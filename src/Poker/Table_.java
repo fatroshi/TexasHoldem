@@ -7,13 +7,14 @@ public enum Table_ {
 
     // DECK POS
     DECK(),
-    // CARDS
-    FIRST(0,0,0),
-    SECOND(1,72,0),
-    THIRD(2,140,0),
+    // CARDS, CardId,x,y,rotation
+    FIRST(0,72,0,0),
+    SECOND(1,50,0,10),
+    THIRD(2,0,0,0),
     FOURTH(),
     FIFTH(),
     DEAD_CARDS(),
+
     // Userinfo
     USERNAME(),
     BALANCE(),
@@ -22,13 +23,13 @@ public enum Table_ {
     BIG(),
     SMALL(),
     // Layout Position
-    P1(0,200,100,"../resource/bg/bg_profile.png"),
-    P2(1,600,200,"../resource/bg/bg_profile.png"),
-    P3(2,400,400,"../resource/bg/bg_profile.png"),
-    P4(3,500,500,"../resource/bg/bg_profile.png"),
+    P0(0,20,200,"../resource/bg/bg_profile.png"),
+    P1(1,200,500,"../resource/bg/bg_profile.png"),
+    P2(2,0,0,"../resource/bg/bg_profile.png"),
+    P3(3,0,0,"../resource/bg/bg_profile.png"),
     ;
 
-    private int userId,cardId;
+    private int userId,cardId,rotation;
     private double xLayout,yLayout; // Layout position
     private double x,y;             // Item position
     private String imageSrc;
@@ -37,10 +38,11 @@ public enum Table_ {
 
     }
 
-    Table_(int cardId,double x, double y) {
+    Table_(int cardId,double x, double y,int rotation) {
         this.cardId = cardId;
         this.x = x;
         this.y = y;
+        this.rotation = rotation;
     }
 
     Table_(int userId, double xLayout, double yLayout, String imageSrcProfile) {
@@ -76,5 +78,8 @@ public enum Table_ {
 
     public int getCardId(){
         return this.cardId;
+    }
+    public int getRotation(){
+        return this.rotation;
     }
 }

@@ -131,23 +131,25 @@ public class Controller extends Application{
         for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
             Hand hand = game.getPlayer(playerId).getHand();
             System.out.println("Total players " + game.getPlayers().size());
+            // Create pane holder for player
+            panePlayers.add(new Pane());
             for (int cardIndex = 0; cardIndex < hand.getNoOfCards(); cardIndex++) {
-                panePlayers.add(new Pane());
+
 
                 Card card = hand.getCard(cardIndex);
+                System.out.println("Player id: " + playerId + ", card index: " + cardIndex);
                 for (Table_ p: Table_.values()){
+                    if(cardIndex == p.getCardId()) {
+                        // Set Card position in layout
+                        card.getImageView().setX(p.getX());                 // Set x
+                        card.getImageView().setY(p.getY());                 // Set y
+                        card.getImageView().setRotate(p.getRotation());     // Set rotation
+                    }
                     if(playerId == p.getUserId()){
-                        if(cardIndex == p.getCardId()){
+                        // Set Layout position
+                        panePlayers.get(playerId).setLayoutX(p.getXlayout()); // Set layout x
+                        panePlayers.get(playerId).setLayoutY(p.getYlayout()); // Set layout y
 
-                            // Set Card position in layout
-                            card.getImageView().setX(p.getX());
-                            card.getImageView().setY(p.getY());
-
-                            // Set Layout posistion
-                            panePlayers.get(playerId).setLayoutX(p.getXlayout());
-                            panePlayers.get(playerId).setLayoutX(p.getYlayout());
-
-                        }
                     }
                 }
 
@@ -165,7 +167,7 @@ public class Controller extends Application{
         root.setTop(topVBox);
         root.setCenter(paneRoot);
 
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, 1000, 650);
         window.setScene(scene);
         window.show();
 

@@ -1,3 +1,5 @@
+package Dealer;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +28,8 @@ public class Deck {
         // They are numbered 1-52
         // Ace = 1.png,
         int fileCounter = 1;
-        String imgFolder = "img/cards/";
+
+        String imgFolder = "../resource/cards/";
         String imgPath;
         for (Rank rank: Rank.values()){
             for (Suit suit: Suit.values()){
@@ -52,7 +55,7 @@ public class Deck {
      * @return
      * @throws NoSuchCardException
      */
-    public Card dealCard() throws NoSuchCardException{
+    public Card dealCard() throws NoSuchCardException {
         if(cards.isEmpty()){
             throw new NoSuchCardException("No more cards left");
         }else {
@@ -76,7 +79,7 @@ public class Deck {
     }
 
     /**
-     * Sort cards by Suit
+     * Sort cards by Dealer.Suit
 
     public void sortBySuit(){
         Collections.sort(cards, new CardBySuit());

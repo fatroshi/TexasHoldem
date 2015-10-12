@@ -1,6 +1,5 @@
-import javafx.scene.image.Image;
-
-import javax.swing.text.html.ImageView;
+package Dealer;
+import Poker.Picture;
 
 /**
  * Objects of this class represents cards in a deck (of cards). A card is

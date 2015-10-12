@@ -1,3 +1,5 @@
+package Poker;
+
 /**
  * Created by Farhad on 10/10/15.
  */
@@ -8,7 +10,7 @@ public enum Poker_ {
         If the list is sorted by value -->
         if the second element in map is 1 then we know the rank (enum name)!
 
-        ex. Cards in hand = { 2, 2, 1 , 10, 5, 4 }  --> call method bestHand(Hand hand)
+        ex. Cards in hand = { 2, 2, 1 , 10, 5, 4 }  --> call method bestHand(User.Hand hand)
         Will return
         2: 2
         1: 1 --> Second element is 1, then we know that we have "PAIR"

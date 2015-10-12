@@ -1,3 +1,5 @@
+package Dealer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class ChipCollection {
         // Loop value of collections
         for (int i = 0; i < collections; i++) {
             for (Chip_ chip: Chip_.values()){
-                // Create Chip And Add to chioCollection
+                // Create Dealer.Chip And Add to chioCollection
                 chipCollection.add(new Chip(chip.getValue(),chip.name(),chip.getImgSrc()));
                 // Add to valueOfChips so that we can get the total value
                 this.valueOfChips += chip.getValue();

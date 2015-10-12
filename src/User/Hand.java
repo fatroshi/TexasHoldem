@@ -1,3 +1,7 @@
+package User;
+
+import Dealer.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +24,7 @@ public class Hand {
         hand.add(card);
     }
 
-    public Card getCard(int index) throws NoSuchCardException{
+    public Card getCard(int index) throws NoSuchCardException {
 
         if(index < this.hand.size()){
             return hand.get(index);

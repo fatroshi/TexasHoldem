@@ -1,13 +1,23 @@
+package Poker;
+
+import Dealer.*;
+import User.*;
+
+
+import java.util.List;
+
+
+
 import java.util.*;
 
 /**
  * Created by Farhad on 07/10/15.
  */
 public class Poker {
-    // Deck (52 cards)
+    // Dealer.Hand (52 cards)
     Deck deck;
 
-    // Player big (Status)
+    // User.Player big (Status)
     public static int playerBig;
     public static List<Integer> playersInGame;
 
@@ -101,7 +111,7 @@ public class Poker {
         // Store rank and suit
         Map<Integer,Integer> rsCards = getRsCards(hand);
 
-        // Highest Card, Pair, Three of a kind, Four of a kind
+        // Highest Dealer.Card, Pair, Three of a kind, Four of a kind
         tmpRqBestHand = getPairThreeFour(rqCards);
         // Check Royal Flush, Straight flush, flush
         tmpRsBestHand = getFlush(rsCards);
@@ -169,7 +179,7 @@ public class Poker {
         for (Map.Entry<Integer, Integer> entry : rqCards.entrySet()) {
             Integer rank = entry.getKey();
             Integer quantity = entry.getValue();
-            System.out.println("Rank : " + rank + ", Quantity: " + quantity);
+            System.out.println("Dealer.Rank : " + rank + ", Quantity: " + quantity);
 
             // Check for
 
@@ -206,12 +216,12 @@ public class Poker {
         }
 
         // PRINT OUT firstQuantity AND secondQuantity
-        System.out.println("First  Rank       --> quantity: " + bestHand[1]);
-        System.out.println("Second Rank       --> quantity: " + bestHand[2]);
+        System.out.println("First  Dealer.Rank       --> quantity: " + bestHand[1]);
+        System.out.println("Second Dealer.Rank       --> quantity: " + bestHand[2]);
         System.out.println("Fifth card top rank: " + bestHand[3]);
 
         // PRINT OUT THE BEST HAND
-        // bestHand = {Poker_:rank, Card rank firstQuantity, secondQuantity, fifth best card}
+        // bestHand = {Poker.Poker_:rank, Dealer.Card rank firstQuantity, secondQuantity, fifth best card}
 
 
         // STORE THE RANK AFTER FOUND WHAT WE GOT
@@ -243,7 +253,7 @@ public class Poker {
         for (Map.Entry<Integer, Integer> entry : rsCards.entrySet()) {
             Integer rank = entry.getKey();
             Integer suit = entry.getValue();
-            //System.out.println("Rank: " + rank + ", Suit: " + suit);
+            //System.out.println("Dealer.Rank: " + rank + ", Dealer.Suit: " + suit);
 
             // Check straight
             if(descByOne(pRank,rank)){

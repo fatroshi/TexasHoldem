@@ -1,3 +1,14 @@
+package User;
+
+import Dealer.*;
+
+import java.util.List;
+
+
+
+
+import Dealer.Dealer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +62,7 @@ abstract public class User {
         while (deposit !=0){
             for (Chip_ chip: Chip_.values()){
                 //System.out.println("Deposit: " + deposit);
-                //System.out.println("Chip value: " + chip.getValue());
+                //System.out.println("Dealer.Chip value: " + chip.getValue());
 
                 // Get highest chip value possible from saldo
                 int count = deposit / chip.getValue();
@@ -71,8 +82,8 @@ abstract public class User {
     // This function should be used by users, and table!
 
     /**
-     * Map object describes Chip color and the quantity of that chip
-     * The chips are created and added to List<Chip> object
+     * Map object describes Dealer.Chip color and the quantity of that chip
+     * The chips are created and added to List<Dealer.Chip> object
      * @param map
      */
     public void createChips(Map<String,Integer> map){
@@ -88,7 +99,7 @@ abstract public class User {
             System.out.println(name + " : " + value);
 
             for(Chip_ chip: Chip_.values()){
-                // Compare map key(name) with the enum Chip_ name
+                // Compare map key(name) with the enum Dealer.Chip_ name
                 if(chip.name() == name){
                     // Get amount for this chip that needs to be created
                     // value = amount of chips of this specific type

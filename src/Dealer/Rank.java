@@ -1,3 +1,5 @@
+package Dealer;
+
 /**
  * Created by Farhad on 29/09/15.
  */

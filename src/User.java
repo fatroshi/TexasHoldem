@@ -16,12 +16,12 @@ abstract public class User {
 
     }
 
-    public User(String username){
+    public User(String username, double balance){
         chips = new ArrayList<>();
         hand = new Hand();
 
         this.username = username;
-        this.balance = 0;
+        this.balance = balance;
     }
 
     public Hand getHand(){

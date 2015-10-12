@@ -9,48 +9,70 @@ public class Poker {
 
     // Player big (Status)
     public static int playerBig;
-    public static int[] playersInGame;
+    public static List<Integer> playersInGame;
 
     // All players
     List<Player> players;
 
 
     public Poker(){
-        deck        = new Deck();
-        players     = new ArrayList<>();
+        deck            = new Deck();
+        players         = new ArrayList<>();
+        playersInGame   = new ArrayList<>();
 
     }
+
+
 
     private Map<Integer,Player> playersBestHand = new HashMap<>();
 
-    private void raise(int index){
-
+    private void raise(int playerId){
+        if(!inArrayList(playerId,playersInGame)){
+            playersInGame.add(playerId);
+        }
     }
 
-    private void bet(int index){
-
+    private void bet(int playerId){
+        if(!inArrayList(playerId,playersInGame)){
+            playersInGame.add(playerId);
+        }
     }
 
-    private void call(){
-
+    private void call(int playerId){
+        if(!inArrayList(playerId,playersInGame)){
+            playersInGame.add(playerId);
+        }
     }
 
-    private void fold(){
-
+    private void fold(int player_id){
+        playersInGame.remove(player_id);
     }
 
-    private void check(){
-
+    private void check(int playerId){
+        if(!inArrayList(playerId,playersInGame)){
+            playersInGame.add(playerId);
+        }
     }
 
-    public void dealCards(){
+    public Player addPlayer(String username, double balance){
+        Player p = new Player(username,balance);
+        players.add(p);
+
+        return p;
+    }
+
+    public void dealCards() {
         for (int i = 0; i < this.players.size(); i++) {
-            if(inArray(i, playersInGame)){
+            if(inArrayList(i, playersInGame)){
                 // Deal card to player
-
+                players.get(i).getHand().addCard(deck.dealCard());
             }
         }
 
+    }
+
+    public <T> boolean inArrayList(int value, List<T> list){
+        return list.contains(value);
     }
 
     public boolean inArray(int value, int[] array){
@@ -288,8 +310,6 @@ public class Poker {
         }
         return  desc;
     }
-
-
 
     public void getWinner(List<Player> players){
         for (int i = 0; i < players.size(); i++) {

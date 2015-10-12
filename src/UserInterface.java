@@ -82,8 +82,8 @@ public class UserInterface extends Application{
         Poker game = new Poker();
 
         Deck deck = new Deck();
-        Player p1 = new Player("Farhad");
-        Player p2 = new Player("Farhad");
+        Player p1 = new Player("Farhad", 2000);
+        Player p2 = new Player("Farhad", 1000);
 
 
         for (int i = 0; i < 7; i++) {

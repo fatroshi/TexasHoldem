@@ -2,9 +2,14 @@
  * Created by Farhad on 12/10/15.
  */
 
+
+
+
 import Poker.*;
 import Dealer.*;
 import User.*;
+
+
 
 import javafx.animation.*;
 import javafx.application.Application;
@@ -13,6 +18,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -20,14 +26,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import sun.awt.util.IdentityArrayList;
 import javafx.scene.shape.*;
+import javafx.scene.*;
 
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
+
 
 
 public class Controller extends Application{
@@ -84,6 +90,7 @@ public class Controller extends Application{
     public void start(Stage stage) {
         window = stage;
         window.setTitle("KING KONG POKER");
+
         Pane paneRoot   = new Pane();
         Pane paneTable  = new Pane();
         Pane paneCards  = new Pane();
@@ -91,6 +98,24 @@ public class Controller extends Application{
         Pane paneP2     = new Pane();
         Pane paneDeck   = new Pane();
 
+        // MENU BAR
+        BorderPane root = new BorderPane();
+        MenuBar mb = new MenuBar();
+        VBox topVBox = new VBox();
+        VBox centerBox = new VBox();
+
+        Menu fileMenu = new Menu("File");
+        MenuItem openItem = new MenuItem("Open");
+        MenuItem closeItem = new MenuItem("Close");
+        MenuItem exitItem = new MenuItem("Exit");
+        fileMenu.getItems().addAll(openItem, closeItem, exitItem);
+
+        mb.getMenus().addAll(fileMenu);
+        topVBox.getChildren().add(mb);
+        paneRoot.getChildren().add(topVBox);
+        // END MENU BAR
+
+        // Table
         GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
 
         // Add table to scene 
@@ -118,8 +143,10 @@ public class Controller extends Application{
         }
 
         addPaneToPane(paneP1,paneRoot);
+        root.setTop(topVBox);
+        root.setCenter(paneRoot);
 
-        Scene scene = new Scene(paneRoot, 1000, 700);
+        Scene scene = new Scene(root, 1000, 700);
         window.setScene(scene);
         window.show();
 

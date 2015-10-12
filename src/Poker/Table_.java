@@ -22,19 +22,28 @@ public enum Table_ {
     BIG(),
     SMALL(),
     // Layout Position
-    P1("../resource/bg/bg_profile.png"),
-    P2("../resource/bg/bg_profile.png"),
-    P3("../resource/bg/bg_profile.png"),
-    P4("../resource/bg/bg_profile.png"),
+    P1(0,100,100,"../resource/bg/bg_profile.png"),
+    P2(1,300,300,"../resource/bg/bg_profile.png"),
+    P3(2,400,400,"../resource/bg/bg_profile.png"),
+    P4(3,500,500,"../resource/bg/bg_profile.png"),
     ;
 
     private String imageSrc;
+    private double xLayout,yLayout; // Layout position
+    private double x,y;             // Item position
 
-    Table_() {
+    Table_(){
 
     }
 
-    Table_(String imageSrcProfile) {
+    Table_(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    Table_(int playerId, double xLayout, double yLayout, String imageSrcProfile) {
+        this.xLayout = xLayout;
+        this.yLayout = yLayout;
         this.imageSrc = imageSrcProfile;
     }
 

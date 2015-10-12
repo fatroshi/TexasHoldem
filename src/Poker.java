@@ -4,6 +4,9 @@ import java.util.*;
  * Created by Farhad on 07/10/15.
  */
 public class Poker {
+    // Deck (52 cards)
+    Deck deck;
+
     // Player big (Status)
     public static int playerBig;
 
@@ -12,8 +15,24 @@ public class Poker {
 
     private Map<Integer,Player> playersBestHand = new HashMap<>();
 
+    private void raise(int index){
+
+    }
+
+    private void bet(int index){
+
+    }
+
+    private void call(){
+
+    }
+
+
+
     public Poker(){
-        players = new ArrayList<>();
+        deck        = new Deck();
+        players     = new ArrayList<>();
+
     }
 
     public static void setPlayerBig(int playerId){
@@ -40,9 +59,6 @@ public class Poker {
         tmpRqBestHand = getPairThreeFour(rqCards);
         // Check Royal Flush, Straight flush, flush
         tmpRsBestHand = getFlush(rsCards);
-
-
-
 
         if(tmpRsBestHand[0] > tmpRqBestHand[0]){
             bestHand = tmpRsBestHand;

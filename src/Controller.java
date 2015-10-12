@@ -10,7 +10,7 @@ import Dealer.*;
 import User.*;
 
 
-
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.geometry.HPos;
@@ -28,6 +28,7 @@ import sun.awt.util.IdentityArrayList;
 import javafx.scene.shape.*;
 import javafx.scene.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,8 +95,7 @@ public class Controller extends Application{
         Pane paneRoot   = new Pane();
         Pane paneTable  = new Pane();
         Pane paneCards  = new Pane();
-        Pane paneP1     = new Pane();
-        Pane paneP2     = new Pane();
+        List<Pane> panePlayers = new ArrayList<>();
         Pane paneDeck   = new Pane();
 
         // MENU BAR
@@ -128,21 +128,40 @@ public class Controller extends Application{
         game.addPlayer("Johan", 543210);
         game.dealCards(2);
 
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            System.out.println("Player");
-            Hand hand = game.getPlayer(i).getHand();
+        for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
+            Hand hand = game.getPlayer(playerId).getHand();
+            System.out.println("Total players " + game.getPlayers().size());
+            for (int cardIndex = 0; cardIndex < hand.getNoOfCards(); cardIndex++) {
+                panePlayers.add(new Pane());
 
-            System.out.println("Cards in hand " + hand.getNoOfCards());
-            for (int j = 0; j < hand.getNoOfCards(); j++) {
-                System.out.println("cards");
-                Card card = hand.getCard(j);
-                System.out.println(card.getSuit());
-                addToPane(card, paneP1);
+                Card card = hand.getCard(cardIndex);
+                for (Table_ p: Table_.values()){
+                    if(playerId == p.getUserId()){
+                        if(cardIndex == p.getCardId()){
+
+                            // Set Card position in layout
+                            card.getImageView().setX(p.getX());
+                            card.getImageView().setY(p.getY());
+
+                            // Set Layout posistion
+                            panePlayers.get(playerId).setLayoutX(p.getXlayout());
+                            panePlayers.get(playerId).setLayoutX(p.getYlayout());
+
+                        }
+                    }
+                }
+
+
+                addToPane(card, panePlayers.get(playerId));
 
             }
         }
 
-        addPaneToPane(paneP1,paneRoot);
+        for (int i = 0; i < panePlayers.size(); i++) {
+            addPaneToPane(panePlayers.get(i),paneRoot);
+        }
+
+
         root.setTop(topVBox);
         root.setCenter(paneRoot);
 

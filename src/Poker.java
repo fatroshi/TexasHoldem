@@ -9,9 +9,17 @@ public class Poker {
 
     // Player big (Status)
     public static int playerBig;
+    public static int[] playersInGame;
 
     // All players
     List<Player> players;
+
+
+    public Poker(){
+        deck        = new Deck();
+        players     = new ArrayList<>();
+
+    }
 
     private Map<Integer,Player> playersBestHand = new HashMap<>();
 
@@ -27,13 +35,29 @@ public class Poker {
 
     }
 
-
-
-    public Poker(){
-        deck        = new Deck();
-        players     = new ArrayList<>();
+    private void fold(){
 
     }
+
+    private void check(){
+
+    }
+
+    public void dealCards(){
+        for (int i = 0; i < this.players.size(); i++) {
+            if(inArray(i, playersInGame)){
+                // Deal card to player
+
+            }
+        }
+
+    }
+
+    public boolean inArray(int value, int[] array){
+
+        return Arrays.asList(array).contains(value);
+    }
+
 
     public static void setPlayerBig(int playerId){
         playerBig = playerId;

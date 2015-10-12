@@ -295,7 +295,7 @@ public class Poker {
         for (int i = 0; i < players.size(); i++) {
             Hand hand = players.get(i).getHand();
 
-            // Check best hand for player
+            // Check best hand for player..
 
         }
     }

@@ -50,6 +50,10 @@ public class Deck {
         return cards.size();
     }
 
+    public List<Card> getCards(){
+        return this.cards;
+    }
+
     /**
      * Deal card if deck is not empty
      * @return

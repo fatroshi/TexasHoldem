@@ -9,32 +9,18 @@ import Poker.*;
 import Dealer.*;
 import User.*;
 
-
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import javafx.animation.*;
 import javafx.application.Application;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sun.awt.util.IdentityArrayList;
-import javafx.scene.shape.*;
-import javafx.scene.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-
-
+import java.util.*;
+import javafx.event.EventHandler;
 
 
 public class Controller extends Application{
@@ -123,19 +109,30 @@ public class Controller extends Application{
 
         // Create game
         Poker game = new Poker();
+
+        //
+
+
+
         // Create player
         game.addPlayer("Farhad", 2000);
-        game.addPlayer("Johan", 543210);
-        game.dealCards(2);
+        game.addPlayer("Johan", 7000);
+        game.addPlayer("Felicia", 6000);
+        game.addPlayer("Elise", 8000);
 
+
+        // Create pane for each player
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            // Create pane holder for player
+            panePlayers.add(new Pane());
+        }
+
+        // Add first 2 cards for players
+        game.dealCards(0);
         for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
             Hand hand = game.getPlayer(playerId).getHand();
             System.out.println("Total players " + game.getPlayers().size());
-            // Create pane holder for player
-            panePlayers.add(new Pane());
             for (int cardIndex = 0; cardIndex < hand.getNoOfCards(); cardIndex++) {
-
-
                 Card card = hand.getCard(cardIndex);
                 System.out.println("Player id: " + playerId + ", card index: " + cardIndex);
                 for (Table_ p: Table_.values()){
@@ -144,24 +141,56 @@ public class Controller extends Application{
                         card.getImageView().setX(p.getX());                 // Set x
                         card.getImageView().setY(p.getY());                 // Set y
                         card.getImageView().setRotate(p.getRotation());     // Set rotation
+                        //card.setOnMouseClicked(event -> card.setImageFrontView());
+
                     }
                     if(playerId == p.getUserId()){
                         // Set Layout position
                         panePlayers.get(playerId).setLayoutX(p.getXlayout()); // Set layout x
                         panePlayers.get(playerId).setLayoutY(p.getYlayout()); // Set layout y
-
                     }
                 }
-
-
                 addToPane(card, panePlayers.get(playerId));
-
             }
         }
 
+        // Add to scene panePlayers
         for (int i = 0; i < panePlayers.size(); i++) {
             addPaneToPane(panePlayers.get(i),paneRoot);
         }
+
+
+
+        // Add 5 card to table
+        // Dessa fem borde sparas i en static lista !!!! sa att alla objekt kan dela pa dessa!!
+        // far error eftersom javaFx vill inte lagga till exakt samma objekt flera ggr
+        game.dealCards(5);
+        for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
+            Hand hand = game.getPlayer(playerId).getHand();
+            for (int cardIndex = 2; cardIndex < hand.getNoOfCards(); cardIndex++) {
+                Card card = hand.getCard(cardIndex);
+                System.out.println("Player id: " + playerId + ", card index: " + cardIndex);
+                for (Table_ p: Table_.values()){
+                    if(cardIndex == p.getCardId()) {
+                        // Set Card position in layout
+                        card.getImageView().setX(p.getX());                 // Set x
+                        card.getImageView().setY(p.getY());                 // Set y
+                        card.getImageView().setRotate(p.getRotation());     // Set rotation
+
+                    }
+                }
+                // Add cards to pane Table
+                //addToPane(card,paneCards);
+            }
+        }
+
+        // Add to scene
+        //addPaneToPane(paneCards,paneRoot);
+
+        // Not working!!!! Ask anders
+        Card card = game.getPlayer(0).getHand().getCard(0);
+        card.setOnMouseClicked(new MousePressHandler());
+
 
 
         root.setTop(topVBox);
@@ -171,8 +200,23 @@ public class Controller extends Application{
         window.setScene(scene);
         window.show();
 
-
     }
+
+    private class MousePressHandler implements  EventHandler<MouseEvent>{
+
+        Card card;
+
+        public MousePressHandler(){
+            //this.card = card;
+            System.out.println("hmmm");
+        }
+
+        @Override
+        public void handle(MouseEvent event){
+            System.out.println("clicked");
+        }
+    }
+
 }
 
 

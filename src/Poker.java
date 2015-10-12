@@ -4,7 +4,7 @@ import java.util.*;
  * Created by Farhad on 07/10/15.
  */
 public class Poker {
-    // Player big
+    // Player big (Status)
     public static int playerBig;
 
     // All players

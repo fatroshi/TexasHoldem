@@ -3,6 +3,7 @@
  */
 
 import Poker.*;
+import Dealer.*;
 import User.*;
 
 import javafx.animation.*;
@@ -92,8 +93,31 @@ public class Controller extends Application{
 
         GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
 
+        // Add table to scene 
+        addToPane(table,paneRoot);
+
+        // Create game
         Poker game = new Poker();
-        Player p1 = new Player("Farhad", 2000);
+        // Create player
+        game.addPlayer("Farhad", 2000);
+        game.addPlayer("Johan", 543210);
+        game.dealCards(2);
+
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            System.out.println("Player");
+            Hand hand = game.getPlayer(i).getHand();
+
+            System.out.println("Cards in hand " + hand.getNoOfCards());
+            for (int j = 0; j < hand.getNoOfCards(); j++) {
+                System.out.println("cards");
+                Card card = hand.getCard(j);
+                System.out.println(card.getSuit());
+                addToPane(card, paneP1);
+
+            }
+        }
+
+        addPaneToPane(paneP1,paneRoot);
 
         Scene scene = new Scene(paneRoot, 1000, 700);
         window.setScene(scene);

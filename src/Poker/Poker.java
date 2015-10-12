@@ -71,14 +71,25 @@ public class Poker {
         return p;
     }
 
-    public void dealCards() {
-        for (int i = 0; i < this.players.size(); i++) {
-            if(inArrayList(i, playersInGame)){
-                // Deal card to player
-                players.get(i).getHand().addCard(deck.dealCard());
+    public void dealCards(int quantityOfDeals) {
+        for (int i = 0; i < quantityOfDeals; i++) {
+            for (int j = 0; j < this.players.size(); j++) {
+                //if(inArrayList(j, playersInGame)){
+                    // Deal card to player
+                    players.get(j).getHand().addCard(deck.dealCard());
+                //}
             }
         }
 
+
+    }
+
+    public List<Player> getPlayers(){
+        return this.players;
+    }
+
+    public Player getPlayer(int index){
+        return this.players.get(index);
     }
 
     public <T> boolean inArrayList(int value, List<T> list){

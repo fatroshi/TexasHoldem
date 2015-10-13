@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sun.awt.util.IdentityArrayList;
@@ -30,6 +31,9 @@ public class Controller extends Application{
     Map<Pane,List<ImageView>> graphics = new HashMap<>();
     Stage window;
 
+    // Create game
+    Poker game = new Poker();
+
     public static void main(String[] args) {
         // Set program as a javaFx application
         // Then calls start(Stage primaryStage)
@@ -39,6 +43,51 @@ public class Controller extends Application{
     public void addToPane(Picture o,Pane pane){
         // Add each child to pane
         pane.getChildren().add(o.getImageView());
+    }
+
+    public void createProfileBg(Pane root){
+
+        Rectangle r;
+        Label username, balance;
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            r = new Rectangle();
+            r.setFill(Color.BLACK);
+            r.setStroke(Color.DARKGRAY);
+
+            // Get username
+            String user = game.getPlayer(i).getUsername();
+            username = new Label(user);
+            // Get balance
+            String strBalance = "$ " + String.valueOf(game.getPlayer(i).getBalance());
+            balance = new Label(strBalance);
+            // Get your x,y layout
+            for (Table_ t: Table_.values()){
+                if(i == t.getUserId()){
+                    r.setX(t.getXlayout() - 35);
+                    r.setY(t.getYlayout() + 90);
+
+                    // x,y for label
+                    // username
+                    username.setLayoutX(t.getXlayout() - 20);
+                    username.setLayoutY(t.getYlayout() + 100);
+                    username.setTextFill(Color.LIGHTGRAY);
+                    username.setFont(Font.font(18));
+                    // balance
+                    balance.setLayoutX(t.getXlayout() - 20);
+                    balance.setLayoutY(t.getYlayout() + 140);
+                    balance.setTextFill(Color.GREEN);
+                }
+            }
+            r.setWidth(140);
+            r.setHeight(80);
+            r.setArcWidth(20);
+            r.setArcHeight(20);
+            root.getChildren().addAll(r, username, balance);
+        }
+
+
+
+
     }
 
     public void addPaneToPane(Pane p, Pane root){
@@ -80,9 +129,13 @@ public class Controller extends Application{
         window = stage;
         window.setTitle("KING KONG POKER");
 
+
+        // Pane
         Pane paneRoot   = new Pane();
         //List<Pane> paneTable  = new ArrayList<>();
         Pane paneTable = new Pane();
+
+
         List<Pane> panePlayers = new ArrayList<>();
         Pane paneDeck   = new Pane();
 
@@ -109,8 +162,7 @@ public class Controller extends Application{
         // Add table to scene 
         addToPane(table,paneRoot);
 
-        // Create game
-        Poker game = new Poker();
+
 
         //
 
@@ -123,18 +175,8 @@ public class Controller extends Application{
         game.addPlayer("Elise", 8000);
 
 
-        Rectangle r = new Rectangle();
-        r.setFill(Color.BLACK);
-        r.setStroke(Color.DARKGRAY);
-        r.setX(Table_.P0.getXlayout());
-        r.setY(Table_.P1.getYlayout());
-        r.setWidth(140);
-        r.setHeight(80);
-        r.setArcWidth(20);
-        r.setArcHeight(20);
+        createProfileBg(paneRoot);
 
-
-        paneRoot.getChildren().add(r);
 
 
         Label labelUsername = new Label("Farhad");

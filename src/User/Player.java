@@ -7,7 +7,11 @@ import User.User;
  */
 public class Player extends User {
     public Player(String username, double balance){
-
         super(username,balance);
     }
+
+
+
+
+
 }

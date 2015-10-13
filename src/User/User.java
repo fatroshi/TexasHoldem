@@ -116,7 +116,7 @@ abstract public class User {
         this.chips.clear();
     }
 
-    public double getSaldo(){
+    public double getBalance(){
         return this.balance;
     }
 

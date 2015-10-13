@@ -36,22 +36,6 @@ public class Chip extends Picture {
         //this.rotate();
         Random random = new Random();
         this.getImageView().setRotate(random.nextInt(160) +10);
-        Chip.chipSize *=   0.93;
-        //this.getImageView().setScaleY(Dealer.Dealer.Chip.chipSize);
-        //this.getImageView().setScaleX(this.getScaleX() * Dealer.Dealer.Chip.chipSize);
-        //this.getImageView().setY(100);
-
-
-        double oY = this.getImageView().getY();
-        Chip.chipY += 5;
-
-        this.getImageView().setY(oY + Chip.chipY);
-
-        System.out.println(this.getImageView().getY());
-        System.out.println(Chip.chipY);
-
-        //System.out.println(this.getScaleY());
-        //super.setX(random.nextInt(20) +1);
     }
 
 

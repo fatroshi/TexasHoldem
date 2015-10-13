@@ -35,7 +35,7 @@ public class Chip extends Picture {
     public void rotate(){
         //this.rotate();
         Random random = new Random();
-        this.getImageView().setRotate(random.nextInt(160) +10);
+        this.getImageView().setRotate(random.nextInt(10) +15);
         this.getImageView().setScaleX(0.6);
         this.getImageView().setScaleY(0.6);
     }

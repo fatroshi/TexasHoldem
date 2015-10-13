@@ -12,10 +12,10 @@ public enum ChipLayout {
     P0_GREEN    (0,10,320,130),
     P0_WHITE    (0,1,370,100),
     // Player 1
-    P1_BLACK    (1,10,320,135),
+    P1_BLACK    (1,500,300,100),
     P1_RED      (1,100,335,100),
     P1_BLUE     (1,50,355,135),
-    P1_GREEN    (1,500,300,100),
+    P1_GREEN    (1,10,320,135),
     P1_WHITE    (1,1,370,100),
     // Player 2
     P2_BLACK    (2,500,100,100),

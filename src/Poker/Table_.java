@@ -25,10 +25,10 @@ public enum Table_ {
     BIG(),
     SMALL(),
     // Layout Position
-    P0(0,100,140,"../resource/bg/bg_profile.png"),
-    P1(1,100,410,"../resource/bg/bg_profile.png"),
-    P2(2,820,410,"../resource/bg/bg_profile.png"),
-    P3(3,820,140,"../resource/bg/bg_profile.png"),
+    P0(0,50,100,"../resource/bg/bg_profile.png"),
+    P1(1,50,320,"../resource/bg/bg_profile.png"),
+    P2(2,880,320,"../resource/bg/bg_profile.png"),
+    P3(3,880,100,"../resource/bg/bg_profile.png"),
     ;
 
     private int userId,cardId,rotation;
@@ -54,6 +54,8 @@ public enum Table_ {
         this.imageSrc = imageSrcProfile;
     }
 
+
+
     public String getImageSrc() {
         return this.imageSrc;
     }
@@ -73,6 +75,7 @@ public enum Table_ {
     public double getY(){
         return this.y;
     }
+
 
     public int getUserId(){
         return this.userId;

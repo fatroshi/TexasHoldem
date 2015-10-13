@@ -84,10 +84,55 @@ public class Controller extends Application{
             r.setArcHeight(20);
             root.getChildren().addAll(r, username, balance);
         }
+    }
 
+    public void getUserChips(Pane root){
+        for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
+            Player p = game.getPlayer(playerId);
+            for (int j = 0; j < p.getChips().size(); j++) {
+                Chip chip = p.getChip(j);
+                for (Table_ t: Table_.values()){
+                        // Set x,y inside layout
+                        //chip.getImageView().setX(t.getX());
+                        //chip.getImageView().setY(t.getY());
+                        // Set layout x,y
+                        //chip.getImageView().setLayoutX(t.getXlayout());
+                        //chip.getImageView().setLayoutY(t.getYlayout());
+                }
+                root.getChildren().add(chip.getImageView());
+            }
+        }
+    }
 
+    public void getFirstTwoCards(Pane root){
+        for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
+            Hand hand = game.getPlayer(playerId).getHand();
+            for (int j = 0; j < hand.getNoOfCards(); j++) {
+                Card card = hand.getCard(j);
+                for (CardLayout cl: CardLayout.values()){
+                    // Set x,y for inside layout
+                    if( j == cl.getCardId()){
+                        card.getImageView().setX(cl.getX());
+                        card.getImageView().setY(cl.getY());
+                        card.getImageView().setRotate(cl.getRotation());
+                        // Toggle card when clicked
+                        card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new MousePressHandler(card));
+                    }
+                }
 
+                // Set x,y for layout
+                for (UserLayout ul: UserLayout.values()){
+                    if( playerId == ul.getUserId()){
+                        card.getImageView().setLayoutX(ul.getLayoutX() + 200);
+                        card.getImageView().setLayoutY(ul.getLayoutY());
+                    }
+                }
 
+                // Add to scene
+                root.getChildren().add(card.getImageView());
+            }
+
+        }
     }
 
     public void addPaneToPane(Pane p, Pane root){
@@ -163,69 +208,23 @@ public class Controller extends Application{
         addToPane(table,paneRoot);
 
 
-
-        //
-
-
-
         // Create player
         game.addPlayer("Farhad", 2000);
         game.addPlayer("Johan", 7000);
         game.addPlayer("Felicia", 6000);
         game.addPlayer("Elise", 8000);
 
-
+        // Add Profile BG to scene
         createProfileBg(paneRoot);
-
-
-
-        Label labelUsername = new Label("Farhad");
-        labelUsername.setTextFill(Color.RED);
-
-        labelUsername.setLayoutX(60);
-        labelUsername.setLayoutY(60);
-
-
-        paneRoot.getChildren().addAll(labelUsername);
-
-        // Create pane for each player
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            // Create pane holder for player
-            panePlayers.add(new Pane());
-            //panePlayers.get(i)
-        }
+        // Add User Chips to scene
+        getUserChips(paneRoot);
 
         // Add first 2 cards for players
         game.dealTwoCards();
-        for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
-            Hand hand = game.getPlayer(playerId).getHand();
-            System.out.println("Total players " + game.getPlayers().size());
-            for (int cardIndex = 0; cardIndex < hand.getNoOfCards(); cardIndex++) {
-                Card card = hand.getCard(cardIndex);
-                System.out.println("Player id: " + playerId + ", card index: " + cardIndex);
-                for (Table_ p: Table_.values()){
-                    if(cardIndex == p.getCardId()) {
-                        // Set Card position in layout
-                        card.getImageView().setX(p.getX());                 // Set x
-                        card.getImageView().setY(p.getY());                 // Set y
-                        card.getImageView().setRotate(p.getRotation());     // Set rotation
-                        //card.setOnMouseClicked(event -> card.setImageFrontView());
-                        card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new MousePressHandler(card));
-                    }
-                    if(playerId == p.getUserId()){
-                        // Set Layout position
-                        panePlayers.get(playerId).setLayoutX(p.getXlayout()); // Set layout x
-                        panePlayers.get(playerId).setLayoutY(p.getYlayout()); // Set layout y
-                    }
-                }
-                addToPane(card, panePlayers.get(playerId));
-            }
-        }
+        // Get the first 2 cards for each player
+        getFirstTwoCards(paneRoot);
 
-        // Add to scene panePlayers
-        for (int i = 0; i < panePlayers.size(); i++) {
-            addPaneToPane(panePlayers.get(i),paneRoot);
-        }
+
 
         // Add 5 card to table
         // Dessa fem borde sparas i en static lista !!!! sa att alla objekt kan dela pa dessa!!

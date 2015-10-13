@@ -38,7 +38,26 @@ abstract public class User {
     public Hand getHand(){
         return this.hand;
     }
+
     public List<Chip> getChips(){
+        return this.chips;
+    }
+
+    public Chip getChip(int index){
+        return this.chips.get(index);
+    }
+
+    public List<Chip> balanceToChips(){
+        // Convert balance to int
+        int balance = (int) Math.round(this.balance);
+        // Convert int version of balance to chips
+        Map<String,Integer> converted = this.depositConvertToChips(balance);
+
+        // Clear chips first
+        this.chips.clear();
+        // Create chips --> will add to this.chips
+        createChips(converted);
+        //
         return this.chips;
     }
 
@@ -82,7 +101,7 @@ abstract public class User {
     // This function should be used by users, and table!
 
     /**
-     * Map object describes Dealer.Chip color and the quantity of that chip
+     * Map object describes Chip color and the quantity of that chip
      * The chips are created and added to List<Dealer.Chip> object
      * @param map
      */
@@ -119,6 +138,7 @@ abstract public class User {
     public double getBalance(){
         return this.balance;
     }
+
 
     public void setSaldo(double balance){
         this.balance = balance;

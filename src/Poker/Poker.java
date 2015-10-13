@@ -206,7 +206,7 @@ public class Poker {
         for (Map.Entry<Integer, Integer> entry : rqCards.entrySet()) {
             Integer rank = entry.getKey();
             Integer quantity = entry.getValue();
-            System.out.println("Dealer.Rank : " + rank + ", Quantity: " + quantity);
+            System.out.println("Dealer.Rank_ : " + rank + ", Quantity: " + quantity);
 
             // Check for
 
@@ -243,8 +243,8 @@ public class Poker {
         }
 
         // PRINT OUT firstQuantity AND secondQuantity
-        System.out.println("First  Dealer.Rank       --> quantity: " + bestHand[1]);
-        System.out.println("Second Dealer.Rank       --> quantity: " + bestHand[2]);
+        System.out.println("First  Dealer.Rank_       --> quantity: " + bestHand[1]);
+        System.out.println("Second Dealer.Rank_       --> quantity: " + bestHand[2]);
         System.out.println("Fifth card top rank: " + bestHand[3]);
 
         // PRINT OUT THE BEST HAND
@@ -280,7 +280,7 @@ public class Poker {
         for (Map.Entry<Integer, Integer> entry : rsCards.entrySet()) {
             Integer rank = entry.getKey();
             Integer suit = entry.getValue();
-            //System.out.println("Dealer.Rank: " + rank + ", Dealer.Suit: " + suit);
+            //System.out.println("Dealer.Rank_: " + rank + ", Dealer.Suit_: " + suit);
 
             // Check straight
             if(descByOne(pRank,rank)){
@@ -302,7 +302,7 @@ public class Poker {
 
             if(rankCounter >= 5 && suitCounter >= 5){
                 // Royal flush or Straight flush
-                if(rank == Rank.ACE.getRank()){
+                if(rank == Rank_.ACE.getRank()){
                     // Royal Flush
                     tmpBestHand[0] = 10;
                     //print("Royal Flush");

@@ -1,4 +1,4 @@
-package Dealer;
+package Layout;
 
 /**
  * Created by Farhad on 13/10/15.

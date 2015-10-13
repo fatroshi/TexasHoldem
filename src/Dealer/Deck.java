@@ -36,8 +36,8 @@ public class Deck {
 
         String imgFolder = "../resource/cards/";
         String imgPath;
-        for (Rank rank: Rank.values()){
-            for (Suit suit: Suit.values()){
+        for (Rank_ rank: Rank_.values()){
+            for (Suit_ suit: Suit_.values()){
                 imgPath = imgFolder + Integer.toString(fileCounter) + ".png";
                 String imgBackPath = imgFolder + "b1fv.png";
                 cards.add(new Card(rank.getRank(),suit.getSuit(),imgPath,imgBackPath));
@@ -88,7 +88,7 @@ public class Deck {
     }
 
     /**
-     * Sort cards by Dealer.Suit
+     * Sort cards by Suit_
 
     public void sortBySuit(){
         Collections.sort(cards, new CardBySuit());

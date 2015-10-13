@@ -2,17 +2,12 @@ package User;
 
 import Dealer.*;
 
-import java.util.List;
-
-
+import java.util.*;
 
 
 import Dealer.Dealer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Farhad on 07/10/15.

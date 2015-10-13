@@ -2,9 +2,9 @@
  * Created by Farhad on 12/10/15.
  */
 
-
-
-
+import Layout.CardLayout;
+import Layout.ChipLayout;
+import Layout.UserLayout;
 import Poker.*;
 import Dealer.*;
 import User.*;
@@ -87,20 +87,63 @@ public class Controller extends Application{
     }
 
     public void getUserChips(Pane root){
+        int blackCounter = 0;
+        int redCounter = 0;
+        int blueCounter = 0;
+        int greenCounter = 0;
+        int whiteCounter = 0;
+        int addY=0;
         for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
             Player p = game.getPlayer(playerId);
+            System.out.println("[CHIPS} Player ID" + playerId );
             for (int j = 0; j < p.getChips().size(); j++) {
                 Chip chip = p.getChip(j);
-                for (Table_ t: Table_.values()){
-                        // Set x,y inside layout
-                        //chip.getImageView().setX(t.getX());
-                        //chip.getImageView().setY(t.getY());
-                        // Set layout x,y
-                        //chip.getImageView().setLayoutX(t.getXlayout());
-                        //chip.getImageView().setLayoutY(t.getYlayout());
+                for (ChipLayout cl: ChipLayout.values()){
+                    if(playerId == cl.getUserId()) {
+
+                        if(chip.getChipValue() == Chip_.BLACK.getValue()){
+                            blackCounter++;
+                            addY = blackCounter;
+                        }else if(chip.getChipValue() == Chip_.RED.getValue()){
+                            redCounter++;
+                            addY = redCounter;
+                        }else if(chip.getChipValue() == Chip_.BLUE.getValue()){
+                            blueCounter++;
+                            addY = blueCounter;
+                        }else if(chip.getChipValue() == Chip_.GREEN.getValue()){
+                            greenCounter++;
+                            addY = greenCounter;
+                        }else if(chip.getChipValue() == Chip_.WHITE.getValue()){
+                            whiteCounter++;
+                            addY = whiteCounter;
+                        }
+
+                        if (chip.getChipValue() == cl.getChipValue()) {
+                            chip.getImageView().setX(cl.getX());
+                            chip.getImageView().setY(cl.getY() - addY);
+                        }
+
+
+                    }
                 }
+
+                // Set x,y for layout
+                for (UserLayout ul: UserLayout.values()){
+                    if( playerId == ul.getUserId()){
+                        chip.getImageView().setLayoutX(ul.getLayoutX());
+                        chip.getImageView().setLayoutY(ul.getLayoutY());
+                    }
+                }
+
+                // Add to scene
                 root.getChildren().add(chip.getImageView());
             }
+            // Reset counters
+            blackCounter    = 0;
+            redCounter      = 0;
+            blueCounter     = 0;
+            greenCounter    = 0;
+            whiteCounter    = 0;
         }
     }
 
@@ -180,7 +223,6 @@ public class Controller extends Application{
         //List<Pane> paneTable  = new ArrayList<>();
         Pane paneTable = new Pane();
 
-
         List<Pane> panePlayers = new ArrayList<>();
         Pane paneDeck   = new Pane();
 
@@ -209,10 +251,10 @@ public class Controller extends Application{
 
 
         // Create player
-        game.addPlayer("Farhad", 2000);
-        game.addPlayer("Johan", 7000);
-        game.addPlayer("Felicia", 6000);
-        game.addPlayer("Elise", 8000);
+        game.addPlayer("Farhad", 1269);
+        game.addPlayer("Johan", 3268);
+        game.addPlayer("Felicia", 4694);
+        game.addPlayer("Elise", 2343);
 
         // Add Profile BG to scene
         createProfileBg(paneRoot);
@@ -224,8 +266,6 @@ public class Controller extends Application{
         // Get the first 2 cards for each player
         getFirstTwoCards(paneRoot);
 
-
-
         // Add 5 card to table
         // Dessa fem borde sparas i en static lista !!!! sa att alla objekt kan dela pa dessa!!
         // far error eftersom javaFx vill inte lagga till exakt samma objekt flera ggr
@@ -233,8 +273,8 @@ public class Controller extends Application{
 
         for (int i = 0; i < Poker.tableCards.size(); i++) {
             Card card = Poker.tableCards.get(i);
-            System.out.println(Poker.tableCards.size());
-            System.out.println(card.getRank());
+            //System.out.println(Poker.tableCards.size());
+            //System.out.println(card.getRank());
 
             for(Table_ t: Table_.values()){
                 if(t.getCardId() == (i+2)){
@@ -251,10 +291,6 @@ public class Controller extends Application{
         paneTable.setLayoutX(240);
         paneTable.setLayoutY(230);
         addPaneToPane(paneTable, paneRoot);
-
-
-
-
 
 
         root.setTop(topVBox);

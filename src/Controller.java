@@ -80,8 +80,8 @@ public class Controller extends Application{
         window.setTitle("KING KONG POKER");
 
         Pane paneRoot   = new Pane();
-        Pane paneTable  = new Pane();
-        Pane paneCards  = new Pane();
+        //List<Pane> paneTable  = new ArrayList<>();
+        Pane paneTable = new Pane();
         List<Pane> panePlayers = new ArrayList<>();
         Pane paneDeck   = new Pane();
 
@@ -166,27 +166,25 @@ public class Controller extends Application{
         // Dessa fem borde sparas i en static lista !!!! sa att alla objekt kan dela pa dessa!!
         // far error eftersom javaFx vill inte lagga till exakt samma objekt flera ggr
         game.dealCards(5);
-        for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
-            Hand hand = game.getPlayer(playerId).getHand();
-            for (int cardIndex = 2; cardIndex < hand.getNoOfCards(); cardIndex++) {
-                Card card = hand.getCard(cardIndex);
-                System.out.println("Player id: " + playerId + ", card index: " + cardIndex);
-                for (Table_ p: Table_.values()){
-                    if(cardIndex == p.getCardId()) {
-                        // Set Card position in layout
-                        card.getImageView().setX(p.getX());                 // Set x
-                        card.getImageView().setY(p.getY());                 // Set y
-                        card.getImageView().setRotate(p.getRotation());     // Set rotation
 
-                    }
+        for (int i = 0; i < Poker.tableCards.size(); i++) {
+            Card card = Poker.tableCards.get(i);
+            System.out.println(Poker.tableCards.size());
+            System.out.println(card.getRank());
+
+            for(Table_ t: Table_.values()){
+                if(t.getCardId() == (i=2)){
+                    card.getImageView().setX(t.getX());                 // Set x
+                    card.getImageView().setY(t.getY());                 // Set y
                 }
-                // Add cards to pane Table
-                //addToPane(card,paneCards);
             }
+
+            addToPane(card, paneTable);
         }
 
         // Add to scene
-        //addPaneToPane(paneCards,paneRoot);
+        addPaneToPane(paneTable,paneRoot);
+
 
 
         root.setTop(topVBox);
@@ -208,8 +206,6 @@ public class Controller extends Application{
 
         @Override
         public void handle(Event evt) {
-            //System.out.println(((Control)evt.getSource()).getId());
-            System.out.println("clicked");
             this.card.toggleImage();
         }
     }

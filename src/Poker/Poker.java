@@ -22,13 +22,16 @@ public class Poker {
     public static List<Integer> playersInGame;
 
     // All players
-    List<Player> players;
+    private List<Player> players;
+    public static List<Card> tableCards;
 
 
     public Poker(){
         deck            = new Deck();
         players         = new ArrayList<>();
         playersInGame   = new ArrayList<>();
+        tableCards      = new ArrayList<>();
+
 
     }
 
@@ -71,6 +74,11 @@ public class Poker {
         return p;
     }
 
+    public void putAllPlayersInGame(){
+        for (int i = 0; i < this.getPlayers().size(); i++) {
+            playersInGame.add(i);
+        }
+    }
 
     public void dealTwoCards(){
         for (int j = 0; j < this.players.size(); j++) {
@@ -86,11 +94,9 @@ public class Poker {
         // Deal same 5 cards to each player
         for (int i = 0; i < quantityOfDeals; i++) {
             Card card = deck.dealCard();
-            for (int j = 0; j < this.players.size(); j++) {
-                //if(inArrayList(j, playersInGame)){
-                    players.get(j).getHand().addCard(card);
-                //}
-            }
+
+            tableCards.add(card);
+
         }
     }
 

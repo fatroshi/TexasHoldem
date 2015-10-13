@@ -18,6 +18,11 @@ public class Deck {
         cards = new ArrayList<>();
         createDeck();
         shuffleCards();
+        shuffleCards();
+        shuffleCards();
+        shuffleCards();
+        shuffleCards();
+
     }
 
     /**

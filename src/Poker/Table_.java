@@ -10,11 +10,11 @@ public enum Table_ {
     // CARDS, CardId,x,y,rotation
     FIRST(0,72,0,0),
     SECOND(1,10,0,10),
-    THIRD(2,90,-215,0),
-    FOURTH(3,170,-215,0),
-    FIFTH(4,250,-215,0),
-    SIXTH(5,330,-215,0),
-    SEVENTH(6,410,-215,0),
+    THIRD(2,1,0,0),
+    FOURTH(3,2,0,0),
+    FIFTH(4,3,0,0),
+    SIXTH(5,4,0,0),
+    SEVENTH(6,5,0,0),
     DEAD_CARDS(7,-50,-50,0),
 
     // Userinfo
@@ -25,10 +25,10 @@ public enum Table_ {
     BIG(),
     SMALL(),
     // Layout Position
-    P0(0,100,200,"../resource/bg/bg_profile.png"),
-    P1(1,200,500,"../resource/bg/bg_profile.png"),
-    P2(2,700,500,"../resource/bg/bg_profile.png"),
-    P3(3,800,200,"../resource/bg/bg_profile.png"),
+    P0(0,100,140,"../resource/bg/bg_profile.png"),
+    P1(1,100,410,"../resource/bg/bg_profile.png"),
+    P2(2,820,410,"../resource/bg/bg_profile.png"),
+    P3(3,820,140,"../resource/bg/bg_profile.png"),
     ;
 
     private int userId,cardId,rotation;

@@ -17,12 +17,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sun.awt.util.IdentityArrayList;
 import java.util.*;
 import javafx.event.EventHandler;
-
+import javafx.scene.shape.*;
 
 public class Controller extends Application{
     List<ImageView> imgViews = new IdentityArrayList<>();
@@ -122,10 +123,34 @@ public class Controller extends Application{
         game.addPlayer("Elise", 8000);
 
 
+        Rectangle r = new Rectangle();
+        r.setFill(Color.BLACK);
+        r.setStroke(Color.DARKGRAY);
+        r.setX(Table_.P0.getXlayout());
+        r.setY(Table_.P1.getYlayout());
+        r.setWidth(140);
+        r.setHeight(80);
+        r.setArcWidth(20);
+        r.setArcHeight(20);
+
+
+        paneRoot.getChildren().add(r);
+
+
+        Label labelUsername = new Label("Farhad");
+        labelUsername.setTextFill(Color.RED);
+
+        labelUsername.setLayoutX(60);
+        labelUsername.setLayoutY(60);
+
+
+        paneRoot.getChildren().addAll(labelUsername);
+
         // Create pane for each player
         for (int i = 0; i < game.getPlayers().size(); i++) {
             // Create pane holder for player
             panePlayers.add(new Pane());
+            //panePlayers.get(i)
         }
 
         // Add first 2 cards for players
@@ -160,8 +185,6 @@ public class Controller extends Application{
             addPaneToPane(panePlayers.get(i),paneRoot);
         }
 
-
-
         // Add 5 card to table
         // Dessa fem borde sparas i en static lista !!!! sa att alla objekt kan dela pa dessa!!
         // far error eftersom javaFx vill inte lagga till exakt samma objekt flera ggr
@@ -173,9 +196,10 @@ public class Controller extends Application{
             System.out.println(card.getRank());
 
             for(Table_ t: Table_.values()){
-                if(t.getCardId() == (i=2)){
-                    card.getImageView().setX(t.getX());                 // Set x
-                    card.getImageView().setY(t.getY());                 // Set y
+                if(t.getCardId() == (i+2)){
+                    card.getImageView().setX(t.getX() * card.getImageView().getImage().getWidth());                 // Set x
+                    card.getImageView().setY(t.getY());                                                             // Set y
+                    card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new MousePressHandler(card));
                 }
             }
 
@@ -183,7 +207,12 @@ public class Controller extends Application{
         }
 
         // Add to scene
-        addPaneToPane(paneTable,paneRoot);
+        paneTable.setLayoutX(240);
+        paneTable.setLayoutY(230);
+        addPaneToPane(paneTable, paneRoot);
+
+
+
 
 
 

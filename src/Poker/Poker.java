@@ -71,19 +71,18 @@ public class Poker {
         return p;
     }
 
-    public void dealCards(int quantityOfDeals) {
 
-        if(quantityOfDeals == 0) {
-            for (int j = 0; j < this.players.size(); j++) {
-
-                // Deal 2 cards for each player
-                for (int i = 0; i < 2; i++) {
-                    players.get(j).getHand().addCard(deck.dealCard());
-                }
-
+    public void dealTwoCards(){
+        for (int j = 0; j < this.players.size(); j++) {
+         // Deal 2 cards for each player
+            for (int i = 0; i < 2; i++) {
+                players.get(j).getHand().addCard(deck.dealCard());
             }
-        }
 
+        }
+    }
+
+    public void dealCards(int quantityOfDeals) {
         // Deal same 5 cards to each player
         for (int i = 0; i < quantityOfDeals; i++) {
             Card card = deck.dealCard();
@@ -93,8 +92,6 @@ public class Poker {
                 //}
             }
         }
-
-
     }
 
     public List<Player> getPlayers(){
@@ -353,6 +350,5 @@ public class Poker {
 
         }
     }
-
 
 }

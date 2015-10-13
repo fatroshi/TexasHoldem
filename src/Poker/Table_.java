@@ -9,7 +9,7 @@ public enum Table_ {
     DECK(),
     // CARDS, CardId,x,y,rotation
     FIRST(0,72,0,0),
-    SECOND(1,0,0,10),
+    SECOND(1,10,0,10),
     THIRD(2,90,-215,0),
     FOURTH(3,170,-215,0),
     FIFTH(4,250,-215,0),

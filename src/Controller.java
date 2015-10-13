@@ -11,6 +11,7 @@ import User.*;
 
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -128,7 +129,7 @@ public class Controller extends Application{
         }
 
         // Add first 2 cards for players
-        game.dealCards(0);
+        game.dealTwoCards();
         for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
             Hand hand = game.getPlayer(playerId).getHand();
             System.out.println("Total players " + game.getPlayers().size());
@@ -142,7 +143,7 @@ public class Controller extends Application{
                         card.getImageView().setY(p.getY());                 // Set y
                         card.getImageView().setRotate(p.getRotation());     // Set rotation
                         //card.setOnMouseClicked(event -> card.setImageFrontView());
-
+                        card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new MousePressHandler(card));
                     }
                     if(playerId == p.getUserId()){
                         // Set Layout position
@@ -187,36 +188,31 @@ public class Controller extends Application{
         // Add to scene
         //addPaneToPane(paneCards,paneRoot);
 
-        // Not working!!!! Ask anders
-        Card card = game.getPlayer(0).getHand().getCard(0);
-        card.setOnMouseClicked(new MousePressHandler());
-
-
 
         root.setTop(topVBox);
         root.setCenter(paneRoot);
 
         Scene scene = new Scene(root, 1000, 650);
+
         window.setScene(scene);
         window.show();
 
     }
 
-    private class MousePressHandler implements  EventHandler<MouseEvent>{
-
+    private class MousePressHandler implements EventHandler<Event>{
         Card card;
 
-        public MousePressHandler(){
-            //this.card = card;
-            System.out.println("hmmm");
+        MousePressHandler(Card card){
+            this.card = card;
         }
 
         @Override
-        public void handle(MouseEvent event){
+        public void handle(Event evt) {
+            //System.out.println(((Control)evt.getSource()).getId());
             System.out.println("clicked");
+            this.card.toggleImage();
         }
     }
-
 }
 
 

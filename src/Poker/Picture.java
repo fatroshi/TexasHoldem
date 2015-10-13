@@ -7,9 +7,11 @@ import javafx.scene.image.ImageView;
  * Created by Farhad on 07/10/15.
  */
 abstract public class Picture extends ImageView{
-    ImageView imageView;
-    Image image;
-    Image imageBack;
+    private ImageView imageView;
+    private Image image;
+    private Image imageBack;
+    private int toggle = 0;
+
 
     public Picture(){
 
@@ -54,6 +56,18 @@ abstract public class Picture extends ImageView{
 
     public void setImageBackView(){
         this.imageView.setImage(this.imageBack);
+    }
+
+    public void toggleImage(){
+        if(this.toggle == 0){
+            this.toggle = 1;
+            setImageFrontView();
+        }else if(this.toggle == 1){
+            this.toggle = 0;
+            setImageBackView();
+        }
+
+
     }
 
     public ImageView getImageView(){

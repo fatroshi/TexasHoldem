@@ -50,7 +50,7 @@ public class MainView extends Application{
         Controller controller = new Controller();
 
         // Pane
-        Pane paneRoot       = new Pane();
+        Pane paneRoot       = controller.getRootPane();
 
         // MENU BAR
         BorderPane root     = new BorderPane();
@@ -80,7 +80,7 @@ public class MainView extends Application{
         // Create players, get user info, get chips for each player
         controller.createPlayers(paneRoot);
 
-
+        /*
         // On click start!
         controller.game.dealTwoCards();
 
@@ -93,7 +93,7 @@ public class MainView extends Application{
 
         // Card 4 5
         controller.getTableCards(4, 5, paneRoot);
-
+        */
         // Get user btn
         controller.getUserBtn(paneRoot);
 

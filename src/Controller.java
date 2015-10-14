@@ -1,8 +1,6 @@
 import Dealer.Card;
 import Dealer.Chip;
 import Dealer.Chip_;
-import Poker.Handlers.BtnClickHandler;
-import Poker.Handlers.CardClickHandler;
 import Layout.ButtonLayout;
 import Layout.CardLayout;
 import Layout.ChipLayout;
@@ -27,7 +25,22 @@ import javafx.util.Duration;
  */
 public class Controller {
     // Create game
-    Poker game = new Poker();
+    private Poker game;
+    // Place holder for items
+    private Pane root;
+
+    public Controller(){
+        game = new Poker();
+        root = new Pane();
+    }
+
+    public Pane getRootPane(){
+        return this.root;
+    }
+
+    public Poker getGame(){
+        return  this.game;
+    }
 
     public void addToPane(Picture o,Pane pane){
         // Add each child to pane
@@ -35,9 +48,10 @@ public class Controller {
     }
 
     public void createPlayers(Pane root){
-        game.addPlayer("Waleed", 1000);
+        game.addPlayer("Lawen", 1000);
         game.addPlayer("Farhad", 2130);
-        game.addPlayer("Bratislav", 4213);
+        game.addPlayer("Felicia", 4213);
+        game.addPlayer("Elise", 4219);
 
         getUserInfo(root);
         getUserChips(root);
@@ -148,7 +162,7 @@ public class Controller {
         }
     }
 
-    public void getFirstTwoCards(Pane root){
+    public void getFirstTwoCards(){
         for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
             Hand hand = game.getPlayer(playerId).getHand();
             for (int j = 0; j < hand.getNoOfCards(); j++) {
@@ -169,11 +183,12 @@ public class Controller {
                     if( playerId == ul.getUserId()){
                         card.getImageView().setLayoutX(ul.getLayoutX() + 200);
                         card.getImageView().setLayoutY(ul.getLayoutY());
+                        fadeIn(card);
                     }
                 }
 
                 // Add to scene
-                root.getChildren().add(card.getImageView());
+                this.root.getChildren().add(card.getImageView());
             }
 
         }
@@ -239,8 +254,7 @@ public class Controller {
             btn.setLayoutY(b.getY());
 
             // Assign EventHandler
-            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(b,this));
-
+            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(b,this,btn));
             root.getChildren().add(btn);
         }
     }
@@ -250,10 +264,10 @@ public class Controller {
     }
 
     public void fadeIn(Picture p){
-        FadeTransition ft = new FadeTransition(Duration.millis(500), p.getImageView());
-        ft.setFromValue(1.0);
-        ft.setToValue(0.1);
-        ft.setCycleCount(Timeline.INDEFINITE);
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), p.getImageView());
+        ft.setFromValue(0.1);
+        ft.setToValue(1.0);
+        //ft.setCycleCount(Timeline.INDEFINITE);
         //ft.setAutoReverse(true);
         ft.play();
     }
@@ -290,6 +304,10 @@ public class Controller {
                 rt
         );
         seqTransition.play();
+    }
+
+    public void getTurn(){
+
     }
 
 }

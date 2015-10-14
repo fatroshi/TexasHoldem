@@ -13,10 +13,11 @@ import java.util.List;
  * Created by Farhad on 07/10/15.
  */
 abstract public class User {
-    String username;
-    double balance;
-    List<Chip> chips;
-    Hand hand;
+    private String username;
+    private double balance;
+    private List<Chip> chips;
+    private Hand hand;
+    private boolean active;
 
     public User(){
 
@@ -28,6 +29,15 @@ abstract public class User {
 
         this.username = username;
         this.balance = balance;
+        this.active = true;
+    }
+
+    public boolean isActive(){
+        return this.active;
+    }
+
+    public void active(boolean b){
+        this.active = false;
     }
 
     public Hand getHand(){

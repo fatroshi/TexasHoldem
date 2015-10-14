@@ -29,7 +29,7 @@ public class BtnClickHandler implements EventHandler<Event> {
                 // Add to scene
                 c.getFirstTwoCards();
                 // Set active user
-                c.getGame().setActiveUser();
+                //c.getGame().setActiveUser();
                 // Remove start btn
                 btn.setVisible(false);
                 break;

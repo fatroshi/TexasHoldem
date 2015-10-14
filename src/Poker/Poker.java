@@ -19,7 +19,7 @@ public class Poker {
 
     // User.Player big (Status)
     public static int playerBig;
-    public static List<Integer> playersInGame;
+
     public static int activeUser;
 
     // All players
@@ -30,82 +30,73 @@ public class Poker {
     public Poker(){
         deck            = new Deck();
         players         = new ArrayList<>();
-        playersInGame   = new ArrayList<>();
         tableCards      = new ArrayList<>();
+        activeUser      = 0;
 
 
     }
 
     private Map<Integer,Player> playersBestHand = new HashMap<>();
 
-    public void raise(){
-        if(inArrayList(activeUser,playersInGame)){
-            System.out.println(getPlayer(activeUser) + ": Raise ");
-            // Set for next user
-            setActiveUser();
-        }
+    public void raise() {
+
+        //System.out.println(players.get(activeUser) + ": Raise ");
+
+        // Set next user
+        nextUser();
+        // Set for next user
+        setActiveUser();
     }
 
     public void bet(){
-        if(inArrayList(activeUser,playersInGame)){
-            System.out.println(getPlayer(activeUser).getUsername()  + ": Bet ");
-            // Set for next user
-            setActiveUser();
-        }
+
+        //System.out.println(players.get(activeUser).getUsername()  + ": Bet ");
+
+        // Set next user
+        nextUser();
+        // Set for next user
+        setActiveUser();
     }
 
     public void call(){
-        if(inArrayList(activeUser,playersInGame)){
-            System.out.println(getPlayer(activeUser).getUsername()  + ": Call ");
-            // Set for next user
-            setActiveUser();
-        }
+
+        //System.out.println(players.get(activeUser).getUsername()  + ": Call ");
+
+        // Set next user
+        nextUser();
+        // Set for next user
+        setActiveUser();
     }
 
     public void fold(){
-        System.out.println(getPlayer(activeUser).getUsername() + ": Chicken, fold! ");
         removePlayerInGame();
+        // Set next user
+        nextUser();
+        // Set for next user
+        setActiveUser();
     }
 
     public void check(){
-        if(inArrayList(activeUser,playersInGame)){
-            // Alert box --> Bet
-            System.out.println(getPlayer(activeUser).getUsername()  + ": wants to bet!!! ");
-            // Set for next user
-            setActiveUser();
 
-        }
+
+
+
+
     }
 
     public String getCurrentPlayerUsername(){
-        System.out.println("Current player" + players.get(activeUser).getUsername());
         return players.get(activeUser).getUsername();
     }
 
     public Player addPlayer(String username, double balance){
         Player p = new Player(username,balance);
         players.add(p);
-        // Add to players (index)in game
-        addPlayersInGame(players.size()-1);
-
         return p;
     }
 
-    public void addPlayersInGame(int id){
-        playersInGame.add(id);
-    }
-
     public void removePlayerInGame(){
-        System.out.println(playersInGame.get(activeUser) + " Remove");
-        System.out.println("Removed " + playersInGame.remove(activeUser));
-        // The show must go on
-        setActiveUser();
-    }
-
-    public void putAllPlayersInGame(){
-        for (int i = 0; i < this.getPlayers().size(); i++) {
-            playersInGame.add(i);
-        }
+        getPlayer(activeUser).active(false);
+        System.out.println(players.get(activeUser).getUsername() + " Removed, ID: " + activeUser);
     }
 
     public void dealTwoCards(){
@@ -364,9 +355,6 @@ public class Poker {
         return tmpBestHand;
     }
 
-    public void print(String s){
-        System.out.println(s);
-    }
 
     public boolean descByOne(int a, int b){
         boolean desc = false;
@@ -385,26 +373,69 @@ public class Poker {
         }
     }
 
-    public int getActiveUser(){
-        return activeUser;
-    }
-    public void setActiveUser(){
-        if(playersInGame.size() > 1){
-            //System.out.println(playersInGame.size());
-            if(activeUser < playersInGame.size()-1){
-                activeUser++;
-                //System.out.println("Id of active user: " + activeUser);
 
+    public int getPlayersInGame(){
+        int counter =0;
+        for (int i = 0; i < players.size(); i++) {
+            if(players.get(i).isActive()){
+                counter++;
+            }
+        }
+
+        return counter;
+    }
+
+    public void setActiveUser(){
+
+        if(getPlayersInGame() > 1){
+            //System.out.println(playersInGame.size());
+            if(activeUser < players.size()){
+                // Check if next player is active
+                for (int i = activeUser; i < players.size(); i++) {
+                    if(getPlayer(i).isActive()){
+                        activeUser = i;
+                        // Current player
+                        System.out.println("Current user: " + getCurrentPlayerUsername() + " Id: " + i);
+                        break;
+                    }
+                }
             }else{
-                activeUser = 0;
+                //System.out.println("Need to reset active user");
+                for (int i = 0; i < players.size(); i++) {
+                    if(getPlayer(i).isActive()){
+                        // We have the id for the next active user
+                        //System.out.println("Found active player " + i);
+                        activeUser = i;
+                        // Current player
+                        System.out.println("Current user: " + getCurrentPlayerUsername() + " Id: " + i);
+                        break;
+                    }
+                }
             }
         }else{
             System.out.println(" One players left, winner is" + players.get(activeUser).getUsername());
         }
 
-        // Current player
-        getCurrentPlayerUsername();
 
+
+
+
+    }
+
+    public void nextUser(){
+        // Add to activeUser
+        activeUser++;
+    }
+
+    public String getNextPlayer(){
+        String username = "";
+        if(activeUser < players.size()){
+            username = getPlayer(activeUser).getUsername();
+        }else{
+            username = " Wrong index for user";
+        }
+
+        return username;
     }
 
 

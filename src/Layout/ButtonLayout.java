@@ -7,18 +7,20 @@ import javafx.scene.paint.Color;
  */
 public enum ButtonLayout {
     // USER BTN
-    START(250,540,"#444444"),
-    CHECK(350,540,"#0e731a"),
-    RAISE(450,540, "#0e731a"),
-    CALL(550,540,"#0e731a"),
-    FOLD(650,540,"#0e731a")
+    START(0,250,540,"#444444"),
+    CHECK(1,350,540,"#0e731a"),
+    RAISE(2,450,540, "#0e731a"),
+    CALL(3,550,540,"#0e731a"),
+    FOLD(4,650,540,"#0e731a")
     ;
 
 
     private double x,y;
+    private int id;
     private String color;
 
-    ButtonLayout(double x, double y,String color) {
+    ButtonLayout(int id,double x, double y,String color) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.color = color;
@@ -34,5 +36,9 @@ public enum ButtonLayout {
 
     public String getColor(){
         return this.color;
+    }
+
+    public int getId(){
+        return this.id;
     }
 }

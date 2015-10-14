@@ -110,7 +110,7 @@ abstract public class User {
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             String name = entry.getKey();
             Integer value = entry.getValue();
-            System.out.println(name + " : " + value);
+            //System.out.println(name + " : " + value);
 
             for(Chip_ chip: Chip_.values()){
                 // Compare map key(name) with the enum Dealer.Chip_ name

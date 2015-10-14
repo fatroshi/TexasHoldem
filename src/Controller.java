@@ -1,6 +1,7 @@
 import Dealer.Card;
 import Dealer.Chip;
 import Dealer.Chip_;
+import Poker.Handlers.BtnClickHandler;
 import Poker.Handlers.CardClickHandler;
 import Layout.ButtonLayout;
 import Layout.CardLayout;
@@ -187,7 +188,7 @@ public class Controller {
         for (int cardID = from; cardID < to; cardID++) {
             Card card = Poker.tableCards.get(cardID);
 
-            System.out.println(Poker.tableCards.size() + " i :" + cardID);
+            //System.out.println(Poker.tableCards.size() + " i :" + cardID);
             //System.out.println(card.getRank());
 
 
@@ -238,7 +239,7 @@ public class Controller {
             btn.setLayoutY(b.getY());
 
             // Assign action
-            btn.setOnMouseClicked(event -> AlertWindow.show(b.name(), b.name()));
+            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(b.name()));
 
             root.getChildren().add(btn);
         }

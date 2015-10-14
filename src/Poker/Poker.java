@@ -77,6 +77,11 @@ public class Poker {
         }
     }
 
+    public String getCurrentPlayerUsername(){
+        System.out.println("Current player" + players.get(activeUser).getUsername());
+        return players.get(activeUser).getUsername();
+    }
+
     public Player addPlayer(String username, double balance){
         Player p = new Player(username,balance);
         players.add(p);
@@ -91,7 +96,10 @@ public class Poker {
     }
 
     public void removePlayerInGame(){
-        playersInGame.remove(activeUser);
+        System.out.println(playersInGame.get(activeUser) + " Remove");
+        System.out.println("Removed " + playersInGame.remove(activeUser));
+        // The show must go on
+        setActiveUser();
     }
 
     public void putAllPlayersInGame(){
@@ -381,15 +389,21 @@ public class Poker {
         return activeUser;
     }
     public void setActiveUser(){
-        //System.out.println(playersInGame.size());
-        if(activeUser < playersInGame.size()-1){
-            activeUser++;
-            //System.out.println("Id of active user: " + activeUser);
+        if(playersInGame.size() > 1){
+            //System.out.println(playersInGame.size());
+            if(activeUser < playersInGame.size()-1){
+                activeUser++;
+                //System.out.println("Id of active user: " + activeUser);
+
+            }else{
+                activeUser = 0;
+            }
         }else{
-            activeUser = 0;
+            System.out.println(" One players left, winner is" + players.get(activeUser).getUsername());
         }
 
-        //System.out.println(getPlayers().get(activeUser).getUsername());
+        // Current player
+        getCurrentPlayerUsername();
 
     }
 

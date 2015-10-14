@@ -238,7 +238,7 @@ public class Controller {
             btn.setLayoutX(b.getX());
             btn.setLayoutY(b.getY());
 
-            // Assign action
+            // Assign EventHandler
             btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(b,this));
 
             root.getChildren().add(btn);

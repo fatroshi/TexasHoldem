@@ -12,9 +12,9 @@ public class BtnClickHandler implements EventHandler<Event> {
 
 
     private ButtonLayout bl;
-    private Controller o;
-    public BtnClickHandler(ButtonLayout bl, Object o){
-        this.o = o;
+    private Controller c;
+    public BtnClickHandler(ButtonLayout bl, Controller c){
+        this.c = c;
         this.bl = bl;
     }
 

@@ -31,10 +31,15 @@ public class BtnClickHandler implements EventHandler<Event> {
                 // Set active user
                 //c.getGame().setActiveUser();
                 // Remove start btn
-                btn.setVisible(false);
+                //btn.setVisible(false);
+                btn.setLayoutX(btn.getLayoutX() -70);
+                btn.setText("Poker round started ");
+                btn.setMinWidth(150);
+                btn.setDisable(false);
                 break;
             case CHECK:
                 // Set next active user
+
                 c.getGame().check();
                 break;
             case BET:

@@ -37,7 +37,7 @@ public class Poker {
     private Map<Integer,Player> playersBestHand = new HashMap<>();
 
     public void raise() {
-
+        AlertWindow.show(" Raise"," Raise: " + players.get(activeUser).getUsername(), 200,100);
         //System.out.println(players.get(activeUser) + ": Raise ");
 
         // Set next user
@@ -411,6 +411,9 @@ public class Poker {
             for (int i = 0; i < players.size(); i++) {
                 if(players.get(i).isActive()){
                     System.out.println(" One players left, winner is:  " + players.get(i).getUsername());
+                    // Alert Window
+                    String user = players.get(i).getUsername();
+                    AlertWindow.show("Winner", " The winner is " + user, 250,120);
                 }
             }
 

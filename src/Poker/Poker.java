@@ -77,8 +77,10 @@ public class Poker {
     }
 
     public void check(){
-
-
+        // Set next user
+        nextUser();
+        // Set for next user
+        setActiveUser();
     }
 
     public String getCurrentPlayerUsername(){
@@ -408,7 +410,12 @@ public class Poker {
                 }
             }
         }else{
-            System.out.println(" One players left, winner is" + players.get(activeUser).getUsername());
+            for (int i = 0; i < players.size(); i++) {
+                if(players.get(i).isActive()){
+                    System.out.println(" One players left, winner is:  " + players.get(i).getUsername());
+                }
+            }
+
         }
     }
 

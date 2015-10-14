@@ -1,49 +1,46 @@
-/**
- * Created by Farhad on 12/10/15.
- */
-
+import Dealer.Card;
+import Dealer.Chip;
+import Dealer.Chip_;
+import Layout.ButtonLayout;
 import Layout.CardLayout;
 import Layout.ChipLayout;
 import Layout.UserLayout;
-import Poker.*;
-import Dealer.*;
-import User.*;
-
+import Poker.Picture;
+import Poker.Poker;
+import Poker.Table_;
+import User.Hand;
+import User.Player;
 import javafx.animation.*;
-import javafx.application.Application;
 import javafx.event.Event;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import sun.awt.util.IdentityArrayList;
-import java.util.*;
 import javafx.event.EventHandler;
-import javafx.scene.shape.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.util.Duration;
 
-
-public class Controller extends Application{
-    List<ImageView> imgViews = new IdentityArrayList<>();
-    Map<Pane,List<ImageView>> graphics = new HashMap<>();
-    Stage window;
-
+/**
+ * Created by Farhad on 14/10/15.
+ */
+public class Controller {
     // Create game
     Poker game = new Poker();
-
-    public static void main(String[] args) {
-        // Set program as a javaFx application
-        // Then calls start(Stage primaryStage)
-        launch(args);
-    }
 
     public void addToPane(Picture o,Pane pane){
         // Add each child to pane
         pane.getChildren().add(o.getImageView());
+    }
+
+    public void createPlayers(Pane root){
+        game.addPlayer("Waleed", 1000);
+        game.addPlayer("Farhad", 2130);
+        game.addPlayer("Bratislav", 4213);
+
+        createProfileBg(root);
+        getUserChips(root);
     }
 
     public void createProfileBg(Pane root){
@@ -217,9 +214,31 @@ public class Controller extends Application{
     }
 
     public void getUserBtn(Pane root){
-        Button button1 = new Button("Check");
+        Button btn;
 
-        root.getChildren().add(button1);
+        for (ButtonLayout b: ButtonLayout.values()){
+            btn = new Button(b.name());
+
+            // Style btn
+            String css = "-fx-stroke: #4e5b65; " +
+                    "-fx-background-color:" + b.getColor() +";" +
+                    "-fx-stroke: green;"
+                    ;
+            btn.setStyle(css);
+            btn.setTextFill(Color.WHITESMOKE);
+            // Set size
+            btn.setMinWidth(90);
+            btn.setMinHeight(40);
+
+            // Set x,y layout
+            btn.setLayoutX(b.getX());
+            btn.setLayoutY(b.getY());
+
+            // Assign action
+            btn.setOnMouseClicked(event -> AlertWindow.show(b.name(), b.name()));
+
+            root.getChildren().add(btn);
+        }
     }
 
     public void addPaneToPane(Pane p, Pane root){
@@ -269,79 +288,7 @@ public class Controller extends Application{
         seqTransition.play();
     }
 
-    @Override
-    public void start(Stage stage) {
-        window = stage;
-        window.setTitle("KING KONG POKER");
-
-
-        // Pane
-        Pane paneRoot   = new Pane();
-
-        // MENU BAR
-        BorderPane root = new BorderPane();
-        MenuBar mb = new MenuBar();
-        VBox topVBox = new VBox();
-        VBox centerBox = new VBox();
-
-        Menu fileMenu = new Menu("File");
-        MenuItem openItem = new MenuItem("Open");
-        MenuItem closeItem = new MenuItem("Close");
-        MenuItem exitItem = new MenuItem("Exit");
-        fileMenu.getItems().addAll(openItem, closeItem, exitItem);
-
-        mb.getMenus().addAll(fileMenu);
-        topVBox.getChildren().add(mb);
-        paneRoot.getChildren().add(topVBox);
-        // END MENU BAR
-
-        // Table
-        GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
-
-        // Add table to scene 
-        addToPane(table,paneRoot);
-
-
-        // Create player
-        game.addPlayer("Farhad", 1269);
-        game.addPlayer("Johan", 3268);
-        game.addPlayer("Felicia", 10000);
-        game.addPlayer("Elise", 43);
-
-        // Add Profile BG to scene
-        createProfileBg(paneRoot);
-        // Add User Chips to scene
-        getUserChips(paneRoot);
-
-        // Add first 2 cards for players
-        game.dealTwoCards();
-        // Get the first 2 cards for each player
-        getFirstTwoCards(paneRoot);
-
-        // Deal 5 cards
-        game.dealCards(5);
-
-        // Card 1 2 3
-        getTableCards(1, 3, paneRoot);
-
-        // Card 4 5
-        getTableCards(4, 5, paneRoot);
-
-        // Get user btn
-        getUserBtn(paneRoot);
-
-        // Add to scene
-        root.setTop(topVBox);
-        root.setCenter(paneRoot);
-
-        Scene scene = new Scene(root, 1000, 650);
-
-        window.setScene(scene);
-        window.show();
-
-    }
-
-    private class MousePressHandler implements EventHandler<Event>{
+    private class MousePressHandler implements EventHandler<Event> {
         Card card;
 
         MousePressHandler(Card card){
@@ -353,6 +300,8 @@ public class Controller extends Application{
             this.card.toggleImage();
         }
     }
+
+    public void print(){
+        System.out.println("Clicked from scene");
+    }
 }
-
-

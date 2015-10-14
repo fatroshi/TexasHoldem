@@ -32,8 +32,6 @@ public class Poker {
         players         = new ArrayList<>();
         tableCards      = new ArrayList<>();
         activeUser      = 0;
-
-
     }
 
     private Map<Integer,Player> playersBestHand = new HashMap<>();

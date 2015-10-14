@@ -50,20 +50,22 @@ public class MainView extends Application{
         Controller controller = new Controller();
 
         // Pane
-        Pane paneRoot   = new Pane();
+        Pane paneRoot       = new Pane();
 
         // MENU BAR
-        BorderPane root = new BorderPane();
-        MenuBar mb = new MenuBar();
-        VBox topVBox = new VBox();
-        VBox centerBox = new VBox();
+        BorderPane root     = new BorderPane();
+        MenuBar mb          = new MenuBar();
+        VBox topVBox        = new VBox();
+        VBox centerBox      = new VBox();
 
-        Menu fileMenu = new Menu("File");
-        MenuItem openItem = new MenuItem("Open");
-        MenuItem closeItem = new MenuItem("Close");
-        MenuItem exitItem = new MenuItem("Exit");
+        Menu fileMenu       = new Menu("File");
+        MenuItem openItem   = new MenuItem("Open");
+        MenuItem closeItem  = new MenuItem("Close");
+        MenuItem exitItem   = new MenuItem("Exit");
+
+        // END
         fileMenu.getItems().addAll(openItem, closeItem, exitItem);
-
+        //
         mb.getMenus().addAll(fileMenu);
         topVBox.getChildren().add(mb);
         paneRoot.getChildren().add(topVBox);
@@ -75,57 +77,34 @@ public class MainView extends Application{
         // Add table to scene 
         root.getChildren().add(table.getImageView());
 
-        // Create players
-        controller.createPlayers(root);
+        // Create players, get user info, get chips for each player
+        controller.createPlayers(paneRoot);
+
 
         // On click start!
         controller.game.dealTwoCards();
 
         // Get the first 2 cards for each player
-        controller.getFirstTwoCards(root);
-        /*
-
-
-
-
-
-        // Add first 2 cards for players
-        game.dealTwoCards();
-        // Get the first 2 cards for each player
-        getFirstTwoCards(paneRoot);
+        controller.getFirstTwoCards(paneRoot);
 
         // Deal 5 cards
-        game.dealCards(5);
-
-        // Card 1 2 3
-        getTableCards(1, 3, paneRoot);
+        controller.game.dealCards(5);
+        controller.getTableCards(1, 3, paneRoot);
 
         // Card 4 5
-        getTableCards(4, 5, paneRoot);
+        controller.getTableCards(4, 5, paneRoot);
 
         // Get user btn
-        getUserBtn(paneRoot);
+        controller.getUserBtn(paneRoot);
 
         // Add to scene
         root.setTop(topVBox);
         root.setCenter(paneRoot);
-
-        */
-
-
-
-
         Scene scene = new Scene(root, 1000, 650);
-
-
-
 
         window.setScene(scene);
         window.show();
-
     }
-
-
 }
 
 

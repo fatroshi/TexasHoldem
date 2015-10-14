@@ -7,10 +7,11 @@ import javafx.scene.paint.Color;
  */
 public enum ButtonLayout {
     // USER BTN
-    CHECK(300,560,"#0e731a"),
-    RAISE(400,560, "#0e731a"),
-    CALL(500,560,"#0e731a"),
-    FOLD(600,560,"#0e731a")
+    START(250,540,"#444444"),
+    CHECK(350,540,"#0e731a"),
+    RAISE(450,540, "#0e731a"),
+    CALL(550,540,"#0e731a"),
+    FOLD(650,540,"#0e731a")
     ;
 
 

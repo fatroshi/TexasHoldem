@@ -39,11 +39,11 @@ public class Controller {
         game.addPlayer("Farhad", 2130);
         game.addPlayer("Bratislav", 4213);
 
-        createProfileBg(root);
+        getUserInfo(root);
         getUserChips(root);
     }
 
-    public void createProfileBg(Pane root){
+    public void getUserInfo(Pane root){
 
         Rectangle r;
         Label username, balance;
@@ -80,7 +80,10 @@ public class Controller {
             r.setHeight(80);
             r.setArcWidth(20);
             r.setArcHeight(20);
-            root.getChildren().addAll(r, username, balance);
+            //System.out.println(username);
+            //System.out.println(balance);
+
+            root.getChildren().addAll(r,username, balance);
         }
     }
 
@@ -93,7 +96,7 @@ public class Controller {
         int addY=0;
         for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
             Player p = game.getPlayer(playerId);
-            System.out.println("[CHIPS} Player ID" + playerId );
+            //System.out.println("[CHIPS} Player ID" + playerId );
             for (int j = 0; j < p.getChips().size(); j++) {
                 Chip chip = p.getChip(j);
                 for (ChipLayout cl: ChipLayout.values()){
@@ -118,7 +121,7 @@ public class Controller {
 
                         if (chip.getChipValue() == cl.getChipValue()) {
                             chip.getImageView().setX(cl.getX());
-                            chip.getImageView().setY(cl.getY() - addY);
+                            chip.getImageView().setY(cl.getY() - addY -50);
                         }
 
 

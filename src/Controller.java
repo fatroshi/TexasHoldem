@@ -26,6 +26,7 @@ import java.util.*;
 import javafx.event.EventHandler;
 import javafx.scene.shape.*;
 
+
 public class Controller extends Application{
     List<ImageView> imgViews = new IdentityArrayList<>();
     Map<Pane,List<ImageView>> graphics = new HashMap<>();
@@ -178,6 +179,43 @@ public class Controller extends Application{
         }
     }
 
+    public Pane getTableCards(int from, int to,Pane root){
+
+        from--;
+
+        Pane pane = new Pane();
+
+        for (int cardID = from; cardID < to; cardID++) {
+            Card card = Poker.tableCards.get(cardID);
+
+            System.out.println(Poker.tableCards.size() + " i :" + cardID);
+            //System.out.println(card.getRank());
+
+
+            for(Table_ t: Table_.values()){
+                if(t.getCardId() == (cardID+2)){
+
+                    card.getImageView().setX(150);                 // Set x
+                    card.getImageView().setY(-100);
+                    move(card,t.getX() * card.getImageView().getImage().getWidth()-150, t.getY()+100);
+
+                    //card.getImageView().setX(t.getX() * card.getImageView().getImage().getWidth());                 // Set x
+                    //card.getImageView().setY(t.getY());                                                             // Set y
+
+                    card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new MousePressHandler(card));
+
+                }
+            }
+
+            card.getImageView().setLayoutX(240);
+            card.getImageView().setLayoutY(230);
+
+            addToPane(card, root);
+        }
+
+        return  pane;
+    }
+
     public void addPaneToPane(Pane p, Pane root){
         root.getChildren().add(p);
     }
@@ -204,13 +242,26 @@ public class Controller extends Application{
         TranslateTransition tt = new TranslateTransition(Duration.millis(2000), p.getImageView());
         tt.setByX(x);
         tt.setByY(y);
-
         //tt.setCycleCount(4);
         //tt.setAutoReverse(true);
+        SequentialTransition seqTransition = new SequentialTransition (
+                new PauseTransition(Duration.millis(1000)), // wait a second
+                tt);
 
-        tt.play();
+        seqTransition.play();
     }
 
+    public void rotation(Picture p){
+        RotateTransition rt = new RotateTransition(Duration.millis(3000), p.getImageView());
+        rt.setByAngle(180);
+        rt.setCycleCount(4);
+        rt.setAutoReverse(true);
+        SequentialTransition seqTransition = new SequentialTransition (
+                new PauseTransition(Duration.millis(1000)), // wait a second
+                rt
+        );
+        seqTransition.play();
+    }
 
     @Override
     public void start(Stage stage) {
@@ -220,11 +271,8 @@ public class Controller extends Application{
 
         // Pane
         Pane paneRoot   = new Pane();
-        //List<Pane> paneTable  = new ArrayList<>();
-        Pane paneTable = new Pane();
 
-        List<Pane> panePlayers = new ArrayList<>();
-        Pane paneDeck   = new Pane();
+
 
         // MENU BAR
         BorderPane root = new BorderPane();
@@ -253,8 +301,8 @@ public class Controller extends Application{
         // Create player
         game.addPlayer("Farhad", 1269);
         game.addPlayer("Johan", 3268);
-        game.addPlayer("Felicia", 4694);
-        game.addPlayer("Elise", 2343);
+        game.addPlayer("Felicia", 10000);
+        game.addPlayer("Elise", 43);
 
         // Add Profile BG to scene
         createProfileBg(paneRoot);
@@ -266,33 +314,17 @@ public class Controller extends Application{
         // Get the first 2 cards for each player
         getFirstTwoCards(paneRoot);
 
-        // Add 5 card to table
-        // Dessa fem borde sparas i en static lista !!!! sa att alla objekt kan dela pa dessa!!
-        // far error eftersom javaFx vill inte lagga till exakt samma objekt flera ggr
+        // Deal 5 cards
         game.dealCards(5);
 
-        for (int i = 0; i < Poker.tableCards.size(); i++) {
-            Card card = Poker.tableCards.get(i);
-            //System.out.println(Poker.tableCards.size());
-            //System.out.println(card.getRank());
+        // Card 1 2 3
+        getTableCards(1, 3, paneRoot);
 
-            for(Table_ t: Table_.values()){
-                if(t.getCardId() == (i+2)){
-                    card.getImageView().setX(t.getX() * card.getImageView().getImage().getWidth());                 // Set x
-                    card.getImageView().setY(t.getY());                                                             // Set y
-                    card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new MousePressHandler(card));
-                }
-            }
+       // Card 4 5
+        getTableCards(4, 5, paneRoot);
 
-            addToPane(card, paneTable);
-        }
 
         // Add to scene
-        paneTable.setLayoutX(240);
-        paneTable.setLayoutY(230);
-        addPaneToPane(paneTable, paneRoot);
-
-
         root.setTop(topVBox);
         root.setCenter(paneRoot);
 

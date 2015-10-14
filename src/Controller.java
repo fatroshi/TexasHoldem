@@ -1,18 +1,17 @@
 import Dealer.Card;
 import Dealer.Chip;
 import Dealer.Chip_;
+import Poker.Handlers.CardClickHandler;
 import Layout.ButtonLayout;
 import Layout.CardLayout;
 import Layout.ChipLayout;
 import Layout.UserLayout;
 import Poker.Picture;
-import Poker.Poker;
+import Poker.*;
 import Poker.Table_;
 import User.Hand;
 import User.Player;
 import javafx.animation.*;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -160,7 +159,7 @@ public class Controller {
                         card.getImageView().setY(cl.getY());
                         card.getImageView().setRotate(cl.getRotation());
                         // Toggle card when clicked
-                        card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new MousePressHandler(card));
+                        card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
                     }
                 }
 
@@ -202,7 +201,8 @@ public class Controller {
                     //card.getImageView().setX(t.getX() * card.getImageView().getImage().getWidth());                 // Set x
                     //card.getImageView().setY(t.getY());                                                             // Set y
 
-                    card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new MousePressHandler(card));
+
+                    card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
 
                 }
             }
@@ -291,20 +291,4 @@ public class Controller {
         seqTransition.play();
     }
 
-    private class MousePressHandler implements EventHandler<Event> {
-        Card card;
-
-        MousePressHandler(Card card){
-            this.card = card;
-        }
-
-        @Override
-        public void handle(Event evt) {
-            this.card.toggleImage();
-        }
-    }
-
-    public void print(){
-        System.out.println("Clicked from scene");
-    }
 }

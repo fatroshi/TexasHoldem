@@ -239,7 +239,7 @@ public class Controller {
             btn.setLayoutY(b.getY());
 
             // Assign action
-            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(b.name()));
+            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(b,this));
 
             root.getChildren().add(btn);
         }

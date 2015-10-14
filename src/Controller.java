@@ -216,6 +216,12 @@ public class Controller extends Application{
         return  pane;
     }
 
+    public void getUserBtn(Pane root){
+        Button button1 = new Button("Check");
+
+        root.getChildren().add(button1);
+    }
+
     public void addPaneToPane(Pane p, Pane root){
         root.getChildren().add(p);
     }
@@ -272,8 +278,6 @@ public class Controller extends Application{
         // Pane
         Pane paneRoot   = new Pane();
 
-
-
         // MENU BAR
         BorderPane root = new BorderPane();
         MenuBar mb = new MenuBar();
@@ -320,9 +324,11 @@ public class Controller extends Application{
         // Card 1 2 3
         getTableCards(1, 3, paneRoot);
 
-       // Card 4 5
+        // Card 4 5
         getTableCards(4, 5, paneRoot);
 
+        // Get user btn
+        getUserBtn(paneRoot);
 
         // Add to scene
         root.setTop(topVBox);

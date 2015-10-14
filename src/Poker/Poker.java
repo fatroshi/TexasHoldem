@@ -79,9 +79,6 @@ public class Poker {
     public void check(){
 
 
-
-
-
     }
 
     public String getCurrentPlayerUsername(){
@@ -386,7 +383,6 @@ public class Poker {
     }
 
     public void setActiveUser(){
-
         if(getPlayersInGame() > 1){
             //System.out.println(playersInGame.size());
             if(activeUser < players.size()){
@@ -415,11 +411,6 @@ public class Poker {
         }else{
             System.out.println(" One players left, winner is" + players.get(activeUser).getUsername());
         }
-
-
-
-
-
     }
 
     public void nextUser(){

@@ -32,6 +32,8 @@ public class Poker {
     public Poker(){
         //
         pokerGraphic = new PokerGraphic();
+        // Poker logic
+        table           = new TableLogic();
         // 52 cards
         deck            = new Deck();
         // All players in the game
@@ -42,7 +44,24 @@ public class Poker {
         activeUser      = 0;
     }
 
+    public double getBet(){
+        return bet;
+    }
+
+    public double getRaise(){
+        return raise;
+    }
+
+    public double getPott(){
+        return pott;
+    }
+
     private Map<Integer,Player> playersBestHand = new HashMap<>();
+
+    private Player activePlayer(){
+        Player player = players.get(activeUser);
+        return player;
+    }
 
     public void raise() {
         AlertWindow.show(" Raise"," Raise: " + players.get(activeUser).getUsername(), 200,100);
@@ -59,6 +78,8 @@ public class Poker {
     }
 
     public void bet(){
+        // Check if player can bet
+
 
         if(oneActivePlayer()){
             //We got a winner
@@ -68,6 +89,8 @@ public class Poker {
             nextUser();
         }
     }
+
+
 
     public void call(){
         if(oneActivePlayer()){

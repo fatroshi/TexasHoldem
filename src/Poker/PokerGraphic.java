@@ -54,8 +54,8 @@ public class PokerGraphic {
         slider.setLayoutX(245);
         slider.setLayoutY(470);
         slider.setTooltip(new Tooltip("Check or Raise")); // Kolla pa youtube googla!!!
+        //slider.setOnDragDetected(event -> usernameLabels.get(0).setText(String.valueOf(slider.getValue())));
 
-        //slider.setOnDragDetected(event -> System.out.println(slider.getValue()));
 
         this.slider = slider;
     }
@@ -72,6 +72,7 @@ public class PokerGraphic {
         this.slider.setMin(currentBet);
         this.slider.setValue(currentRaise);
         this.slider.setMax(player.getBalance());
+
     }
 
     public void addPlayerBG(int playerIndex){

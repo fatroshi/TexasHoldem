@@ -144,7 +144,13 @@ abstract public class User {
         return this.balance;
     }
 
+    public void depositBalance(double deposit){
+        this.balance += deposit;
+    }
 
+    public void debitBalance(double debit){
+        this.balance -= debit;
+    }
     public void setSaldo(double balance){
         this.balance = balance;
     }

@@ -31,4 +31,13 @@ public class Animation {
         //ft.setAutoReverse(true);
         ft.play();
     }
+
+    public static void fadeIn(Picture p){
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), p.getImageView());
+        ft.setFromValue(0.1);
+        ft.setToValue(1.0);
+        //ft.setCycleCount(Timeline.INDEFINITE);
+        //ft.setAutoReverse(true);
+        ft.play();
+    }
 }

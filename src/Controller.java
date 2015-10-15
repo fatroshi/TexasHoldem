@@ -133,35 +133,16 @@ public class Controller {
         }
     }
 
+
+
+
     public void getFirstTwoCards(){
-        for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
-            Hand hand = game.getPlayer(playerId).getHand();
-            for (int j = 0; j < hand.getNoOfCards(); j++) {
-                Card card = hand.getCard(j);
-                for (CardLayout cl: CardLayout.values()){
-                    // Set x,y for inside layout
-                    if( j == cl.getCardId()){
-                        card.getImageView().setX(cl.getX());
-                        card.getImageView().setY(cl.getY());
-                        card.getImageView().setRotate(cl.getRotation());
-                        // Toggle card when clicked
-                        card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
-                    }
-                }
-
-                // Set x,y for layout
-                for (UserLayout ul: UserLayout.values()){
-                    if( playerId == ul.getUserId()){
-                        card.getImageView().setLayoutX(ul.getLayoutX() + 200);
-                        card.getImageView().setLayoutY(ul.getLayoutY());
-                        fadeIn(card);
-                    }
-                }
-
-                // Add to scene
-                this.root.getChildren().add(card.getImageView());
-            }
-
+        for (int i = 0; i < game.getPlayerCards().size(); i++) {
+            Card card = game.getPlayerCards().get(i);
+            // Set event handler when card clicked
+            card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
+            // Add to scene
+            this.root.getChildren().add(card.getImageView());
         }
     }
 
@@ -218,14 +199,7 @@ public class Controller {
         root.getChildren().add(p);
     }
 
-    public void fadeIn(Picture p){
-        FadeTransition ft = new FadeTransition(Duration.millis(1000), p.getImageView());
-        ft.setFromValue(0.1);
-        ft.setToValue(1.0);
-        //ft.setCycleCount(Timeline.INDEFINITE);
-        //ft.setAutoReverse(true);
-        ft.play();
-    }
+
 
     public void fadeOut(Picture p){
         FadeTransition ft = new FadeTransition(Duration.millis(500), p.getImageView());

@@ -1,8 +1,6 @@
 package Poker;
 import Dealer.*;
 import Layout.*;
-
-
 import User.Hand;
 import User.Player;
 import javafx.scene.control.Button;
@@ -12,10 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-
-
 import java.util.*;
-
 
 /**
  * Created by Farhad on 07/10/15.
@@ -36,7 +31,6 @@ public class Poker {
     private List<Label> balanceLabels;
     private List<Rectangle> playersBG;
     private List<Button> buttons;
-
 
 
     public Poker(){
@@ -127,10 +121,30 @@ public class Poker {
     public List<Card> getPlayerCards(){
 
         List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < players.size(); i++) {
-            Hand hand = players.get(i).getHand();
+        for (int playerId = 0; playerId < players.size(); playerId++) {
+            Hand hand = players.get(playerId).getHand();
             for (int j = 0; j < hand.getNoOfCards(); j++) {
-                cards.add(hand.getCard(i));
+                Card card = hand.getCard(j);
+                for (CardLayout cl: CardLayout.values()){
+                    // Set x,y for inside layout
+                    if( j == cl.getCardId()){
+                        card.getImageView().setX(cl.getX());
+                        card.getImageView().setY(cl.getY());
+                        card.getImageView().setRotate(cl.getRotation());
+                        // Toggle card when clicked
+                        //card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
+                    }
+                    // Set x,y for layout
+                    for (UserLayout ul: UserLayout.values()){
+                        if( playerId == ul.getUserId()){
+                            card.getImageView().setLayoutX(ul.getLayoutX() + 200);
+                            card.getImageView().setLayoutY(ul.getLayoutY());
+                            Animation.fadeIn(card);
+                        }
+                    }
+                }
+
+                cards.add(card);
             }
         }
 
@@ -539,7 +553,6 @@ public class Poker {
         return onePlayer;
     }
 
-
     public boolean setActivePlayer(){
         boolean foundUser = false;
         for (int i = activeUser; i < players.size(); i++) {
@@ -577,7 +590,6 @@ public class Poker {
         balanceLabels.get(activeUser).setTextFill(Color.BLACK);
         usernameLabels.get(activeUser).setTextFill(Color.BLACK);
     }
-
 
     public void createButtons(){
         Button btn;

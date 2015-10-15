@@ -122,6 +122,19 @@ public class Poker {
         }
     }
 
+    public List<Card> getPlayerCards(){
+
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < players.size(); i++) {
+            Hand hand = players.get(i).getHand();
+            for (int j = 0; j < hand.getNoOfCards(); j++) {
+                cards.add(hand.getCard(i));
+            }
+        }
+
+        return cards;
+    }
+
     public String getCurrentPlayerUsername(){
         return players.get(activeUser).getUsername();
     }
@@ -584,7 +597,7 @@ public class Poker {
             btn.setLayoutY(b.getY());
 
             // Assign EventHandler
-            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(b,this,btn));
+            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayerButtonsHandler(b,this,btn));
             // Add to list
             buttons.add(btn);
         }

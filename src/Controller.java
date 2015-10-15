@@ -59,14 +59,13 @@ public class Controller {
 
     public void getUserInfo(Pane root){
         for (int i = 0; i < game.getPlayers().size(); i++) {
+            // Get user background
             Rectangle r = getGame().getPlayerBG(i);
             // Get username
             Label username = getGame().getUsernameLabel(i);
             // Get balance
             Label balance = getGame().getBalanceLabel(i);
-            // Get your x,y layout
-
-
+            // Add to root scene
             root.getChildren().addAll(r,username, balance);
         }
     }

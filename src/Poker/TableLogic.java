@@ -13,7 +13,7 @@ public class TableLogic {
 
     }
 
-    public Player_ makeBet(Player player, double currentBet){
+    public Enum makeBet(Player player, double currentBet){
 
         Player_ status;
 

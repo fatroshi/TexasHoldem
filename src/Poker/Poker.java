@@ -80,7 +80,6 @@ public class Poker {
     public void bet(){
         // Check if player can bet
 
-
         if(oneActivePlayer()){
             //We got a winner
             setWinnerBG();

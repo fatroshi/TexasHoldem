@@ -51,13 +51,21 @@ public class PokerGraphic {
         //slider.setMinorTickCount(5);
         //slider.setBlockIncrement(10);
         slider.setMinWidth(520);
-        slider.setLayoutX(245);
-        slider.setLayoutY(470);
-        slider.setTooltip(new Tooltip("Check or Raise")); // Kolla pa youtube googla!!!
-        //slider.setOnDragDetected(event -> usernameLabels.get(0).setText(String.valueOf(slider.getValue())));
+        slider.setLayoutX(240);
+        slider.setLayoutY(510);
+        slider.setTooltip(new Tooltip("Check or Raise"));
+
+        slider.setStyle("-fx-color: RED;");
+        slider.setOnMouseClicked(event -> sliderHandler());
 
 
         this.slider = slider;
+    }
+
+    public void sliderHandler(){
+        double value = round(slider.getValue(), 0);
+        String strValue = String.valueOf(value);
+        usernameLabels.get(0).setText(strValue);
     }
 
     public void setSliderMax(double max){
@@ -215,6 +223,21 @@ public class PokerGraphic {
     }
     public Button getButton(int index){
         return this.buttons.get(index);
+    }
+
+    /**
+     * Found at: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
+     * @param value
+     * @param places
+     * @return
+     */
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
 
 }

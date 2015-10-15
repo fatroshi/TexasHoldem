@@ -11,19 +11,19 @@ public class BtnClickHandler implements EventHandler<Event> {
 
 
 
-    private ButtonLayout bl;
+    private String text;
     private Controller c;
     private Button btn;
-    public BtnClickHandler(ButtonLayout bl, Controller c, Button btn){
-        this.bl = bl;
+    public BtnClickHandler(String text, Controller c, Button btn){
+        this.text = text;
         this.c = c;
         this.btn = btn;
     }
 
     @Override
     public void handle(Event evt) {
-        switch (this.bl){
-            case START:
+        switch (this.text){
+            case "START":
                 // Dealer deals
                 c.getGame().dealTwoCards();
                 // Add to scene
@@ -35,21 +35,20 @@ public class BtnClickHandler implements EventHandler<Event> {
                 btn.setVisible(false);
                 c.getGame().nextUser();
                 break;
-            case CHECK:
+            case "CHECK":
                 // Set next active user
-
                 c.getGame().check();
                 break;
-            case BET:
+            case "BET":
                 c.getGame().bet();
                 break;
-            case RAISE:
+            case "RAISE":
                 c.getGame().raise();
                 break;
-            case CALL:
+            case "CALL":
                 c.getGame().call();
                 break;
-            case FOLD:
+            case "FOLD":
                 c.getGame().fold();
                 break;
         }

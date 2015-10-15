@@ -20,6 +20,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
+import java.util.List;
+
 /**
  * Created by Farhad on 14/10/15.
  */
@@ -202,28 +204,12 @@ public class Controller {
     }
 
     public void getUserBtn(Pane root){
-        Button btn;
 
-        for (ButtonLayout b: ButtonLayout.values()){
-            btn = new Button(b.name());
-
-            // Style btn
-            String css = "-fx-stroke: #4e5b65; " +
-                    "-fx-background-color:" + b.getColor() +";" +
-                    "-fx-stroke: green;"
-                    ;
-            btn.setStyle(css);
-            btn.setTextFill(Color.WHITESMOKE);
-            // Set size
-            btn.setMinWidth(90);
-            btn.setMinHeight(40);
-
-            // Set x,y layout
-            btn.setLayoutX(b.getX());
-            btn.setLayoutY(b.getY());
+        for (int i = 0; i < game.getButtons().size(); i++) {
+            Button btn = game.getButton(i);
 
             // Assign EventHandler
-            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(b,this,btn));
+            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(),this,btn));
             root.getChildren().add(btn);
         }
     }

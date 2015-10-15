@@ -56,6 +56,8 @@ public class Poker {
         tableCards      = new ArrayList<>();
         // Id of current selected user
         activeUser      = 0;
+        // Create btn, With no event handlers attached
+        createButtons();
     }
 
     private Map<Integer,Player> playersBestHand = new HashMap<>();
@@ -97,7 +99,7 @@ public class Poker {
     public void fold(){
         if(oneActivePlayer()){
             //We got a winner
-            nextUser();
+
         }else{
             //Set active = false
             removePlayerInGame();
@@ -597,11 +599,19 @@ public class Poker {
             btn.setLayoutY(b.getY());
 
             // Assign EventHandler
-            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayerButtonsHandler(b,this,btn));
+            //btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayerButtonsHandler(b,this,btn));
             // Add to list
             buttons.add(btn);
         }
 
+    }
+
+    public List<Button> getButtons(){
+        return this.buttons;
+    }
+
+    public Button getButton(int index){
+        return this.buttons.get(index);
     }
 
 

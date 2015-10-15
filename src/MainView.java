@@ -95,7 +95,7 @@ public class MainView extends Application{
         controller.getTableCards(4, 5, paneRoot);
         */
         // Get user btn
-        controller.getUserBtn(paneRoot);
+        controller.getUserBtn();
 
         // Add to scene
         root.setTop(topVBox);

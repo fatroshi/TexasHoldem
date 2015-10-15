@@ -24,6 +24,10 @@ public class BtnClickHandler implements EventHandler<Event> {
     public void handle(Event evt) {
         switch (this.text){
             case "START":
+                // User info
+                c.getUserInfo();
+                // User chips
+                c.getUserChips();
                 // Dealer deals
                 c.getGame().dealTwoCards();
                 // Add to scene

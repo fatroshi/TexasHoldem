@@ -1,26 +1,15 @@
 import Dealer.Card;
 import Dealer.Chip;
-import Dealer.Chip_;
-import Layout.ButtonLayout;
-import Layout.CardLayout;
-import Layout.ChipLayout;
-import Layout.UserLayout;
 import Poker.Picture;
 import Poker.*;
 import Poker.Table_;
-import User.Hand;
-import User.Player;
 import javafx.animation.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.util.Duration;
-
-import java.util.List;
 
 /**
  * Created by Farhad on 14/10/15.
@@ -54,12 +43,9 @@ public class Controller {
         game.addPlayer("Farhad", 2130);
         game.addPlayer("Felicia", 4213);
         game.addPlayer("Elise", 4219);
-
-        getUserInfo(root);
-        getUserChips(root);
     }
 
-    public void getUserInfo(Pane root){
+    public void getUserInfo(){
         for (int i = 0; i < game.getPlayers().size(); i++) {
             // Get user background
             Rectangle r = getGame().getPlayerBG(i);
@@ -72,7 +58,7 @@ public class Controller {
         }
     }
 
-    public void getUserChips(Pane root){
+    public void getUserChips(){
         for (int i = 0; i < game.getPlayers().size(); i++) {
             for (int j = 0; j < game.getPlayerChips(i).size(); j++) {
                 Chip chip = game.getPlayerChips(i).get(j);
@@ -112,7 +98,7 @@ public class Controller {
         return  pane;
     }
 
-    public void getUserBtn(Pane root){
+    public void getUserBtn(){
         for (int i = 0; i < game.getButtons().size(); i++) {
             Button btn = game.getButton(i);
             // Assign EventHandler

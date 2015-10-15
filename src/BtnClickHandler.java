@@ -26,6 +26,8 @@ public class BtnClickHandler implements EventHandler<Event> {
             case "START":
                 // New Scene BG
                 c.getGameScene();
+                // Get UI Items
+                c.getUIitems();
                 // User info
                 c.getUserInfo();
                 // User chips

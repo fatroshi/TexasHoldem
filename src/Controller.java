@@ -125,4 +125,10 @@ public class Controller {
         root.getChildren().add(btn);
     }
 
+    public void getUIitems(){
+        root.getChildren().add(game.getSlider());
+    }
+
+
+
 }

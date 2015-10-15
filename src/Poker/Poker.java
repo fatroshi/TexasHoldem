@@ -5,6 +5,7 @@ import User.Hand;
 import User.Player;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -32,6 +33,10 @@ public class Poker {
     private List<Rectangle> playersBG;
     private List<Button> buttons;
 
+    // Poker Graphic Elements
+    PokerGraphic pg;
+
+
 
     public Poker(){
         // 52 cards
@@ -52,6 +57,8 @@ public class Poker {
         activeUser      = 0;
         // Create btn, With no event handlers attached
         createButtons();
+        //
+        pg = new PokerGraphic();
     }
 
     private Map<Integer,Player> playersBestHand = new HashMap<>();
@@ -71,6 +78,7 @@ public class Poker {
     }
 
     public void bet(){
+
         if(oneActivePlayer()){
             //We got a winner
             setWinnerBG();
@@ -78,6 +86,14 @@ public class Poker {
             // Set next user
             nextUser();
         }
+    }
+
+    public Slider getSlider(){
+        return pg.getSlider();
+    }
+
+    public void setSlider(double max){
+        this.pg.setSliderMax(max);
     }
 
     public void call(){
@@ -517,7 +533,7 @@ public class Poker {
             if(setActivePlayer()){
                 // Show current selected user
                 setUserBG(activeUser, Color.DARKGREEN);
-
+                setSlider(players.get(activeUser).getBalance());
             }
 
 
@@ -527,6 +543,7 @@ public class Poker {
             if(setActivePlayer()){
                 // Show current selected user
                 setUserBG(activeUser, Color.DARKGREEN);
+                setSlider(players.get(activeUser).getBalance());
             }
         }
     }
@@ -644,6 +661,7 @@ public class Poker {
     public Button getButton(int index){
         return this.buttons.get(index);
     }
+
     public List<Chip> getPlayerChips(int playerId) {
         int blackCounter = 0;
         int redCounter = 0;

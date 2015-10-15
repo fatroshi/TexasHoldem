@@ -77,7 +77,7 @@ public class Controller {
     }
 
     public void getTableCards(int from, int to){
-        from--;
+
         Pane pane = new Pane();
         for (int cardID = from; cardID < to; cardID++) {
             Card card = Poker.tableCards.get(cardID);

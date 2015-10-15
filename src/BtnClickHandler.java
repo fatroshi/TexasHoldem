@@ -30,12 +30,13 @@ public class BtnClickHandler implements EventHandler<Event> {
                 c.getUserInfo();
                 // User chips
                 c.getUserChips();
-                // Dealer deals
+                // Dealer deal 2 cards for each player
                 c.getGame().dealTwoCards();
                 // Add to scene
                 c.getFirstTwoCards();
                 // Set active user
-                //c.getGame().setActiveUser();
+                //Dealer deal 5 for the table
+                c.getGame().dealCards(5);
                 // Remove start btn
                 c.getUserBtn();
                 //btn.setVisible(false);

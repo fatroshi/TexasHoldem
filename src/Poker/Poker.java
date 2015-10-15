@@ -612,12 +612,13 @@ public class Poker {
             if(btn.getText() != "START"){
                 btn.setVisible(false);
             }else{
-                btn.setMinWidth(250);
-                btn.setMinHeight(80);
-                btn.setFont(Font.font(35));
+                // Start btn
+                btn.setMinWidth(200);
+                btn.setMinHeight(70);
+                btn.setFont(Font.font(25));
                 // Set x,y layout
-                btn.setLayoutX(380);
-                btn.setLayoutY(260);
+                //btn.setLayoutX(380);
+                //btn.setLayoutY(530);
             }
 
             // Assign EventHandler

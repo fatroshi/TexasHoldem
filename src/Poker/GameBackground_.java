@@ -5,7 +5,8 @@ package Poker;
  */
 public enum GameBackground_ {
     TABLE("../resource/bg/table.png"),
-    START("../resource/bg/start.png"),
+    TABLE_BLACK("../resource/bg/tableStart.png"),
+    START("../resource/bg/table_Black.png"),
     PLAYER("../resource/bg/bg_profile.png");
 
     private String imageSrc;

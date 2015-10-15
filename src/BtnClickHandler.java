@@ -24,6 +24,8 @@ public class BtnClickHandler implements EventHandler<Event> {
     public void handle(Event evt) {
         switch (this.text){
             case "START":
+                // New Scene BG
+                c.getGameScene();
                 // User info
                 c.getUserInfo();
                 // User chips
@@ -35,6 +37,7 @@ public class BtnClickHandler implements EventHandler<Event> {
                 // Set active user
                 //c.getGame().setActiveUser();
                 // Remove start btn
+                c.getUserBtn();
                 //btn.setVisible(false);
                 btn.setVisible(false);
                 // Show game buttons

@@ -72,10 +72,10 @@ public class MainView extends Application{
         // END MENU BAR
 
         // Table
-        GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
+        GameBackground start = new GameBackground(GameBackground_.TABLE_BLACK.getImageSrc());
 
         // Add table to scene 
-        root.getChildren().add(table.getImageView());
+        root.getChildren().add(start.getImageView());
 
         // Create players, get user info, get chips for each player
         controller.createPlayers(paneRoot);
@@ -95,7 +95,7 @@ public class MainView extends Application{
         controller.getTableCards(4, 5, paneRoot);
         */
         // Get user btn
-        controller.getUserBtn();
+        controller.getStartBtn();
 
         // Add to scene
         root.setTop(topVBox);

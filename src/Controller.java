@@ -97,7 +97,7 @@ public class Controller {
     }
 
     public void getUserBtn(){
-        for (int i = 0; i < game.getButtons().size(); i++) {
+        for (int i = 1; i < game.getButtons().size(); i++) {
             Button btn = game.getButton(i);
             // Assign EventHandler
             btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(),this,btn));
@@ -109,10 +109,20 @@ public class Controller {
         root.getChildren().add(p);
     }
 
-
+    public void getGameScene(){
+        GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
+        Animation.fadeIn(table);
+        root.getChildren().add(table.getImageView());
+    }
 
     public void getTurn(){
 
+    }
+
+    public void getStartBtn(){
+        Button btn = game.getButtons().get(0);
+        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(),this,btn));
+        root.getChildren().add(btn);
     }
 
 }

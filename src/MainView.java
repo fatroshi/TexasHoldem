@@ -71,7 +71,7 @@ public class MainView extends Application{
         paneRoot.getChildren().add(topVBox);
         // END MENU BAR
 
-        // Table
+        // TableLogic
         GameBackground start = new GameBackground(GameBackground_.TABLE_BLACK.getImageSrc());
 
         // Add table to scene 

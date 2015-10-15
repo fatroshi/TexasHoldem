@@ -3,13 +3,7 @@ import Dealer.*;
 import Layout.*;
 import User.Hand;
 import User.Player;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 
 import java.util.*;
 
@@ -33,8 +27,7 @@ public class Poker {
 
     // Poker Graphic Elements
     PokerGraphic pokerGraphic;
-
-
+    TableLogic table;
 
     public Poker(){
         //
@@ -47,14 +40,9 @@ public class Poker {
         tableCards      = new ArrayList<>();
         // Id of current selected user
         activeUser      = 0;
-
-
     }
 
     private Map<Integer,Player> playersBestHand = new HashMap<>();
-
-
-
 
     public void raise() {
         AlertWindow.show(" Raise"," Raise: " + players.get(activeUser).getUsername(), 200,100);

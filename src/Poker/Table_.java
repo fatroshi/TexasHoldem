@@ -4,8 +4,6 @@ package Poker;
  * Created by Farhad on 12/10/15.
  */
 public enum Table_ {
-
-
     // CARDS, CardId,x,y,rotation
     FIRST(0,72,0,0),
     SECOND(1,10,0,10),

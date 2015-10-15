@@ -9,7 +9,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -213,10 +212,8 @@ public class PokerGraphic {
     public List<Button> getButtons(){
         return this.buttons;
     }
-
     public Button getButton(int index){
         return this.buttons.get(index);
     }
-
 
 }

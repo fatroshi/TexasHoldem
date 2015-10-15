@@ -73,68 +73,14 @@ public class Controller {
     }
 
     public void getUserChips(Pane root){
-        int blackCounter = 0;
-        int redCounter = 0;
-        int blueCounter = 0;
-        int greenCounter = 0;
-        int whiteCounter = 0;
-        int addY=0;
-        for (int playerId = 0; playerId < game.getPlayers().size(); playerId++) {
-            Player p = game.getPlayer(playerId);
-            //System.out.println("[CHIPS} Player ID" + playerId );
-            for (int j = 0; j < p.getChips().size(); j++) {
-                Chip chip = p.getChip(j);
-                for (ChipLayout cl: ChipLayout.values()){
-                    if(playerId == cl.getUserId()) {
-
-                        if(chip.getChipValue() == Chip_.BLACK.getValue()){
-                            blackCounter++;
-                            addY = blackCounter;
-                        }else if(chip.getChipValue() == Chip_.RED.getValue()){
-                            redCounter++;
-                            addY = redCounter;
-                        }else if(chip.getChipValue() == Chip_.BLUE.getValue()){
-                            blueCounter++;
-                            addY = blueCounter;
-                        }else if(chip.getChipValue() == Chip_.GREEN.getValue()){
-                            greenCounter++;
-                            addY = greenCounter;
-                        }else if(chip.getChipValue() == Chip_.WHITE.getValue()){
-                            whiteCounter++;
-                            addY = whiteCounter;
-                        }
-
-                        if (chip.getChipValue() == cl.getChipValue()) {
-                            chip.getImageView().setX(cl.getX());
-                            chip.getImageView().setY(cl.getY() - addY -50);
-                        }
-
-
-                    }
-                }
-
-                // Set x,y for layout
-                for (UserLayout ul: UserLayout.values()){
-                    if( playerId == ul.getUserId()){
-                        chip.getImageView().setLayoutX(ul.getLayoutX());
-                        chip.getImageView().setLayoutY(ul.getLayoutY());
-                    }
-                }
-
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            for (int j = 0; j < game.getPlayerChips(i).size(); j++) {
+                Chip chip = game.getPlayerChips(i).get(j);
                 // Add to scene
                 root.getChildren().add(chip.getImageView());
             }
-            // Reset counters
-            blackCounter    = 0;
-            redCounter      = 0;
-            blueCounter     = 0;
-            greenCounter    = 0;
-            whiteCounter    = 0;
         }
     }
-
-
-
 
     public void getFirstTwoCards(){
         for (int i = 0; i < game.getPlayerCards().size(); i++) {
@@ -147,48 +93,28 @@ public class Controller {
     }
 
     public Pane getTableCards(int from, int to,Pane root){
-
         from--;
-
         Pane pane = new Pane();
-
         for (int cardID = from; cardID < to; cardID++) {
             Card card = Poker.tableCards.get(cardID);
-
-            //System.out.println(Poker.tableCards.size() + " i :" + cardID);
-            //System.out.println(card.getRank());
-
-
             for(Table_ t: Table_.values()){
                 if(t.getCardId() == (cardID+2)){
-
-                    card.getImageView().setX(150);                 // Set x
+                    card.getImageView().setX(150);
                     card.getImageView().setY(-100);
                     move(card,t.getX() * card.getImageView().getImage().getWidth()-150, t.getY()+100);
-
-                    //card.getImageView().setX(t.getX() * card.getImageView().getImage().getWidth());                 // Set x
-                    //card.getImageView().setY(t.getY());                                                             // Set y
-
-
                     card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
-
                 }
             }
-
             card.getImageView().setLayoutX(240);
             card.getImageView().setLayoutY(230);
-
             addToPane(card, root);
         }
-
         return  pane;
     }
 
     public void getUserBtn(Pane root){
-
         for (int i = 0; i < game.getButtons().size(); i++) {
             Button btn = game.getButton(i);
-
             // Assign EventHandler
             btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(),this,btn));
             root.getChildren().add(btn);
@@ -198,8 +124,6 @@ public class Controller {
     public void addPaneToPane(Pane p, Pane root){
         root.getChildren().add(p);
     }
-
-
 
     public void fadeOut(Picture p){
         FadeTransition ft = new FadeTransition(Duration.millis(500), p.getImageView());

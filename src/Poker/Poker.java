@@ -626,5 +626,64 @@ public class Poker {
         return this.buttons.get(index);
     }
 
+    public List<Chip> getPlayerChips(int playerId) {
+        int blackCounter = 0;
+        int redCounter = 0;
+        int blueCounter = 0;
+        int greenCounter = 0;
+        int whiteCounter = 0;
+        int addY = 0;
+
+        List<Chip> chips = new ArrayList<>();
+        // Get player
+        Player p = getPlayer(playerId);
+        //System.out.println("[CHIPS} Player ID" + playerId );
+        for (int j = 0; j < p.getChips().size(); j++) {
+            Chip chip = p.getChip(j);
+            for (ChipLayout cl : ChipLayout.values()) {
+                if (playerId == cl.getUserId()) {
+
+                    if (chip.getChipValue() == Chip_.BLACK.getValue()) {
+                        blackCounter++;
+                        addY = blackCounter;
+                    } else if (chip.getChipValue() == Chip_.RED.getValue()) {
+                        redCounter++;
+                        addY = redCounter;
+                    } else if (chip.getChipValue() == Chip_.BLUE.getValue()) {
+                        blueCounter++;
+                        addY = blueCounter;
+                    } else if (chip.getChipValue() == Chip_.GREEN.getValue()) {
+                        greenCounter++;
+                        addY = greenCounter;
+                    } else if (chip.getChipValue() == Chip_.WHITE.getValue()) {
+                        whiteCounter++;
+                        addY = whiteCounter;
+                    }
+
+                    if (chip.getChipValue() == cl.getChipValue()) {
+                        chip.getImageView().setX(cl.getX());
+                        chip.getImageView().setY(cl.getY() - addY - 50);
+                    }
+
+                }
+            }
+
+            // Set x,y for layout
+            for (UserLayout ul : UserLayout.values()) {
+                if (playerId == ul.getUserId()) {
+                    chip.getImageView().setLayoutX(ul.getLayoutX());
+                    chip.getImageView().setLayoutY(ul.getLayoutY());
+                }
+            }
+
+            // Add to list
+            chips.add(chip);
+        }
+        // Return the list
+        return chips;
+    }
+
+
+
 
 }

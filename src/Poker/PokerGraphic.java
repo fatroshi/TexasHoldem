@@ -69,6 +69,12 @@ public class PokerGraphic {
         return this.slider;
     }
 
+    public void updateSlider(Player player, double currentBet, double currentRaise){
+        this.slider.setMin(currentBet);
+        this.slider.setValue(currentRaise);
+        this.slider.setMax(player.getBalance());
+    }
+
     public void addPlayerBG(int playerIndex){
         // Index of the player in array
         int id = playerIndex;
@@ -211,4 +217,6 @@ public class PokerGraphic {
     public Button getButton(int index){
         return this.buttons.get(index);
     }
+
+
 }

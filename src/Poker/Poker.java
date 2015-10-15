@@ -22,17 +22,13 @@ public class Poker {
 
     // User.Player big (Status)
     public static int playerBig;
-
-
-
     // All players
     private List<Player> players;
     public static List<Card> tableCards;
-
-
     //
     public static int activeUser;
     public static double bet;
+    public static double raise;
     public static double pott;
 
     // Poker Graphic Elements
@@ -469,7 +465,7 @@ public class Poker {
             if(setActivePlayer()){
                 // Show current selected user
                 pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
-                pokerGraphic.setSliderMax(players.get(activeUser).getBalance());
+                pokerGraphic.updateSlider(players.get(activeUser),bet,raise);
             }
         }
     }

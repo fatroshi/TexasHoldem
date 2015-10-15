@@ -126,7 +126,7 @@ public class Controller {
     }
 
     public void getUIitems(){
-        root.getChildren().add(game.getSlider());
+        root.getChildren().add(game.getPokerGraphic().getSlider());
     }
 
 

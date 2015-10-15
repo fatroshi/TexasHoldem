@@ -85,14 +85,6 @@ public class Poker {
         }
     }
 
-    public Slider getSlider(){
-        return pokerGraphic.getSlider();
-    }
-
-    public void setSlider(double max){
-        this.pokerGraphic.setSliderMax(max);
-    }
-
     public void call(){
         if(oneActivePlayer()){
             //We got a winner
@@ -188,14 +180,6 @@ public class Poker {
     public PokerGraphic getPokerGraphic(){
         return this.pokerGraphic;
     }
-
-
-
-
-
-
-
-
 
     public void removePlayerInGame(){
         getPlayer(activeUser).active(false);
@@ -475,7 +459,7 @@ public class Poker {
             if(setActivePlayer()){
                 // Show current selected user
                 pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
-                setSlider(players.get(activeUser).getBalance());
+                pokerGraphic.setSliderMax(players.get(activeUser).getBalance());
             }
 
 
@@ -485,7 +469,7 @@ public class Poker {
             if(setActivePlayer()){
                 // Show current selected user
                 pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
-                setSlider(players.get(activeUser).getBalance());
+                pokerGraphic.setSliderMax(players.get(activeUser).getBalance());
             }
         }
     }
@@ -528,7 +512,6 @@ public class Poker {
 
         return foundUser;
     }
-
 
     public void setWinnerBG() {
         // Change color of player bg

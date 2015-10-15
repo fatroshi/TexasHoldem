@@ -100,7 +100,7 @@ public class MainView extends Application{
         // Add to scene
         root.setTop(topVBox);
         root.setCenter(paneRoot);
-        Scene scene = new Scene(root, 1000, 400);
+        Scene scene = new Scene(root, 1000, 650);
 
         window.setScene(scene);
         window.show();

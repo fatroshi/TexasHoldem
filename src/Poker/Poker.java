@@ -163,7 +163,7 @@ public class Poker {
         for (Table_ t: Table_.values()){
             if(id == t.getUserId()){
                 username.setLayoutX(t.getXlayout() - 20);
-                username.setLayoutY(t.getYlayout() + 100);
+                username.setLayoutY(t.getYlayout() + 95);
                 username.setTextFill(Color.LIGHTGRAY);
                 username.setFont(Font.font(18));
             }
@@ -176,13 +176,13 @@ public class Poker {
         // Index of the player in array
         int id = players.indexOf(player);
         // Create Label for balance
-        Label balance = new Label(String.valueOf(player.getBalance()));
+        Label balance = new Label("$ " + String.valueOf(player.getBalance()));
         // Set x,y for label
         for (Table_ t: Table_.values()){
             if(id == t.getUserId()){
                 // balance
                 balance.setLayoutX(t.getXlayout() - 20);
-                balance.setLayoutY(t.getYlayout() + 140);
+                balance.setLayoutY(t.getYlayout() + 118);
                 balance.setTextFill(Color.GREEN);
             }
         }
@@ -199,9 +199,9 @@ public class Poker {
         r.setFill(Color.BLACK);
         r.setStroke(Color.DARKGRAY);
         r.setWidth(140);
-        r.setHeight(80);
-        r.setArcWidth(20);
-        r.setArcHeight(20);
+        r.setHeight(50);
+        r.setArcWidth(10);
+        r.setArcHeight(10);
 
         for (Table_ t: Table_.values()) {
             if (id == t.getUserId()) {

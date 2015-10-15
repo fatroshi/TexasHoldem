@@ -58,44 +58,14 @@ public class Controller {
     }
 
     public void getUserInfo(Pane root){
-
-        Rectangle r;
-        Label username, balance;
         for (int i = 0; i < game.getPlayers().size(); i++) {
-            r = new Rectangle();
-            r.setFill(Color.BLACK);
-            r.setStroke(Color.DARKGRAY);
-
+            Rectangle r = getGame().getPlayerBG(i);
             // Get username
-            String user = game.getPlayer(i).getUsername();
-            username = new Label(user);
+            Label username = getGame().getUsernameLabel(i);
             // Get balance
-            String strBalance = "$ " + String.valueOf(game.getPlayer(i).getBalance());
-            balance = new Label(strBalance);
+            Label balance = getGame().getBalanceLabel(i);
             // Get your x,y layout
-            for (Table_ t: Table_.values()){
-                if(i == t.getUserId()){
-                    r.setX(t.getXlayout() - 35);
-                    r.setY(t.getYlayout() + 90);
 
-                    // x,y for label
-                    // username
-                    username.setLayoutX(t.getXlayout() - 20);
-                    username.setLayoutY(t.getYlayout() + 100);
-                    username.setTextFill(Color.LIGHTGRAY);
-                    username.setFont(Font.font(18));
-                    // balance
-                    balance.setLayoutX(t.getXlayout() - 20);
-                    balance.setLayoutY(t.getYlayout() + 140);
-                    balance.setTextFill(Color.GREEN);
-                }
-            }
-            r.setWidth(140);
-            r.setHeight(80);
-            r.setArcWidth(20);
-            r.setArcHeight(20);
-            //System.out.println(username);
-            //System.out.println(balance);
 
             root.getChildren().addAll(r,username, balance);
         }

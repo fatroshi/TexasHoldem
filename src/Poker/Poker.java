@@ -2,6 +2,11 @@ package Poker;
 
 import Dealer.*;
 import User.*;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 
 import java.util.List;
@@ -25,12 +30,26 @@ public class Poker {
     // All players
     private List<Player> players;
     public static List<Card> tableCards;
+    private List<Label> usernameLabels;
+    private List<Label> balanceLabels;
+    private List<Rectangle> playersBG;
+
 
 
     public Poker(){
+        // 52 cards
         deck            = new Deck();
+        // Background for players
+        playersBG       = new ArrayList<>();
+        // Players username
+        usernameLabels  = new ArrayList<>();
+        // Players balance
+        balanceLabels   = new ArrayList<>();
+        // All players in the game
         players         = new ArrayList<>();
+        // Holder for 5 Cards
         tableCards      = new ArrayList<>();
+        // Id of current selected user
         activeUser      = 0;
     }
 
@@ -68,6 +87,12 @@ public class Poker {
 
     public void fold(){
         removePlayerInGame();
+        //Do somthing with user cards
+        Card c1 = players.get(activeUser).getHand().getCard(0);
+        Card c2 = players.get(activeUser).getHand().getCard(1);
+
+        Animation.fadeOut(c1);
+        Animation.fadeOut(c2);
         // Set next user
         nextUser();
         // Set for next user
@@ -86,9 +111,87 @@ public class Poker {
     }
 
     public Player addPlayer(String username, double balance){
-        Player p = new Player(username,balance);
-        players.add(p);
-        return p;
+        Player player = new Player(username,balance);
+        players.add(player);
+
+        // Add username to usernameLabels
+        addUsername(player);
+        // Add balance to balanceLabels
+        addBalance(player);
+        // Add bg to bgPlayers
+        addPlayerBG(player);
+        return player;
+    }
+
+    public void addUsername(Player player){
+        // Index of the player in array
+        int id = players.indexOf(player);
+        // Create label for username
+        Label username = new Label(player.getUsername());
+        // Set x,y for label
+        for (Table_ t: Table_.values()){
+            if(id == t.getUserId()){
+                username.setLayoutX(t.getXlayout() - 20);
+                username.setLayoutY(t.getYlayout() + 100);
+                username.setTextFill(Color.LIGHTGRAY);
+                username.setFont(Font.font(18));
+            }
+        }
+        this.usernameLabels.add(username);
+
+    }
+
+    public void addBalance(Player player){
+        // Index of the player in array
+        int id = players.indexOf(player);
+        // Create Label for balance
+        Label balance = new Label(player.getUsername());
+        // Set x,y for label
+        for (Table_ t: Table_.values()){
+            if(id == t.getUserId()){
+                // balance
+                balance.setLayoutX(t.getXlayout() - 20);
+                balance.setLayoutY(t.getYlayout() + 140);
+                balance.setTextFill(Color.GREEN);
+            }
+        }
+        // Add to array
+        this.balanceLabels.add(balance);
+    }
+
+    public void addPlayerBG(Player player){
+        // Index of the player in array
+        int id = players.indexOf(player);
+        // Create ractangle
+        Rectangle r = new Rectangle();
+        // Properties
+        r.setFill(Color.BLACK);
+        r.setStroke(Color.DARKGRAY);
+        r.setWidth(140);
+        r.setHeight(80);
+        r.setArcWidth(20);
+        r.setArcHeight(20);
+
+        for (Table_ t: Table_.values()) {
+            if (id == t.getUserId()) {
+                r.setX(t.getXlayout() - 35);
+                r.setY(t.getYlayout() + 90);
+            }
+        }
+        // Add to array
+        this.playersBG.add(r);
+    }
+
+    public Rectangle getPlayerBG(int index){
+        return playersBG.get(index);
+    }
+
+    public Label getUsernameLabel(int index){
+        return usernameLabels.get(index);
+    }
+
+    public Label getBalanceLabel(int index){
+        return balanceLabels.get(index);
     }
 
     public void removePlayerInGame(){
@@ -387,22 +490,26 @@ public class Poker {
             if(activeUser < players.size()){
                 // Check if next player is active
                 for (int i = activeUser; i < players.size(); i++) {
-                    if(getPlayer(i).isActive()){
+                    Player player = getPlayer(i);
+                    if(player.isActive()){
                         activeUser = i;
                         // Current player
-                        System.out.println("Current user: " + getCurrentPlayerUsername() + " Id: " + i);
+                        System.out.println("Current user: " + player.getUsername() + " Id: " + i);
                         break;
                     }
                 }
             }else{
                 //System.out.println("Need to reset active user");
                 for (int i = 0; i < players.size(); i++) {
-                    if(getPlayer(i).isActive()){
+                    Player player = getPlayer(i);
+                    if(player.isActive()){
                         // We have the id for the next active user
                         //System.out.println("Found active player " + i);
                         activeUser = i;
                         // Current player
-                        System.out.println("Current user: " + getCurrentPlayerUsername() + " Id: " + i);
+                        System.out.println("Current user: " + player.getUsername() + " Id: " + i);
+                        // Show who the winne is
+
                         break;
                     }
                 }

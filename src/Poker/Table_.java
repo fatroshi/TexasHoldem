@@ -5,8 +5,7 @@ package Poker;
  */
 public enum Table_ {
 
-    // DECK POS
-    DECK(),
+
     // CARDS, CardId,x,y,rotation
     FIRST(0,72,0,0),
     SECOND(1,10,0,10),

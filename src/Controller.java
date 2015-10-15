@@ -46,11 +46,11 @@ public class Controller {
     public void getUserInfo(){
         for (int i = 0; i < game.getPlayers().size(); i++) {
             // Get user background
-            Rectangle r = getGame().getPlayerBG(i);
+            Rectangle r = getGame().getPokerGraphic().getPlayerBG(i);
             // Get username
-            Label username = getGame().getUsernameLabel(i);
+            Label username = getGame().getPokerGraphic().getUsernameLabel(i);
             // Get balance
-            Label balance = getGame().getBalanceLabel(i);
+            Label balance = getGame().getPokerGraphic().getBalanceLabel(i);
             // Add to root scene
             root.getChildren().addAll(r,username, balance);
         }
@@ -97,8 +97,8 @@ public class Controller {
     }
 
     public void getUserBtn(){
-        for (int i = 1; i < game.getButtons().size(); i++) {
-            Button btn = game.getButton(i);
+        for (int i = 1; i < game.getPokerGraphic().getButtons().size(); i++) {
+            Button btn = game.getPokerGraphic().getButton(i);
             // Assign EventHandler
             btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(),this,btn));
             root.getChildren().add(btn);
@@ -120,7 +120,7 @@ public class Controller {
     }
 
     public void getStartBtn(){
-        Button btn = game.getButtons().get(0);
+        Button btn = game.getPokerGraphic().getButtons().get(0);
         btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(),this,btn));
         root.getChildren().add(btn);
     }

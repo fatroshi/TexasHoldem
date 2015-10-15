@@ -8,11 +8,11 @@ import javafx.scene.paint.Color;
 public enum ButtonLayout {
     // USER BTN
     START(0,190,400,"#0e731a"),
-    CHECK(1,240,560,"#0e731a"),
-    BET(2,340,560,"#0e731a"),
-    CALL(3,440,560,"#0e731a"),
-    RAISE(4,540,560, "#0e731a"),
-    FOLD(5,685,560,"#a80317")
+    CHECK(1,240,570,"#0e731a"),
+    BET(2,340,570,"#0e731a"),
+    CALL(3,440,570,"#0e731a"),
+    RAISE(4,540,570, "#0e731a"),
+    FOLD(5,685,570,"#a80317")
     ;
 
 

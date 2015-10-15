@@ -44,7 +44,7 @@ public class BtnClickHandler implements EventHandler<Event> {
                 //btn.setVisible(false);
                 btn.setVisible(false);
                 // Show game buttons
-                c.getGame().showGameButtons();
+                c.getGame().getPokerGraphic().showGameButtons();
                 // Select player
                 c.getGame().nextUser();
                 break;

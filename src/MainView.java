@@ -89,7 +89,7 @@ public class MainView extends Application{
 
         // Deal 5 cards
         controller.game.dealCards(5);
-        controller.getTableCards(1, 3, paneRoot);
+        controller.getTableCards(1, 3);
 
         // Card 4 5
         controller.getTableCards(4, 5, paneRoot);

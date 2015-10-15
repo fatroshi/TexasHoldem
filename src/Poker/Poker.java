@@ -281,7 +281,6 @@ public class Poker {
         return Arrays.asList(array).contains(value);
     }
 
-
     public static void setPlayerBig(int playerId){
         playerBig = playerId;
     }
@@ -610,12 +609,31 @@ public class Poker {
             btn.setLayoutX(b.getX());
             btn.setLayoutY(b.getY());
 
+            if(btn.getText() != "START"){
+                btn.setVisible(false);
+            }else{
+                btn.setMinWidth(250);
+                btn.setMinHeight(80);
+                btn.setFont(Font.font(35));
+                // Set x,y layout
+                btn.setLayoutX(380);
+                btn.setLayoutY(260);
+            }
+
             // Assign EventHandler
             //btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayerButtonsHandler(b,this,btn));
             // Add to list
             buttons.add(btn);
         }
 
+    }
+
+    public void showGameButtons(){
+        for (int i = 0; i < buttons.size(); i++) {
+            if(buttons.get(i).getText() != "START") {
+                buttons.get(i).setVisible(true);
+            }
+        }
     }
 
     public List<Button> getButtons(){
@@ -625,7 +643,6 @@ public class Poker {
     public Button getButton(int index){
         return this.buttons.get(index);
     }
-
     public List<Chip> getPlayerChips(int playerId) {
         int blackCounter = 0;
         int redCounter = 0;
@@ -675,15 +692,10 @@ public class Poker {
                     chip.getImageView().setLayoutY(ul.getLayoutY());
                 }
             }
-
             // Add to list
             chips.add(chip);
         }
         // Return the list
         return chips;
     }
-
-
-
-
 }

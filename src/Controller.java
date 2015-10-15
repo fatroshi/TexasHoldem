@@ -2,14 +2,12 @@ import Dealer.Card;
 import Dealer.Chip;
 import Poker.Picture;
 import Poker.*;
-import Poker.Table_;
-import javafx.animation.*;
+import Poker.Animation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 /**
  * Created by Farhad on 14/10/15.
@@ -78,7 +76,7 @@ public class Controller {
         }
     }
 
-    public Pane getTableCards(int from, int to,Pane root){
+    public void getTableCards(int from, int to){
         from--;
         Pane pane = new Pane();
         for (int cardID = from; cardID < to; cardID++) {
@@ -87,15 +85,15 @@ public class Controller {
                 if(t.getCardId() == (cardID+2)){
                     card.getImageView().setX(150);
                     card.getImageView().setY(-100);
-                    move(card,t.getX() * card.getImageView().getImage().getWidth()-150, t.getY()+100);
+                    Animation.move(card, t.getX() * card.getImageView().getImage().getWidth() - 150, t.getY() + 100);
                     card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
                 }
             }
             card.getImageView().setLayoutX(240);
             card.getImageView().setLayoutY(230);
-            addToPane(card, root);
+            this.root.getChildren().add(card.getImageView());
         }
-        return  pane;
+
     }
 
     public void getUserBtn(){
@@ -111,39 +109,7 @@ public class Controller {
         root.getChildren().add(p);
     }
 
-    public void fadeOut(Picture p){
-        FadeTransition ft = new FadeTransition(Duration.millis(500), p.getImageView());
-        ft.setFromValue(0.0);
-        ft.setToValue(1.);
-        ft.setCycleCount(Timeline.INDEFINITE);
-        //ft.setAutoReverse(true);
-        ft.play();
-    }
 
-    public void move(Picture p, double x, double y){
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), p.getImageView());
-        tt.setByX(x);
-        tt.setByY(y);
-        //tt.setCycleCount(4);
-        //tt.setAutoReverse(true);
-        SequentialTransition seqTransition = new SequentialTransition (
-                new PauseTransition(Duration.millis(1000)), // wait a second
-                tt);
-
-        seqTransition.play();
-    }
-
-    public void rotation(Picture p){
-        RotateTransition rt = new RotateTransition(Duration.millis(3000), p.getImageView());
-        rt.setByAngle(180);
-        rt.setCycleCount(4);
-        rt.setAutoReverse(true);
-        SequentialTransition seqTransition = new SequentialTransition (
-                new PauseTransition(Duration.millis(1000)), // wait a second
-                rt
-        );
-        seqTransition.play();
-    }
 
     public void getTurn(){
 

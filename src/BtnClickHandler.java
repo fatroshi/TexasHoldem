@@ -37,6 +37,9 @@ public class BtnClickHandler implements EventHandler<Event> {
                 // Remove start btn
                 //btn.setVisible(false);
                 btn.setVisible(false);
+                // Show game buttons
+                c.getGame().showGameButtons();
+                // Select player
                 c.getGame().nextUser();
                 break;
             case "CHECK":

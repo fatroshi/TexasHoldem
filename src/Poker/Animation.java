@@ -40,4 +40,29 @@ public class Animation {
         //ft.setAutoReverse(true);
         ft.play();
     }
+
+    public static void rotation(Picture p){
+        RotateTransition rt = new RotateTransition(Duration.millis(3000), p.getImageView());
+        rt.setByAngle(180);
+        rt.setCycleCount(4);
+        rt.setAutoReverse(true);
+        SequentialTransition seqTransition = new SequentialTransition (
+                new PauseTransition(Duration.millis(1000)), // wait a second
+                rt
+        );
+        seqTransition.play();
+    }
+
+    public static void move(Picture p, double x, double y){
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), p.getImageView());
+        tt.setByX(x);
+        tt.setByY(y);
+        //tt.setCycleCount(4);
+        //tt.setAutoReverse(true);
+        SequentialTransition seqTransition = new SequentialTransition (
+                new PauseTransition(Duration.millis(1000)), // wait a second
+                tt);
+
+        seqTransition.play();
+    }
 }

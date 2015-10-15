@@ -1,4 +1,5 @@
 package Dealer;
+
 import Poker.Picture;
 
 /**
@@ -7,6 +8,17 @@ import Poker.Picture;
  */
 
 public class Card extends Picture {
+
+    // Tables for converting rank & suit to text (why static?)
+    private static final String[] rankTab = {
+            "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+            "Jack", "Queen", "King"
+    };
+    // SPADES(1), CLUBS(4), HEARTS(2), DIAMONDS(3);
+    private static final String[] suitTab = {
+            "spades", "hearts", "diamonds", "clubs"
+    };
+    private final int rank, suit;
 
     /**
      * @param rank 1 = Ace, 2 = 2, ...
@@ -21,10 +33,11 @@ public class Card extends Picture {
     }
 
     public Card(int rank, int suit, String imgSrcFront, String imgSrcBack) {
-        super(imgSrcFront,imgSrcBack );
+        super(imgSrcFront, imgSrcBack);
         this.rank = rank;
         this.suit = suit;
     }
+
     public int getRank() {
         return rank;
     }
@@ -42,19 +55,6 @@ public class Card extends Picture {
         String info = rankTab[this.rank - 1] + " of " + suitTab[this.suit - 1];
         return info;
     }
-
-    private final int rank, suit;
-
-    // Tables for converting rank & suit to text (why static?)
-    private static final String[] rankTab = {
-            "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-            "Jack", "Queen", "King"
-    };
-
-    // SPADES(1), CLUBS(4), HEARTS(2), DIAMONDS(3);
-    private static final String[] suitTab = {
-            "spades", "hearts", "diamonds","clubs"
-    };
 
 
 }

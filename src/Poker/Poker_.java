@@ -1,7 +1,7 @@
 package Poker;
 
 /**
- * Created by Farhad on 10/10/15.
+ * Created by Farhad Atroshi on 10/10/15.
  */
 public enum Poker_ {
 
@@ -21,22 +21,22 @@ public enum Poker_ {
      */
 
     // Third element is rank for the poker game, lowest = 1
-    HIGH_CARD(1,1,1),
-    PAIR(2,1,2),
-    TWO_PAIR(2,2,3),
-    THREE_OF_A_KIND(3,1,4),
-    STRAIGHT(5,1,5),
-    FLUSH(5,1,6),
-    FULL_HOUSE(3,2,7),
-    FOUR_OF_A_KIND(4,1,8),
-    STRAIGHT_FLUSH(5,1,9),
-    ROYAL_FLUSH(5,1,10);
+    HIGH_CARD(1, 1, 1),
+    PAIR(2, 1, 2),
+    TWO_PAIR(2, 2, 3),
+    THREE_OF_A_KIND(3, 1, 4),
+    STRAIGHT(5, 1, 5),
+    FLUSH(5, 1, 6),
+    FULL_HOUSE(3, 2, 7),
+    FOUR_OF_A_KIND(4, 1, 8),
+    STRAIGHT_FLUSH(5, 1, 9),
+    ROYAL_FLUSH(5, 1, 10);
 
     private int rank;
     private int firstQuantity;
     private int secondQuantity;
 
-    Poker_(int rank){
+    Poker_(int rank) {
 
     }
 
@@ -51,15 +51,15 @@ public enum Poker_ {
         return this.rank;
     }
 
-    private String getName(){
+    private String getName() {
         return this.name();
     }
 
-    public int getFirstQuantity(){
+    public int getFirstQuantity() {
         return this.firstQuantity;
     }
 
-    public int getSecondQuantity(){
+    public int getSecondQuantity() {
         return this.secondQuantity;
     }
 }

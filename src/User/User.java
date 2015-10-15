@@ -1,16 +1,15 @@
 package User;
 
-import Dealer.*;
+import Dealer.Chip;
+import Dealer.Chip_;
 
-import java.util.*;
-
-
-import Dealer.Dealer;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Created by Farhad on 07/10/15.
+ * Created by Farhad Atroshi on 07/10/15.
  */
 abstract public class User {
     private String username;
@@ -19,11 +18,11 @@ abstract public class User {
     private Hand hand;
     private boolean active;
 
-    public User(){
+    public User() {
 
     }
 
-    public User(String username, double balance){
+    public User(String username, double balance) {
         chips = new ArrayList<>();
         hand = new Hand();
 
@@ -32,31 +31,31 @@ abstract public class User {
         this.active = true;
     }
 
-    public boolean isActive(){
+    public boolean isActive() {
         return this.active;
     }
 
-    public void active(boolean b){
+    public void active(boolean b) {
         this.active = false;
     }
 
-    public Hand getHand(){
+    public Hand getHand() {
         return this.hand;
     }
 
-    public List<Chip> getChips(){
+    public List<Chip> getChips() {
         return this.chips;
     }
 
-    public Chip getChip(int index){
+    public Chip getChip(int index) {
         return this.chips.get(index);
     }
 
-    public List<Chip> balanceToChips(){
+    public List<Chip> balanceToChips() {
         // Convert balance to int
         int balance = (int) Math.round(this.balance);
         // Convert int version of balance to chips
-        Map<String,Integer> converted = this.depositConvertToChips(balance);
+        Map<String, Integer> converted = this.depositConvertToChips(balance);
 
         // Clear chips first
         this.chips.clear();
@@ -66,25 +65,25 @@ abstract public class User {
         return this.chips;
     }
 
-    public void buyChips(){
-       // Write logic for adding to existing list!
+    public void buyChips() {
+        // Write logic for adding to existing list!
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return this.username;
     }
 
     // Should throw an Exception if the input is a float value --> Handle this by AlertWindow ?
     // This function should be user by users, and table!
-    public Map<String,Integer> depositConvertToChips(int deposit){
+    public Map<String, Integer> depositConvertToChips(int deposit) {
 
         // Here we should add on the current saldo --> balance + deposit
         // so that we can create correct amount of chips and later on show on table,
         // for the users and total pot on table
 
-        Map<String,Integer> chips = new HashMap<>();
-        while (deposit !=0){
-            for (Chip_ chip: Chip_.values()){
+        Map<String, Integer> chips = new HashMap<>();
+        while (deposit != 0) {
+            for (Chip_ chip : Chip_.values()) {
                 //System.out.println("Deposit: " + deposit);
                 //System.out.println("Dealer.Chip value: " + chip.getValue());
 
@@ -93,14 +92,14 @@ abstract public class User {
 
                 //System.out.println("Count:" + count);
                 // Remove from deposit
-                if(count > 0) {
-                    chips.put(chip.name(),count);
+                if (count > 0) {
+                    chips.put(chip.name(), count);
                     deposit -= count * chip.getValue();
                 }
             }
         }
 
-        return  chips;
+        return chips;
     }
 
     // This function should be used by users, and table!
@@ -108,9 +107,10 @@ abstract public class User {
     /**
      * Map object describes Chip color and the quantity of that chip
      * The chips are created and added to List<Dealer.Chip> object
+     *
      * @param map
      */
-    public void createChips(Map<String,Integer> map){
+    public void createChips(Map<String, Integer> map) {
 
         // Here we should clear all objects in chips
         // And then create new ones
@@ -122,36 +122,37 @@ abstract public class User {
             Integer value = entry.getValue();
             //System.out.println(name + " : " + value);
 
-            for(Chip_ chip: Chip_.values()){
+            for (Chip_ chip : Chip_.values()) {
                 // Compare map key(name) with the enum Dealer.Chip_ name
-                if(chip.name() == name){
+                if (chip.name() == name) {
                     // Get amount for this chip that needs to be created
                     // value = amount of chips of this specific type
                     for (int i = 0; i < value; i++) {
                         // Create chip
-                        chips.add(new Chip(chip.getValue(),chip.name(),chip.getImgSrc()));
+                        chips.add(new Chip(chip.getValue(), chip.name(), chip.getImgSrc()));
                     }
                 }
             }
         }
     }
 
-    public void clearChips(){
+    public void clearChips() {
         this.chips.clear();
     }
 
-    public double getBalance(){
+    public double getBalance() {
         return this.balance;
     }
 
-    public void depositBalance(double deposit){
+    public void depositBalance(double deposit) {
         this.balance += deposit;
     }
 
-    public void debitBalance(double debit){
+    public void debitBalance(double debit) {
         this.balance -= debit;
     }
-    public void setSaldo(double balance){
+
+    public void setSaldo(double balance) {
         this.balance = balance;
     }
 }

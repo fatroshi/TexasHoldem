@@ -1,7 +1,7 @@
 package Poker;
 
 /**
- * Created by Farhad on 08/10/15.
+ * Created by Farhad Atroshi on 08/10/15.
  */
 public enum GameBackground_ {
     TABLE("../resource/bg/table.png"),

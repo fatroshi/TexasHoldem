@@ -1,11 +1,9 @@
-import Layout.ButtonLayout;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 
 /**
- * Created by Farhad on 14/10/15.
+ * Created by Farhad Atroshi on 14/10/15.
  */
 public class BtnClickHandler implements EventHandler<Event> {
 

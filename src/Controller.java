@@ -1,8 +1,6 @@
 import Dealer.Card;
 import Dealer.Chip;
-import Poker.Picture;
 import Poker.*;
-import Poker.Animation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -10,7 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 /**
- * Created by Farhad on 14/10/15.
+ * Created by Farhad Atroshi on 14/10/15.
  */
 public class Controller {
     // Create game
@@ -18,32 +16,32 @@ public class Controller {
     // Place holder for items
     private Pane root;
 
-    public Controller(){
+    public Controller() {
         game = new Poker();
         root = new Pane();
     }
 
-    public Pane getRootPane(){
+    public Pane getRootPane() {
         return this.root;
     }
 
-    public Poker getGame(){
-        return  this.game;
+    public Poker getGame() {
+        return this.game;
     }
 
-    public void addToPane(Picture o,Pane pane){
+    public void addToPane(Picture o, Pane pane) {
         // Add each child to pane
         pane.getChildren().add(o.getImageView());
     }
 
-    public void createPlayers(Pane root){
+    public void createPlayers(Pane root) {
         game.addPlayer("Lawen", 1000);
         game.addPlayer("Farhad", 2130);
         game.addPlayer("Felicia", 4213);
         game.addPlayer("Elise", 4219);
     }
 
-    public void getUserInfo(){
+    public void getUserInfo() {
         for (int i = 0; i < game.getPlayers().size(); i++) {
             // Get user background
             Rectangle r = getGame().getPokerGraphic().getPlayerBG(i);
@@ -52,11 +50,11 @@ public class Controller {
             // Get balance
             Label balance = getGame().getPokerGraphic().getBalanceLabel(i);
             // Add to root scene
-            root.getChildren().addAll(r,username, balance);
+            root.getChildren().addAll(r, username, balance);
         }
     }
 
-    public void getUserChips(){
+    public void getUserChips() {
         for (int i = 0; i < game.getPlayers().size(); i++) {
             for (int j = 0; j < game.getPlayerChips(i).size(); j++) {
                 Chip chip = game.getPlayerChips(i).get(j);
@@ -66,7 +64,7 @@ public class Controller {
         }
     }
 
-    public void getFirstTwoCards(){
+    public void getFirstTwoCards() {
         for (int i = 0; i < game.getPlayerCards().size(); i++) {
             Card card = game.getPlayerCards().get(i);
             // Set event handler when card clicked
@@ -76,13 +74,13 @@ public class Controller {
         }
     }
 
-    public void getTableCards(int from, int to){
+    public void getTableCards(int from, int to) {
 
         Pane pane = new Pane();
         for (int cardID = from; cardID < to; cardID++) {
             Card card = Poker.tableCards.get(cardID);
-            for(Table_ t: Table_.values()){
-                if(t.getCardId() == (cardID+2)){
+            for (Table_ t : Table_.values()) {
+                if (t.getCardId() == (cardID + 2)) {
                     card.getImageView().setX(150);
                     card.getImageView().setY(-100);
                     Animation.move(card, t.getX() * card.getImageView().getImage().getWidth() - 150, t.getY() + 100);
@@ -96,39 +94,38 @@ public class Controller {
 
     }
 
-    public void getUserBtn(){
+    public void getUserBtn() {
         for (int i = 1; i < game.getPokerGraphic().getButtons().size(); i++) {
             Button btn = game.getPokerGraphic().getButton(i);
             // Assign EventHandler
-            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(),this,btn));
+            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(), this, btn));
             root.getChildren().add(btn);
         }
     }
 
-    public void addPaneToPane(Pane p, Pane root){
+    public void addPaneToPane(Pane p, Pane root) {
         root.getChildren().add(p);
     }
 
-    public void getGameScene(){
+    public void getGameScene() {
         GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
         Animation.fadeIn(table);
         root.getChildren().add(table.getImageView());
     }
 
-    public void getTurn(){
+    public void getTurn() {
 
     }
 
-    public void getStartBtn(){
+    public void getStartBtn() {
         Button btn = game.getPokerGraphic().getButtons().get(0);
-        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(),this,btn));
+        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(), this, btn));
         root.getChildren().add(btn);
     }
 
-    public void getUIitems(){
+    public void getUIitems() {
         root.getChildren().add(game.getPokerGraphic().getSlider());
     }
-
 
 
 }

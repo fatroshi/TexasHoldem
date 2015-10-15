@@ -1,7 +1,7 @@
 package Poker;
 
 /**
- * Created by Farhad on 15/10/15.
+ * Created by Farhad Atroshi on 15/10/15.
  */
 public enum Player_ {
 
@@ -15,11 +15,11 @@ public enum Player_ {
 
     private int status;
 
-    Player_(int status){
+    Player_(int status) {
         this.status = status;
     }
 
-    private int getValue(){
+    private int getValue() {
         return this.status;
     }
 

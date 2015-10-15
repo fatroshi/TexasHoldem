@@ -1,7 +1,7 @@
 package Dealer;
 
 /**
- * Created by Farhad on 29/09/15.
+ * Created by Farhad Atroshi on 29/09/15.
  */
 public enum Suit_ {
     // 1 = spades, 2 = hearts, 3 = diamonds, 4 = clubs
@@ -9,6 +9,7 @@ public enum Suit_ {
 
 
     private int suit;
+
     Suit_(int value) {
         this.suit = value;
     }

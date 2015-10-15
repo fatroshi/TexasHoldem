@@ -1,10 +1,11 @@
 package Dealer;
+
 import Poker.Picture;
 
 import java.util.Random;
 
 /**
- * Created by Farhad on 07/10/15.
+ * Created by Farhad Atroshi on 07/10/15.
  */
 public class Chip extends Picture {
 
@@ -13,9 +14,9 @@ public class Chip extends Picture {
     private int chipValue;
     private String chipName;
     // Dealer.Dealer.Chip position in grid, clumn,row
-    private int position[] ;
+    private int position[];
 
-    public Chip(int value, String name, String imgSrc){
+    public Chip(int value, String name, String imgSrc) {
         // Call parent constructor
         super(imgSrc);
         this.chipValue = value;
@@ -24,23 +25,21 @@ public class Chip extends Picture {
 
     }
 
-    public int getChipValue(){
+    public int getChipValue() {
         return this.chipValue;
     }
 
-    public String getChipName(){
+    public String getChipName() {
         return this.chipName;
     }
 
-    public void rotate(){
+    public void rotate() {
         //this.rotate();
         Random random = new Random();
-        this.getImageView().setRotate(random.nextInt(10) +15);
+        this.getImageView().setRotate(random.nextInt(10) + 15);
         this.getImageView().setScaleX(0.6);
         this.getImageView().setScaleY(0.6);
     }
-
-
 
 
 }

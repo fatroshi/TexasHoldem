@@ -1,6 +1,9 @@
 package Poker;
+
 import Dealer.*;
-import Layout.*;
+import Layout.CardLayout;
+import Layout.ChipLayout;
+import Layout.UserLayout;
 import User.Hand;
 import User.Player;
 import javafx.scene.paint.Color;
@@ -8,104 +11,107 @@ import javafx.scene.paint.Color;
 import java.util.*;
 
 /**
- * Created by Farhad on 07/10/15.
+ * Created by Farhad Atroshi on 07/10/15.
  */
 public class Poker {
-    // Dealer.Hand (52 cards)
-    Deck deck;
-
     // User.Player big (Status)
     public static int playerBig;
-    // All players
-    private List<Player> players;
     public static List<Card> tableCards;
     //
     public static int activeUser;
     public static double bet;
     public static double raise;
     public static double pott;
-
+    // Dealer.Hand (52 cards)
+    Deck deck;
     // Poker Graphic Elements
     PokerGraphic pokerGraphic;
     TableLogic table;
+    // All players
+    private List<Player> players;
+    private Map<Integer, Player> playersBestHand = new HashMap<>();
 
-    public Poker(){
+    public Poker() {
         //
         pokerGraphic = new PokerGraphic();
         // Poker logic
-        table           = new TableLogic();
+        table = new TableLogic();
         // 52 cards
-        deck            = new Deck();
+        deck = new Deck();
         // All players in the game
-        players         = new ArrayList<>();
+        players = new ArrayList<>();
         // Holder for 5 Cards
-        tableCards      = new ArrayList<>();
+        tableCards = new ArrayList<>();
         // Id of current selected user
-        activeUser      = 0;
+        activeUser = 0;
     }
 
-    public double getBet(){
+    public static int getPlayerBig() {
+        return playerBig;
+    }
+
+    public static void setPlayerBig(int playerId) {
+        playerBig = playerId;
+    }
+
+    public double getBet() {
         return bet;
     }
 
-    public double getRaise(){
+    public double getRaise() {
         return raise;
     }
 
-    public double getPott(){
+    public double getPott() {
         return pott;
     }
 
-    private Map<Integer,Player> playersBestHand = new HashMap<>();
-
-    private Player activePlayer(){
+    private Player activePlayer() {
         Player player = players.get(activeUser);
         return player;
     }
 
     public void raise() {
-        AlertWindow.show(" Raise"," Raise: " + players.get(activeUser).getUsername(), 200,100);
+        AlertWindow.show(" Raise", " Raise: " + players.get(activeUser).getUsername(), 200, 100);
         //System.out.println(players.get(activeUser) + ": Raise ");
 
-        if(oneActivePlayer()){
+        if (oneActivePlayer()) {
             //We got a winner
             setWinnerBG();
-        }else{
+        } else {
             // Set next user
             nextUser();
         }
 
     }
 
-    public void bet(){
+    public void bet() {
         // Check if player can bet
 
-        if(oneActivePlayer()){
+        if (oneActivePlayer()) {
             //We got a winner
             setWinnerBG();
-        }else{
+        } else {
             // Set next user
             nextUser();
         }
     }
 
-
-
-    public void call(){
-        if(oneActivePlayer()){
+    public void call() {
+        if (oneActivePlayer()) {
             //We got a winner
             setWinnerBG();
-        }else{
+        } else {
             // Set next user
             nextUser();
         }
     }
 
-    public void fold(){
-        if(oneActivePlayer()){
+    public void fold() {
+        if (oneActivePlayer()) {
             //We got a winner
 
-        }else{
+        } else {
             //Set active = false
             removePlayerInGame();
             //Do somthing with user cards
@@ -119,26 +125,26 @@ public class Poker {
         }
     }
 
-    public void check(){
-        if(oneActivePlayer()){
+    public void check() {
+        if (oneActivePlayer()) {
             //We got a winner
             setWinnerBG();
-        }else{
+        } else {
             // Set next user
             nextUser();
         }
     }
 
-    public List<Card> getPlayerCards(){
+    public List<Card> getPlayerCards() {
 
         List<Card> cards = new ArrayList<>();
         for (int playerId = 0; playerId < players.size(); playerId++) {
             Hand hand = players.get(playerId).getHand();
             for (int j = 0; j < hand.getNoOfCards(); j++) {
                 Card card = hand.getCard(j);
-                for (CardLayout cl: CardLayout.values()){
+                for (CardLayout cl : CardLayout.values()) {
                     // Set x,y for inside layout
-                    if( j == cl.getCardId()){
+                    if (j == cl.getCardId()) {
                         card.getImageView().setX(cl.getX());
                         card.getImageView().setY(cl.getY());
                         card.getImageView().setRotate(cl.getRotation());
@@ -146,8 +152,8 @@ public class Poker {
                         //card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
                     }
                     // Set x,y for layout
-                    for (UserLayout ul: UserLayout.values()){
-                        if( playerId == ul.getUserId()){
+                    for (UserLayout ul : UserLayout.values()) {
+                        if (playerId == ul.getUserId()) {
                             card.getImageView().setLayoutX(ul.getLayoutX() + 200);
                             card.getImageView().setLayoutY(ul.getLayoutY());
                             Animation.fadeIn(card);
@@ -162,12 +168,12 @@ public class Poker {
         return cards;
     }
 
-    public String getCurrentPlayerUsername(){
+    public String getCurrentPlayerUsername() {
         return players.get(activeUser).getUsername();
     }
 
-    public Player addPlayer(String username, double balance){
-        Player player = new Player(username,balance);
+    public Player addPlayer(String username, double balance) {
+        Player player = new Player(username, balance);
         players.add(player);
 
         // Player Index in list players
@@ -183,18 +189,18 @@ public class Poker {
         return player;
     }
 
-    public PokerGraphic getPokerGraphic(){
+    public PokerGraphic getPokerGraphic() {
         return this.pokerGraphic;
     }
 
-    public void removePlayerInGame(){
+    public void removePlayerInGame() {
         getPlayer(activeUser).active(false);
         System.out.println(players.get(activeUser).getUsername() + " Removed, ID: " + activeUser);
     }
 
-    public void dealTwoCards(){
+    public void dealTwoCards() {
         for (int j = 0; j < this.players.size(); j++) {
-         // Deal 2 cards for each player
+            // Deal 2 cards for each player
             for (int i = 0; i < 2; i++) {
                 players.get(j).getHand().addCard(deck.dealCard());
             }
@@ -212,32 +218,24 @@ public class Poker {
         }
     }
 
-    public List<Player> getPlayers(){
+    public List<Player> getPlayers() {
         return this.players;
     }
 
-    public Player getPlayer(int index){
+    public Player getPlayer(int index) {
         return this.players.get(index);
     }
 
-    public <T> boolean inArrayList(int value, List<T> list){
+    public <T> boolean inArrayList(int value, List<T> list) {
         return list.contains(value);
     }
 
-    public boolean inArray(int value, int[] array){
+    public boolean inArray(int value, int[] array) {
 
         return Arrays.asList(array).contains(value);
     }
 
-    public static void setPlayerBig(int playerId){
-        playerBig = playerId;
-    }
-
-    public static int getPlayerBig(){
-        return playerBig;
-    }
-
-    public Integer[] bestHand(Hand hand){
+    public Integer[] bestHand(Hand hand) {
 
         //tmpRqBestHand
         Integer[] tmpRqBestHand = new Integer[4];
@@ -247,21 +245,21 @@ public class Poker {
         // Store rank and quantity of suit
         Map<Integer, Integer> rqCards = getRqCards(hand);
         // Store rank and suit
-        Map<Integer,Integer> rsCards = getRsCards(hand);
+        Map<Integer, Integer> rsCards = getRsCards(hand);
 
         // Highest Dealer.Card, Pair, Three of a kind, Four of a kind
         tmpRqBestHand = getPairThreeFour(rqCards);
         // Check Royal Flush, Straight flush, flush
         tmpRsBestHand = getFlush(rsCards);
 
-        if(tmpRsBestHand[0] > tmpRqBestHand[0]){
+        if (tmpRsBestHand[0] > tmpRqBestHand[0]) {
             bestHand = tmpRsBestHand;
-        }else{
+        } else {
             bestHand = tmpRqBestHand;
         }
 
-        for (Poker_ p: Poker_.values()){
-            if(bestHand[0] == p.getRank()){
+        for (Poker_ p : Poker_.values()) {
+            if (bestHand[0] == p.getRank()) {
                 System.out.println(p.name());
             }
         }
@@ -269,10 +267,10 @@ public class Poker {
         return bestHand;
     }
 
-    public Map<Integer, Integer> getRqCards(Hand hand){
+    public Map<Integer, Integer> getRqCards(Hand hand) {
 
         // Store card rank, quantity
-        Map<Integer,Integer> rqCards = new HashMap<>();
+        Map<Integer, Integer> rqCards = new HashMap<>();
         for (int i = 0; i < hand.getNoOfCards(); i++) {
             Card card = hand.getCard(i);
             // Check if the key exists
@@ -282,7 +280,7 @@ public class Poker {
                 value = rqCards.get(card.getRank());
                 // Quantity
                 value += 1;
-                rqCards.put(card.getRank(),  value );
+                rqCards.put(card.getRank(), value);
             } else {
                 // No such key
                 rqCards.put(card.getRank(), 1);
@@ -292,10 +290,10 @@ public class Poker {
         return rqCards;
     }
 
-    public Map<Integer, Integer> getRsCards(Hand hand){
+    public Map<Integer, Integer> getRsCards(Hand hand) {
 
         // Store card rank, suit
-        Map<Integer,Integer> rsCards = new HashMap<>();
+        Map<Integer, Integer> rsCards = new HashMap<>();
         for (int i = 0; i < hand.getNoOfCards(); i++) {
             Card card = hand.getCard(i);
 
@@ -304,8 +302,8 @@ public class Poker {
         return rsCards;
     }
 
-    public Integer[] getPairThreeFour(Map<Integer, Integer> rqCards){
-        Integer[] bestHand = {0,0,0,0};
+    public Integer[] getPairThreeFour(Map<Integer, Integer> rqCards) {
+        Integer[] bestHand = {0, 0, 0, 0};
 
         // Check quantities of the cards
         int firstQuantity = 0;
@@ -322,7 +320,7 @@ public class Poker {
             // Check for
 
             // Get Highest firstQuantity, secondQuantity
-            if(quantity > firstQuantity){
+            if (quantity > firstQuantity) {
                 // First update secondQuantity
                 // Else we will loose that information
                 secondQuantity = firstQuantity;
@@ -335,7 +333,7 @@ public class Poker {
                 bestHand[1] = quantity;
 
                 //System.out.println("Current best hand: " + name);
-            }else if(quantity <= firstQuantity && quantity > secondQuantity){
+            } else if (quantity <= firstQuantity && quantity > secondQuantity) {
                 // MOST BE PAIR
                 secondQuantity = quantity;
                 // Get rank
@@ -345,7 +343,7 @@ public class Poker {
             }
 
             // GET Highest rank for fifth card
-            if(rank > highestRank && rank != firstQuantityRank && rank != secondQuantityRank){
+            if (rank > highestRank && rank != firstQuantityRank && rank != secondQuantityRank) {
                 highestRank = rank;
                 // Update bestHand
                 bestHand[3] = highestRank;
@@ -365,8 +363,8 @@ public class Poker {
         // STORE THE RANK AFTER FOUND WHAT WE GOT
         // CREATE 2 NEW VAR, FOR RANK
 
-        for (Poker_ p: Poker_.values()){
-            if(bestHand[1] == p.getFirstQuantity() && bestHand[2] == p.getSecondQuantity()){
+        for (Poker_ p : Poker_.values()) {
+            if (bestHand[1] == p.getFirstQuantity() && bestHand[2] == p.getSecondQuantity()) {
                 bestHand[0] = p.getRank();
                 // Compare rank with result from getFlush
                 bestHand[1] = firstQuantityRank;
@@ -378,8 +376,8 @@ public class Poker {
         return bestHand;
     }
 
-    public Integer[] getFlush(Map<Integer, Integer> rsCards){
-        Integer[] tmpBestHand = {0,0,0,0};
+    public Integer[] getFlush(Map<Integer, Integer> rsCards) {
+        Integer[] tmpBestHand = {0, 0, 0, 0};
 
         // rank
         Integer pRank = 0;
@@ -394,30 +392,30 @@ public class Poker {
             //System.out.println("Dealer.Rank_: " + rank + ", Dealer.Suit_: " + suit);
 
             // Check straight
-            if(descByOne(pRank,rank)){
+            if (descByOne(pRank, rank)) {
                 rankCounter++;
                 //System.out.println(counter);
-            }else{
+            } else {
                 rankCounter = 1;
 
             }
             // Check flush
-            if(pSuit == suit){
+            if (pSuit == suit) {
                 suitCounter++;
-            }else{
+            } else {
                 suitCounter = 1;
             }
             // Store value int tmp var
             pRank = rank;
             pSuit = suit;
 
-            if(rankCounter >= 5 && suitCounter >= 5){
+            if (rankCounter >= 5 && suitCounter >= 5) {
                 // Royal flush or Straight flush
-                if(rank == Rank_.ACE.getRank()){
+                if (rank == Rank_.ACE.getRank()) {
                     // Royal Flush
                     tmpBestHand[0] = 10;
                     //print("Royal Flush");
-                }else{
+                } else {
                     // Straight Flush
                     // Store the highest card which should be this one
                     //print("Straight Flush, highest card: " +rank );
@@ -426,7 +424,7 @@ public class Poker {
                     tmpBestHand[0] = 9;
                     tmpBestHand[3] = rank;
                 }
-            }else if(rankCounter >= 5){
+            } else if (rankCounter >= 5) {
                 // Straight
                 // Store the highest card which should be this one
                 //print("Straight, highest card: " + rank);
@@ -434,7 +432,7 @@ public class Poker {
                 // Store values
                 tmpBestHand[0] = 5;
                 tmpBestHand[3] = rank;
-            }else if(suitCounter >= 5){
+            } else if (suitCounter >= 5) {
                 // Wer got flush
                 //print("Flush");
                 // Store values
@@ -447,44 +445,44 @@ public class Poker {
         return tmpBestHand;
     }
 
-    public boolean descByOne(int a, int b){
+    public boolean descByOne(int a, int b) {
         boolean desc = false;
-        if(a == (b-1)){
+        if (a == (b - 1)) {
             desc = true;
         }
-        return  desc;
+        return desc;
     }
 
-    public void nextUser(){
+    public void nextUser() {
         // Add to activeUser
         int nextActiveUser = activeUser + 1;
         // Find next active User
-        if(nextActiveUser < players.size()){
+        if (nextActiveUser < players.size()) {
             activeUser = nextActiveUser;
             // Find and set next active player
-            if(setActivePlayer()){
+            if (setActivePlayer()) {
                 // Show current selected user
                 pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
                 pokerGraphic.setSliderMax(players.get(activeUser).getBalance());
             }
 
 
-        }else{
+        } else {
             // Reset
             activeUser = 0;
-            if(setActivePlayer()){
+            if (setActivePlayer()) {
                 // Show current selected user
                 pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
-                pokerGraphic.updateSlider(players.get(activeUser),bet,raise);
+                pokerGraphic.updateSlider(players.get(activeUser), bet, raise);
             }
         }
     }
 
-    public int getActivePlayers(){
+    public int getActivePlayers() {
         int activePlayers = 0;
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            if(player.isActive()){
+            if (player.isActive()) {
                 activePlayers++;
             }
         }
@@ -492,21 +490,21 @@ public class Poker {
         return activePlayers;
     }
 
-    public boolean oneActivePlayer(){
+    public boolean oneActivePlayer() {
         boolean onePlayer = false;
-        if(getActivePlayers() == 1){
+        if (getActivePlayers() == 1) {
             onePlayer = true;
         }
 
         return onePlayer;
     }
 
-    public boolean setActivePlayer(){
+    public boolean setActivePlayer() {
         boolean foundUser = false;
         for (int i = activeUser; i < players.size(); i++) {
             Player player = players.get(i);
             // Check if player still in game
-            if(player.isActive()){
+            if (player.isActive()) {
                 activeUser = i;
                 System.out.println("activeUser: " + activeUser + " " + player.getUsername());
                 //

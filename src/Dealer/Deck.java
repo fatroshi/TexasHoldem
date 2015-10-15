@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Farhad on 29/09/15.
+ * Created by Farhad Atroshi on 29/09/15.
  */
 public class Deck {
 
@@ -14,7 +14,7 @@ public class Deck {
     /**
      * Create 52 cards and shuffle them
      */
-    public Deck(){
+    public Deck() {
         cards = new ArrayList<>();
         createDeck();
         shuffleCards();
@@ -28,7 +28,7 @@ public class Deck {
     /**
      * Create deck with help an enums
      */
-    public void createDeck(){
+    public void createDeck() {
         // We need a counter for the image files.
         // They are numbered 1-52
         // Ace = 1.png,
@@ -36,11 +36,11 @@ public class Deck {
 
         String imgFolder = "../resource/cards/";
         String imgPath;
-        for (Rank_ rank: Rank_.values()){
-            for (Suit_ suit: Suit_.values()){
+        for (Rank_ rank : Rank_.values()) {
+            for (Suit_ suit : Suit_.values()) {
                 imgPath = imgFolder + Integer.toString(fileCounter) + ".png";
                 String imgBackPath = imgFolder + "b1fv.png";
-                cards.add(new Card(rank.getRank(),suit.getSuit(),imgPath,imgBackPath));
+                cards.add(new Card(rank.getRank(), suit.getSuit(), imgPath, imgBackPath));
                 fileCounter++;
             }
         }
@@ -48,60 +48,64 @@ public class Deck {
 
     /**
      * Get no of cards in deck
+     *
      * @return no of cards in deck
      */
-    public int getNoOfCards(){
+    public int getNoOfCards() {
 
         return cards.size();
     }
 
-    public List<Card> getCards(){
+    public List<Card> getCards() {
         return this.cards;
     }
 
     /**
      * Deal card if deck is not empty
+     *
      * @return
      * @throws NoSuchCardException
      */
     public Card dealCard() throws NoSuchCardException {
-        if(cards.isEmpty()){
+        if (cards.isEmpty()) {
             throw new NoSuchCardException("No more cards left");
-        }else {
+        } else {
             return removeCard();
         }
     }
 
     /**
      * Remove the first card
+     *
      * @return the removed card
      */
-    public Card removeCard(){
+    public Card removeCard() {
         return cards.remove(0);
     }
 
     /**
      * Shuffle created cards
      */
-    public void shuffleCards(){
+    public void shuffleCards() {
         Collections.shuffle(cards);
     }
 
     /**
      * Sort cards by Suit_
 
-    public void sortBySuit(){
-        Collections.sort(cards, new CardBySuit());
-    }*/
+     public void sortBySuit(){
+     Collections.sort(cards, new CardBySuit());
+     }*/
 
     /**
      * Sort cards by rank
+     * <p>
+     * public void sortByRank(){
+     * Collections.sort(cards, new CardByRank());
+     * }
+     */
 
-    public void sortByRank(){
-        Collections.sort(cards, new CardByRank());
-    }*/
-
-    public void  fill(){
+    public void fill() {
         // Clear deck
         cards.clear();
         // Create 52 cards
@@ -110,7 +114,7 @@ public class Deck {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
 
         return null;
     }

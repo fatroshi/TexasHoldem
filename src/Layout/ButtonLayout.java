@@ -1,9 +1,7 @@
 package Layout;
 
-import javafx.scene.paint.Color;
-
 /**
- * Created by Farhad on 14/10/15.
+ * Created by Farhad Atroshi on 14/10/15.
  */
 public enum ButtonLayout {
     // USER BTN

@@ -1,31 +1,24 @@
 /**
- * Created by Farhad on 12/10/15.
+ * Created by Farhad Atroshi on 12/10/15.
  */
 
-import Layout.ButtonLayout;
-import Layout.CardLayout;
-import Layout.ChipLayout;
-import Layout.UserLayout;
-import Poker.*;
-import Dealer.*;
-import User.*;
-
-import javafx.animation.*;
+import Poker.GameBackground;
+import Poker.GameBackground_;
 import javafx.application.Application;
-import javafx.event.Event;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import sun.awt.util.IdentityArrayList;
-import java.util.*;
-import javafx.event.EventHandler;
-import javafx.scene.shape.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainView extends Application{

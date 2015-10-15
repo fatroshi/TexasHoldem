@@ -4,20 +4,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * Created by Farhad on 07/10/15.
+ * Created by Farhad Atroshi on 07/10/15.
  */
-abstract public class Picture extends ImageView{
+abstract public class Picture extends ImageView {
     private ImageView imageView;
     private Image image;
     private Image imageBack;
     private int toggle = 0;
 
 
-    public Picture(){
+    public Picture() {
 
     }
 
-    public Picture(String src){
+    public Picture(String src) {
         // init object
         this.imageView = new ImageView();
         // Load image in container
@@ -26,7 +26,7 @@ abstract public class Picture extends ImageView{
         imageView.setImage(this.image);
     }
 
-    public Picture(String srcFront,String srcBack){
+    public Picture(String srcFront, String srcBack) {
         // init object
         this.imageView = new ImageView();
         // Load image in container
@@ -37,7 +37,7 @@ abstract public class Picture extends ImageView{
         setImageBackView();
     }
 
-    public Picture(String src,double x, double y){
+    public Picture(String src, double x, double y) {
         // init object
         this.imageView = new ImageView();
         // Load image in container
@@ -50,19 +50,19 @@ abstract public class Picture extends ImageView{
         this.setY(y);
     }
 
-    public void setImageFrontView(){
+    public void setImageFrontView() {
         this.imageView.setImage(this.image);
     }
 
-    public void setImageBackView(){
+    public void setImageBackView() {
         this.imageView.setImage(this.imageBack);
     }
 
-    public void toggleImage(){
-        if(this.toggle == 0){
+    public void toggleImage() {
+        if (this.toggle == 0) {
             this.toggle = 1;
             setImageFrontView();
-        }else if(this.toggle == 1){
+        } else if (this.toggle == 1) {
             this.toggle = 0;
             setImageBackView();
         }
@@ -70,10 +70,9 @@ abstract public class Picture extends ImageView{
 
     }
 
-    public ImageView getImageView(){
+    public ImageView getImageView() {
         return this.imageView;
     }
-
 
 
 }

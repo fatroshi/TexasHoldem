@@ -1,7 +1,7 @@
 package Layout;
 
 /**
- * Created by Farhad on 13/10/15.
+ * Created by Farhad Atroshi on 13/10/15.
  */
 public enum ChipLayout {
     //

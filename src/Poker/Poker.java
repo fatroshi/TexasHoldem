@@ -1,15 +1,16 @@
 package Poker;
-
 import Dealer.*;
-import User.*;
+import Layout.*;
+
+
+import User.Hand;
+import User.Player;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-
-
-import java.util.List;
 
 
 
@@ -34,6 +35,7 @@ public class Poker {
     private List<Label> usernameLabels;
     private List<Label> balanceLabels;
     private List<Rectangle> playersBG;
+    private List<Button> buttons;
 
 
 
@@ -46,6 +48,8 @@ public class Poker {
         usernameLabels  = new ArrayList<>();
         // Players balance
         balanceLabels   = new ArrayList<>();
+        // Check, Bet... buttons
+        buttons         = new ArrayList<>();
         // All players in the game
         players         = new ArrayList<>();
         // Holder for 5 Cards
@@ -60,51 +64,62 @@ public class Poker {
         AlertWindow.show(" Raise"," Raise: " + players.get(activeUser).getUsername(), 200,100);
         //System.out.println(players.get(activeUser) + ": Raise ");
 
-        // Set next user
-        nextUser();
-        // Set for next user
-        //setActiveUser();
+        if(oneActivePlayer()){
+            //We got a winner
+            setWinnerBG();
+        }else{
+            // Set next user
+            nextUser();
+        }
+
     }
 
     public void bet(){
-
-        //System.out.println(players.get(activeUser).getUsername()  + ": Bet ");
-
-        // Set next user
-        nextUser();
-        // Set for next user
-        //setActiveUser();
+        if(oneActivePlayer()){
+            //We got a winner
+            setWinnerBG();
+        }else{
+            // Set next user
+            nextUser();
+        }
     }
 
     public void call(){
-
-        //System.out.println(players.get(activeUser).getUsername()  + ": Call ");
-
-        // Set next user
-        nextUser();
-        // Set for next user
-        //setActiveUser();
+        if(oneActivePlayer()){
+            //We got a winner
+            setWinnerBG();
+        }else{
+            // Set next user
+            nextUser();
+        }
     }
 
     public void fold(){
-        removePlayerInGame();
-        //Do somthing with user cards
-        Card c1 = players.get(activeUser).getHand().getCard(0);
-        Card c2 = players.get(activeUser).getHand().getCard(1);
+        if(oneActivePlayer()){
+            //We got a winner
+            nextUser();
+        }else{
+            //Set active = false
+            removePlayerInGame();
+            //Do somthing with user cards
+            Card c1 = players.get(activeUser).getHand().getCard(0);
+            Card c2 = players.get(activeUser).getHand().getCard(1);
 
-        Animation.fadeOut(c1);
-        Animation.fadeOut(c2);
-        // Set next user
-        nextUser();
-        // Set for next user
-        //setActiveUser();
+            Animation.fadeOut(c1);
+            Animation.fadeOut(c2);
+            // Set next user
+            nextUser();
+        }
     }
 
     public void check(){
-        // Set next user
-        nextUser();
-        // Set for next user
-        //setActiveUser();
+        if(oneActivePlayer()){
+            //We got a winner
+            setWinnerBG();
+        }else{
+            // Set next user
+            nextUser();
+        }
     }
 
     public String getCurrentPlayerUsername(){
@@ -146,7 +161,7 @@ public class Poker {
         // Index of the player in array
         int id = players.indexOf(player);
         // Create Label for balance
-        Label balance = new Label(player.getUsername());
+        Label balance = new Label(String.valueOf(player.getBalance()));
         // Set x,y for label
         for (Table_ t: Table_.values()){
             if(id == t.getUserId()){
@@ -464,39 +479,117 @@ public class Poker {
         return  desc;
     }
 
-    public int getPlayersInGame(){
-        int counter =0;
-        for (int i = 0; i < players.size(); i++) {
-            if(players.get(i).isActive()){
-                counter++;
-            }
-        }
-        return counter;
-    }
-
     public void nextUser(){
         // Add to activeUser
         int nextActiveUser = activeUser + 1;
         // Find next active User
         if(nextActiveUser < players.size()){
             activeUser = nextActiveUser;
-            for (int i = activeUser; i < players.size(); i++) {
-                Player player = players.get(i);
-                // Check if player still in game
-                if(player.isActive()){
-                    activeUser = i;
-                    // Found user, break the loop
-                    break;
-                }
-            }
-            System.out.println("activeUser: " + activeUser);
-        }else{
+            // Find and set next active player
+            if(setActivePlayer()){
+                // Show current selected user
+                setUserBG(activeUser, Color.DARKGREEN);
 
-            // activeUser = 0 --> First user
-            // Reset var to no selected user
-            activeUser = -1;
+            }
+
+
+        }else{
+            // Reset
+            activeUser = 0;
+            if(setActivePlayer()){
+                // Show current selected user
+                setUserBG(activeUser, Color.DARKGREEN);
+            }
+        }
+    }
+
+    public int getActivePlayers(){
+        int activePlayers = 0;
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
+            if(player.isActive()){
+                activePlayers++;
+            }
+        }
+
+        return activePlayers;
+    }
+
+    public boolean oneActivePlayer(){
+        boolean onePlayer = false;
+        if(getActivePlayers() == 1){
+            onePlayer = true;
+        }
+
+        return onePlayer;
+    }
+
+
+    public boolean setActivePlayer(){
+        boolean foundUser = false;
+        for (int i = activeUser; i < players.size(); i++) {
+            Player player = players.get(i);
+            // Check if player still in game
+            if(player.isActive()){
+                activeUser = i;
+                System.out.println("activeUser: " + activeUser + " " + player.getUsername());
+                //
+                foundUser = true;
+                // Found user, break the loop
+                break;
+            }
+        }
+
+        return foundUser;
+    }
+
+    public void setUserBG(int index, Color color){
+        // Change color of player bg
+        playersBG.get(index).setFill(color);
+        balanceLabels.get(index).setTextFill(Color.WHITESMOKE);
+
+        for (int i = 0; i < playersBG.size(); i++) {
+            if(i !=index){
+                playersBG.get(i).setFill(Color.BLACK);
+                balanceLabels.get(i).setTextFill(Color.GREEN);
+            }
+        }
+    }
+
+    public void setWinnerBG() {
+        // Change color of player bg
+        playersBG.get(activeUser).setFill(Color.GOLD);
+        balanceLabels.get(activeUser).setTextFill(Color.BLACK);
+        usernameLabels.get(activeUser).setTextFill(Color.BLACK);
+    }
+
+
+    public void createButtons(){
+        Button btn;
+        for (ButtonLayout b: ButtonLayout.values()){
+            btn = new Button(b.name());
+            // Style btn
+            String css = "-fx-stroke: #4e5b65; " +
+                    "-fx-background-color:" + b.getColor() +";" +
+                    "-fx-stroke: green;"
+                    ;
+            btn.setStyle(css);
+            btn.setTextFill(Color.WHITESMOKE);
+            // Set size
+            btn.setMinWidth(90);
+            btn.setMinHeight(40);
+
+            // Set x,y layout
+            btn.setLayoutX(b.getX());
+            btn.setLayoutY(b.getY());
+
+            // Assign EventHandler
+            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(b,this,btn));
+            // Add to list
+            buttons.add(btn);
         }
 
     }
+
 
 }

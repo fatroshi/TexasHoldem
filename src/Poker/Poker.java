@@ -100,7 +100,7 @@ public class Poker {
                 System.out.println(" 4 round");
 
                 // Check who the winner is
-                getWinner();
+                //getWinner();
 
             }
         }
@@ -131,12 +131,20 @@ public class Poker {
 
             if(rank[0] > topRank[0]){
                 winner = players.indexOf(player);
+                System.arraycopy(rank, 0, topRank, 0, 4);
+            }else if(rank[0] == topRank[0] && rank[1] > topRank[1]){
+                winner = players.indexOf(player);
+                System.arraycopy(rank, 0, topRank, 0, 4);
+            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] > topRank[2]){
+                winner = players.indexOf(player);
+                System.arraycopy(rank, 0, topRank, 0, 4);
+            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] > topRank[3]){
+                winner = players.indexOf(player);
+                System.arraycopy(rank, 0, topRank, 0, 4);
             }
-
-
         }
 
-        System.out.println("Winner id" + winner);
+        System.out.println("Winner is " + players.get(winner).getUsername());
 
     }
 

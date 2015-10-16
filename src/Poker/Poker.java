@@ -99,56 +99,39 @@ public class Poker {
                 // CHECK WHO ONE
                 System.out.println(" 4 round");
 
+                // Check who the winner is
+                getWinner();
 
-                Map<Integer[], Player> bestHands = new HashMap<>();
-
-                for (int i = 0; i < players.size(); i++) {
-                    Hand hand = players.get(i).getHand();
-                    bestHands.put(bestHand(hand), players.get(i));
-                }
-
-
-                // Store hand rank
-                Integer[] topRank = {0,0,0,0};
-                int sameHandCounter = 0;
-                Player winner = null;
-                for (Map.Entry<Integer[], Player> entry : bestHands.entrySet())
-                {
-                    Integer[] rank = entry.getKey();
-                    Player player = entry.getValue();
-
-                    System.out.println("Hand of: " + player.getUsername());
-
-                    for (int i = 0; i < rank.length; i++) {
-                        System.out.print(" " + rank[i]);
-                    }
-
-
-                    System.out.println();
-
-                    for (int i = 3; i < rank.length; i++) {
-                        if(rank[i] == topRank[i]) {
-                            sameHandCounter++;
-                            continue;
-
-                        }else if(rank[i] > topRank[i]){
-                            // Found the new winner
-                            winner = player;
-                            System.out.println(" New winner " + player.getUsername());
-                            System.arraycopy(rank,0,topRank,0,4);
-                            break;
-                        }
-                    }
-
-                    if(sameHandCounter == 5){
-                        System.out.println("Both players have same hand!!!");
-                    }
-
-                }
             }
         }
 
         return rounds;
+    }
+
+
+    public void getWinner() {
+        Map<Integer[], Player> bestHands = new HashMap<>();
+
+        for (int i = 0; i < players.size(); i++) {
+            Hand hand = players.get(i).getHand();
+            bestHands.put(bestHand(hand), players.get(i));
+        }
+
+        // Store hand rank
+        Integer[] topRank = {0, 0, 0, 0};
+        int sameHandCounter = 0;
+        Player winner = null;
+        for (Map.Entry<Integer[], Player> entry : bestHands.entrySet()) {
+            Integer[] rank = entry.getKey();
+            Player player = entry.getValue();
+
+            //System.arraycopy(rank, 0, topRank, 0, 4);
+
+            System.out.println("Hand of: " + player.getUsername());
+
+
+
+        }
     }
 
     public void raise() {
@@ -215,6 +198,12 @@ public class Poker {
         }
     }
 
+    /**
+     * Set all properties for the cards,
+     * x,y,layoutX,layoutY
+     * Animation, Show front/Back
+     * @return list of cards for each player
+     */
     public List<Card> getPlayerCards() {
 
         List<Card> cards = new ArrayList<>();
@@ -249,6 +238,13 @@ public class Poker {
         return cards;
     }
 
+    /**
+     * Adding player to the players list
+     * Adding username and balance to list in pokerGraphic object
+     * @param username
+     * @param balance
+     * @return
+     */
     public Player addPlayer(String username, double balance) {
         Player player = new Player(username, balance);
         players.add(player);
@@ -266,15 +262,25 @@ public class Poker {
         return player;
     }
 
+    /**
+     * Returns the PokerGraphic object
+     * @return
+     */
     public PokerGraphic getPokerGraphic() {
         return this.pokerGraphic;
     }
 
+    /**
+     * Removes player from the game by calling the players method player.active(false);
+     */
     public void removePlayerInGame() {
         getPlayer(activeUser).active(false);
         System.out.println(players.get(activeUser).getUsername() + " Removed, ID: " + activeUser);
     }
 
+    /**
+     * Deals tho cards for each player
+     */
     public void dealTwoCards() {
         for (int j = 0; j < this.players.size(); j++) {
             // Deal 2 cards for each player
@@ -285,6 +291,11 @@ public class Poker {
         }
     }
 
+    /**
+     * Deals cards to table and players
+     * this is used for the 4 table cards not the first 2 cards for players'
+     * @param quantityOfDeals
+     */
     public void dealCards(int quantityOfDeals) {
         // Deal same 5 cards to each player
         for (int i = 0; i < quantityOfDeals; i++) {
@@ -298,11 +309,19 @@ public class Poker {
         }
     }
 
-
+    /**
+     * Get list of all players in the game
+     * @return list of players
+     */
     public List<Player> getPlayers() {
         return this.players;
     }
 
+    /**
+     * Get player from players list by index
+     * @param index
+     * @return Player
+     */
     public Player getPlayer(int index) {
         return this.players.get(index);
     }
@@ -556,6 +575,10 @@ public class Poker {
         return desc;
     }
 
+    /**
+     * Sets the new active player and
+     * updates game elements by calling method update method
+     */
     public void nextUser() {
         // Store old activeUser
         oldActiveUser = activeUser;
@@ -578,6 +601,11 @@ public class Poker {
         }
     }
 
+    /**
+     * Game control,
+     * updates graphic elements
+     * (Explain more when done)
+     */
     public void updateGame(){
         if (setActivePlayer()) {
             // Check round
@@ -635,6 +663,10 @@ public class Poker {
         return activePlayers;
     }
 
+    /**
+     * Check if we only have one active player
+     * @return true if only one player is active
+     */
     public boolean oneActivePlayer() {
         boolean onePlayer = false;
         if (getActivePlayers() == 1) {
@@ -645,7 +677,7 @@ public class Poker {
     }
 
     /**
-     * Check if we could find an activePlayer
+     * Check if we could find next activePlayer
      * @return true if player was found
      */
     public boolean setActivePlayer() {

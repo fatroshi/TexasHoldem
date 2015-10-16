@@ -47,6 +47,9 @@ public class BtnClickHandler implements EventHandler<Event> {
                 c.getGame().nextUser();
                 break;
             case "CHECK":
+                //
+                //c.getGame().round(); controller should check round!
+                c.getRound();
                 // Set next active user
                 c.getGame().check();
                 break;

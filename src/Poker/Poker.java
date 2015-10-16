@@ -71,7 +71,7 @@ public class Poker {
      * Check game round,
      * This will be used for knowing when to show cards
      */
-    public void round(){
+    public int round(){
         // 1. How many active players
         // 2. if the counter = (acive players) - 1, one round
         // When to reset the counter ?
@@ -81,15 +81,21 @@ public class Poker {
             System.out.println("New round");
             // one fill round
             playCounter = 0;
-            // First round
+            // Increase rounds
+            rounds++;
+            if(this.rounds == 1){       // First round
                 // Show 1-3 cards
-
-            // Second round
+                System.out.println(" First rount ");
+            }else if(this.rounds == 2){ // Second round
                 // 3-4
-            // Third round
+                System.out.println(" Second round");
+            }else if(this.rounds == 3){ // Third round
                 // 4-5
-
+                System.out.println(" Third round");
+            }
         }
+
+        return rounds;
     }
 
 

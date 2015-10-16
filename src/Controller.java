@@ -15,10 +15,13 @@ public class Controller {
     private Poker game;
     // Place holder for items
     private Pane root;
+    // Round
+    int round;
 
     public Controller() {
         game = new Poker();
         root = new Pane();
+        round = 0;
     }
 
     public Pane getRootPane() {
@@ -88,6 +91,7 @@ public class Controller {
             }
             card.getImageView().setLayoutX(240);
             card.getImageView().setLayoutY(230);
+
             this.root.getChildren().add(card.getImageView());
         }
 
@@ -126,6 +130,26 @@ public class Controller {
         root.getChildren().add(game.getPokerGraphic().getSliderLabel());
         root.getChildren().add(game.getPokerGraphic().getStatusLabel());
         root.getChildren().add(game.getPokerGraphic().getSlider());
+    }
+
+    public void getRound(){
+        int round = this.game.round();
+
+        if(round > this.round) {
+            this.round = round;
+
+            switch (this.round) {
+                case 1:
+                    this.getTableCards(0, 3);
+                    break;
+                case 2:
+                    this.getTableCards(3, 4);
+                    break;
+                case 3:
+                    this.getTableCards(4, 5);
+                    break;
+            }
+        }
     }
 
 

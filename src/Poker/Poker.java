@@ -116,11 +116,11 @@ public class Poker {
             Hand hand = players.get(i).getHand();
             bestHands.put(bestHand(hand), players.get(i));
         }
-
         // Store hand rank
         Integer[] topRank = {0, 0, 0, 0};
+
         int sameHandCounter = 0;
-        Player winner = null;
+        int winner = -1;
         for (Map.Entry<Integer[], Player> entry : bestHands.entrySet()) {
             Integer[] rank = entry.getKey();
             Player player = entry.getValue();
@@ -129,9 +129,15 @@ public class Poker {
 
             System.out.println("Hand of: " + player.getUsername());
 
+            if(rank[0] > topRank[0]){
+                winner = players.indexOf(player);
+            }
 
 
         }
+
+        System.out.println("Winner id" + winner);
+
     }
 
     public void raise() {
@@ -353,9 +359,14 @@ public class Poker {
         tmpRsBestHand = getFlush(rsCards);
 
         // Get the best hand
+        // This might look like a strange logic with the extra else
+        // but we do this because we are interested in Rank rather than suit
         if (tmpRsBestHand[0] > tmpRqBestHand[0]) {
             bestHand = tmpRsBestHand;
-        } else {
+        } else if(tmpRsBestHand[0] < tmpRqBestHand[0]) {
+            bestHand = tmpRqBestHand;
+        } else{
+            //
             bestHand = tmpRqBestHand;
         }
 
@@ -432,7 +443,7 @@ public class Poker {
         for (Map.Entry<Integer, Integer> entry : rqCards.entrySet()) {
             Integer rank = entry.getKey();
             Integer quantity = entry.getValue();
-            System.out.println("Dealer.Rank_ : " + rank + ", Quantity: " + quantity);
+            //System.out.println("Rank_ : " + rank + ", Quantity: " + quantity);
 
             // Check for
 

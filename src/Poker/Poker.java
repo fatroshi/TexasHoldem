@@ -38,6 +38,9 @@ public class Poker {
     private int playCounter;
 
     public Poker() {
+        // Current bet
+        bet = 100;
+
         //
         pokerGraphic = new PokerGraphic();
         // Poker logic
@@ -52,6 +55,7 @@ public class Poker {
         activeUser = 0;
         // Store player and best hand for the player
         playersBestHand = new HashMap<>();
+
     }
 
     public static int getPlayerBig() {
@@ -101,13 +105,6 @@ public class Poker {
 
                 // Check who the winner is
                 //getWinner();
-                // Show table cards
-                System.out.println("****************************");
-                System.out.println("Table cards");
-                for (int i = 0; i < tableCards.size(); i++) {
-                    System.out.println(tableCards.get(i).getRank() + " ");
-                }
-                System.out.println("****************************");
             }
         }
 
@@ -115,7 +112,7 @@ public class Poker {
     }
 
 
-    public void getWinner() {
+    public Player getWinner() {
         Map<Integer[], Player> bestHands = new HashMap<>();
 
         for (int i = 0; i < players.size(); i++) {
@@ -130,12 +127,6 @@ public class Poker {
         for (Map.Entry<Integer[], Player> entry : bestHands.entrySet()) {
             Integer[] rank = entry.getKey();
             Player player = entry.getValue();
-
-            //System.arraycopy(rank, 0, topRank, 0, 4);
-
-            System.out.print("Hand of: " + player.getUsername() + " " + rank[0] + " " + rank[1] + " " + rank[2] + " " + rank[3]);
-            System.out.println();
-            System.out.println("----------------------------------------");
 
             if(rank[0] > topRank[0]){
                 winner = players.indexOf(player);
@@ -156,10 +147,10 @@ public class Poker {
                 // split the cash
             }
         }
-
-        System.out.println("Winner is " + players.get(winner).getUsername());
-
+        return players.get(winner);
     }
+
+
 
     public void raise() {
         AlertWindow.show(" Raise", " Raise: " + players.get(activeUser).getUsername(), 200, 100);
@@ -364,15 +355,6 @@ public class Poker {
      * @return values check in enum class Poker_
      */
     public Integer[] bestHand(Hand hand) {
-
-        System.out.println("-------------------------");
-        System.out.println("Hand");
-        for (int i = 0; i < hand.getNoOfCards(); i++) {
-            System.out.print(hand.getCard(i).getRank() + " ");
-        }
-        System.out.println();
-        System.out.println("-------------------------");
-
 
         //tmpRqBestHand
         Integer[] tmpRqBestHand = new Integer[4];
@@ -651,40 +633,42 @@ public class Poker {
     public void updateGame(){
         if (setActivePlayer()) {
             // Check round
-            this.round();
-            //Check if it was a raise
-            String oldPlayer = players.get(oldActiveUser).getUsername();
-            String msg = "";
+            if(this.rounds < 5) {
+                this.round();
+                //Check if it was a raise
+                String oldPlayer = players.get(oldActiveUser).getUsername();
+                String msg = "";
 
-            if(newBet > bet) {
-                bet = newBet;
-                // Raise
-                msg = oldPlayer + " RAISE";
-                // reset play counter
-                playCounter = 1;
-            }else if(newBet == 0){
-                // FOLD
-                playCounter++;
-            }else if(newBet < bet){
-                // All in
-                msg = oldPlayer + " All IN";
-                playCounter++;
-            }else{
-                // Check
-                msg = oldPlayer + " CHECK";
-                playCounter++;
+                if (newBet > bet) {
+                    bet = newBet;
+                    // Raise
+                    msg = oldPlayer + " RAISE";
+                    // reset play counter
+                    playCounter = 1;
+                } else if (newBet == 0) {
+                    // FOLD
+                    playCounter++;
+                } else if (newBet < bet) {
+                    // All in
+                    //msg = oldPlayer + " All IN";
+                    playCounter++;
+                } else {
+                    // Check
+                    msg = oldPlayer + " CHECK";
+                    playCounter++;
+                }
+
+                // Display previous action from user
+                pokerGraphic.setStatusLabel(msg);
+
+                // For current active user
+
+                // Show current selected user
+                pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
+                // Get player info.
+                double balance = players.get(activeUser).getBalance();
+                pokerGraphic.updateSlider(balance, activeUser, bet, raise);
             }
-
-            // Display previous action from user
-            pokerGraphic.setStatusLabel(msg);
-
-            // For current active user
-
-            // Show current selected user
-            pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
-            // Get player info.
-            double balance = players.get(activeUser).getBalance();
-            pokerGraphic.updateSlider(balance,activeUser, bet, raise);
 
         }
     }

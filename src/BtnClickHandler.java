@@ -1,3 +1,4 @@
+import Poker.Poker;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -6,8 +7,6 @@ import javafx.scene.control.Button;
  * Created by Farhad Atroshi on 14/10/15.
  */
 public class BtnClickHandler implements EventHandler<Event> {
-
-
 
     private String text;
     private Controller c;
@@ -20,6 +19,10 @@ public class BtnClickHandler implements EventHandler<Event> {
 
     @Override
     public void handle(Event evt) {
+
+        // Update slider
+        c.getGame().getPokerGraphic().sliderHandler();
+
         switch (this.text){
             case "START":
                 // New Scene BG
@@ -44,7 +47,7 @@ public class BtnClickHandler implements EventHandler<Event> {
                 // Show game buttons
                 c.getGame().getPokerGraphic().showGameButtons();
                 // Select player
-                c.getGame().nextUser();
+                //c.getGame().nextUser();
                 break;
             case "CHECK":
                 //

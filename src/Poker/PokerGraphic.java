@@ -68,7 +68,7 @@ public class PokerGraphic {
         Slider slider = new Slider();
         slider.setMin(0);
         slider.setMax(100);
-        slider.setValue(50);
+        slider.setValue(Poker.bet);
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);
         slider.setMajorTickUnit(500);

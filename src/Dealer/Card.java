@@ -11,8 +11,8 @@ public class Card extends Picture {
 
     // Tables for converting rank & suit to text (why static?)
     private static final String[] rankTab = {
-            "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-            "Jack", "Queen", "King"
+            "2", "3", "4", "5", "6", "7", "8", "9", "10",
+            "Jack", "Queen", "King", "Ace"
     };
     // SPADES(1), CLUBS(4), HEARTS(2), DIAMONDS(3);
     private static final String[] suitTab = {

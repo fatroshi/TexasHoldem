@@ -101,7 +101,13 @@ public class Poker {
 
                 // Check who the winner is
                 //getWinner();
-
+                // Show table cards
+                System.out.println("****************************");
+                System.out.println("Table cards");
+                for (int i = 0; i < tableCards.size(); i++) {
+                    System.out.println(tableCards.get(i).getRank() + " ");
+                }
+                System.out.println("****************************");
             }
         }
 
@@ -127,7 +133,9 @@ public class Poker {
 
             //System.arraycopy(rank, 0, topRank, 0, 4);
 
-            System.out.println("Hand of: " + player.getUsername());
+            System.out.print("Hand of: " + player.getUsername() + " " + rank[0] + " " + rank[1] + " " + rank[2] + " " + rank[3]);
+            System.out.println();
+            System.out.println("----------------------------------------");
 
             if(rank[0] > topRank[0]){
                 winner = players.indexOf(player);
@@ -313,6 +321,7 @@ public class Poker {
     /**
      * Deals cards to table and players
      * this is used for the 4 table cards not the first 2 cards for players'
+     * Setting for card, show back/front
      * @param quantityOfDeals
      */
     public void dealCards(int quantityOfDeals) {
@@ -355,6 +364,15 @@ public class Poker {
      * @return values check in enum class Poker_
      */
     public Integer[] bestHand(Hand hand) {
+
+        System.out.println("-------------------------");
+        System.out.println("Hand");
+        for (int i = 0; i < hand.getNoOfCards(); i++) {
+            System.out.print(hand.getCard(i).getRank() + " ");
+        }
+        System.out.println();
+        System.out.println("-------------------------");
+
 
         //tmpRqBestHand
         Integer[] tmpRqBestHand = new Integer[4];

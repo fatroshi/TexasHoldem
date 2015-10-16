@@ -79,8 +79,12 @@ public class Controller {
 
     public void getTableCards(int from, int to) {
 
+        System.out.println("*** SHOWING CARDS ON TABLE ***");
         for (int cardID = from; cardID < to; cardID++) {
             Card card = Poker.tableCards.get(cardID);
+
+            System.out.print(card.getRank() + " ");
+
             for (Table_ t : Table_.values()) {
                 if (t.getCardId() == (cardID + 2)) {
                     card.getImageView().setX(150);
@@ -94,6 +98,7 @@ public class Controller {
 
             this.root.getChildren().add(card.getImageView());
         }
+        System.out.println("*** END SHOWING CARDS ON TABLE ***");
 
     }
 

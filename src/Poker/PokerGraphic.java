@@ -19,7 +19,8 @@ import java.util.List;
 public class PokerGraphic {
 
     private Slider slider;
-    private Label sliderLabel;
+    private Label sliderLabeValue;
+    private Label statusLabel;
 
     // Players
     private List<Rectangle> playersBG;
@@ -29,7 +30,8 @@ public class PokerGraphic {
 
     public PokerGraphic() {
         // label for slider
-        sliderLabel = new Label();
+        sliderLabeValue = new Label();
+        statusLabel = new Label();
         // Create slider
         createSlider();
         // Background for players
@@ -80,11 +82,19 @@ public class PokerGraphic {
         this.slider = slider;
 
         // Label for slider
-        sliderLabel.setLayoutX(240);
-        sliderLabel.setLayoutY(465);
-        sliderLabel.setFont(Font.font(24));
-        sliderLabel.setTextFill(Color.WHITE);
+        sliderLabeValue.setLayoutX(240);
+        sliderLabeValue.setLayoutY(465);
+        sliderLabeValue.setFont(Font.font(24));
+        sliderLabeValue.setTextFill(Color.WHITE);
 
+    }
+
+    public Label getStatusLabel(){
+        this.statusLabel.setLayoutX(240);
+        this.statusLabel.setLayoutY(435);
+        this.statusLabel.setFont(Font.font(24));
+        this.statusLabel.setTextFill(Color.WHITE);
+        return this.statusLabel;
     }
 
     /**
@@ -94,20 +104,25 @@ public class PokerGraphic {
     public void sliderHandler() {
         double value = round(slider.getValue(), 0);
         String strValue = String.valueOf(value);
-        this.sliderLabel.setText("$ " + strValue);
+        // Slider label
+        setSliderLabel("$ " + strValue);
         // Set new bet
         Poker.setBet(Double.parseDouble(strValue));
     }
 
-    public void setSliderMax(double max) {
-        this.slider.setMax(max);
+    public void setStatusLabel(String text){
+        this.statusLabel.setText(text);
+    }
+
+    public void setSliderLabel(String text){
+        this.sliderLabeValue.setText(text);
     }
 
     public Slider getSlider() {
         return this.slider;
     }
     public Label getSliderLabel() {
-        return this.sliderLabel;
+        return this.sliderLabeValue;
     }
 
     public void updateSlider(double playerBalance, int playerId, double currentBet, double currentRaise) {

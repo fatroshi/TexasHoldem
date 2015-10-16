@@ -33,6 +33,7 @@ public class Poker {
     private List<Player> players;
     private Map<Integer, Player> playersBestHand = new HashMap<>();
     // For round function
+    private int rounds;
     private int playCounter;
 
     public Poker() {
@@ -78,7 +79,16 @@ public class Poker {
 
         if(playCounter == getActivePlayers()){
             System.out.println("New round");
+            // one fill round
             playCounter = 0;
+            // First round
+                // Show 1-3 cards
+
+            // Second round
+                // 3-4
+            // Third round
+                // 4-5
+
         }
     }
 
@@ -489,17 +499,16 @@ public class Poker {
 
     public void updateGame(){
         if (setActivePlayer()) {
-
-
             // Check round
             this.round();
             //Check if it was a raise
             String oldPlayer = players.get(oldActiveUser).getUsername();
+            String msg = "";
 
             if(newBet > bet) {
                 bet = newBet;
                 // Raise
-                System.out.println("[ From " + oldPlayer + " ] It was a RAISE");
+                msg = oldPlayer + " RAISE";
                 // reset play counter
                 playCounter = 1;
             }else if(newBet == 0){
@@ -507,13 +516,16 @@ public class Poker {
                 playCounter++;
             }else if(newBet < bet){
                 // All in
-                System.out.println("[ From " + oldPlayer + " ] All in from user");
+                msg = oldPlayer + " All IN";
                 playCounter++;
             }else{
                 // Check
-                System.out.println("[ From " + oldPlayer + " ] It was CHECK");
+                msg = oldPlayer + " CHECK";
                 playCounter++;
             }
+
+            // Display previous action from user
+            pokerGraphic.setStatusLabel(msg);
 
             // For current active user
 
@@ -526,6 +538,10 @@ public class Poker {
         }
     }
 
+    /**
+     * Count all active players in the game
+     * @return quantity of active players
+     */
     public int getActivePlayers() {
         int activePlayers = 0;
         for (int i = 0; i < players.size(); i++) {
@@ -547,6 +563,10 @@ public class Poker {
         return onePlayer;
     }
 
+    /**
+     * Check if we could find an activePlayer
+     * @return true if player was found
+     */
     public boolean setActivePlayer() {
         boolean foundUser = false;
         for (int i = activeUser; i < players.size(); i++) {
@@ -565,6 +585,9 @@ public class Poker {
         return foundUser;
     }
 
+    /**
+     * Change bg for the winner/s
+     */
     public void setWinnerBG() {
         // Change color of player bg
         pokerGraphic.getPlayerBG(activeUser).setFill(Color.GOLD);
@@ -572,6 +595,11 @@ public class Poker {
         pokerGraphic.getUsernameLabel(activeUser).setTextFill(Color.BLACK);
     }
 
+    /**
+     * Get cheap object for the user
+     * @param playerId
+     * @return list of all chips
+     */
     public List<Chip> getPlayerChips(int playerId) {
         int blackCounter = 0;
         int redCounter = 0;

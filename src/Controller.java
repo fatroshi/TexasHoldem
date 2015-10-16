@@ -124,6 +124,7 @@ public class Controller {
 
     public void getSlider() {
         root.getChildren().add(game.getPokerGraphic().getSliderLabel());
+        root.getChildren().add(game.getPokerGraphic().getStatusLabel());
         root.getChildren().add(game.getPokerGraphic().getSlider());
     }
 

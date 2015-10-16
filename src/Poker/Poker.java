@@ -54,8 +54,8 @@ public class Poker {
         playerBig = playerId;
     }
 
-    public double getBet() {
-        return bet;
+    public static void setBet(double setBet) {
+        bet = setBet;
     }
 
     public double getRaise() {
@@ -168,10 +168,6 @@ public class Poker {
         return cards;
     }
 
-    public String getCurrentPlayerUsername() {
-        return players.get(activeUser).getUsername();
-    }
-
     public Player addPlayer(String username, double balance) {
         Player player = new Player(username, balance);
         players.add(player);
@@ -224,15 +220,6 @@ public class Poker {
 
     public Player getPlayer(int index) {
         return this.players.get(index);
-    }
-
-    public <T> boolean inArrayList(int value, List<T> list) {
-        return list.contains(value);
-    }
-
-    public boolean inArray(int value, int[] array) {
-
-        return Arrays.asList(array).contains(value);
     }
 
     public Integer[] bestHand(Hand hand) {
@@ -463,7 +450,9 @@ public class Poker {
             if (setActivePlayer()) {
                 // Show current selected user
                 pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
-                pokerGraphic.setSliderMax(players.get(activeUser).getBalance());
+                // Get player info.
+                double balance = players.get(activeUser).getBalance();
+                pokerGraphic.updateSlider(balance,activeUser, bet, raise);
             }
 
 
@@ -473,7 +462,9 @@ public class Poker {
             if (setActivePlayer()) {
                 // Show current selected user
                 pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
-                pokerGraphic.updateSlider(players.get(activeUser), bet, raise);
+                // Get player info.
+                double balance = players.get(activeUser).getBalance();
+                pokerGraphic.updateSlider(balance,activeUser, bet, raise);
             }
         }
     }

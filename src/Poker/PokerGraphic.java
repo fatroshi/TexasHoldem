@@ -19,6 +19,7 @@ import java.util.List;
 public class PokerGraphic {
 
     private Slider slider;
+    private Label sliderLabel;
 
     // Players
     private List<Rectangle> playersBG;
@@ -27,6 +28,9 @@ public class PokerGraphic {
     private List<Button> buttons;
 
     public PokerGraphic() {
+        // label for slider
+        sliderLabel = new Label();
+        // Create slider
         createSlider();
         // Background for players
         playersBG = new ArrayList<>();
@@ -38,6 +42,7 @@ public class PokerGraphic {
         buttons = new ArrayList<>();
         // Create btn, With no event handlers attached
         this.createButtons();
+
 
     }
 
@@ -63,26 +68,31 @@ public class PokerGraphic {
         slider.setMax(100);
         slider.setValue(50);
         slider.setShowTickLabels(true);
-        //slider.setShowTickMarks(true);
-        //slider.setMajorTickUnit(50);
-        //slider.setMinorTickCount(5);
-        //slider.setBlockIncrement(10);
+        slider.setShowTickMarks(true);
+        slider.setMajorTickUnit(500);
+        //slider.setMinorTickCount(500);
+        //slider.setBlockIncrement(100);
         slider.setMinWidth(520);
         slider.setLayoutX(240);
         slider.setLayoutY(510);
         slider.setTooltip(new Tooltip("Check or Raise"));
-
         slider.setStyle("-fx-color: RED;");
-        slider.setOnMouseClicked(event -> sliderHandler());
-
-
         this.slider = slider;
+
+        // Label for slider
+        sliderLabel.setLayoutX(240);
+        sliderLabel.setLayoutY(465);
+        sliderLabel.setFont(Font.font(24));
+        sliderLabel.setTextFill(Color.WHITE);
+
     }
 
     public void sliderHandler() {
         double value = round(slider.getValue(), 0);
         String strValue = String.valueOf(value);
-        usernameLabels.get(0).setText(strValue);
+        this.sliderLabel.setText("$ " + strValue);
+        // Set new bet
+        Poker.setBet(Double.parseDouble(strValue));
     }
 
     public void setSliderMax(double max) {
@@ -92,11 +102,15 @@ public class PokerGraphic {
     public Slider getSlider() {
         return this.slider;
     }
+    public Label getSliderLabel() {
+        return this.sliderLabel;
+    }
 
-    public void updateSlider(Player player, double currentBet, double currentRaise) {
+    public void updateSlider(double playerBalance, int playerId, double currentBet, double currentRaise) {
+        slider.setOnMouseClicked(event -> sliderHandler());
         this.slider.setMin(currentBet);
         this.slider.setValue(currentRaise);
-        this.slider.setMax(player.getBalance());
+        this.slider.setMax(playerBalance);
 
     }
 

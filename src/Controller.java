@@ -42,31 +42,31 @@ public class Controller {
     }
 
     public void getUserInfo() {
-        for (int i = 0; i < game.getPlayers().size(); i++) {
+        for (int i = 0; i < this.game.getPlayers().size(); i++) {
             // Get user background
-            Rectangle r = getGame().getPokerGraphic().getPlayerBG(i);
+            Rectangle r = this.game.getPokerGraphic().getPlayerBG(i);
             // Get username
-            Label username = getGame().getPokerGraphic().getUsernameLabel(i);
+            Label username = this.game.getPokerGraphic().getUsernameLabel(i);
             // Get balance
-            Label balance = getGame().getPokerGraphic().getBalanceLabel(i);
+            Label balance = this.game.getPokerGraphic().getBalanceLabel(i);
             // Add to root scene
             root.getChildren().addAll(r, username, balance);
         }
     }
 
     public void getUserChips() {
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            for (int j = 0; j < game.getPlayerChips(i).size(); j++) {
-                Chip chip = game.getPlayerChips(i).get(j);
+        for (int i = 0; i < this.game.getPlayers().size(); i++) {
+            for (int j = 0; j < this.game.getPlayerChips(i).size(); j++) {
+                Chip chip = this.game.getPlayerChips(i).get(j);
                 // Add to scene
-                root.getChildren().add(chip.getImageView());
+                this.root.getChildren().add(chip.getImageView());
             }
         }
     }
 
     public void getFirstTwoCards() {
-        for (int i = 0; i < game.getPlayerCards().size(); i++) {
-            Card card = game.getPlayerCards().get(i);
+        for (int i = 0; i < this.game.getPlayerCards().size(); i++) {
+            Card card = this.game.getPlayerCards().get(i);
             // Set event handler when card clicked
             card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
             // Add to scene
@@ -76,7 +76,6 @@ public class Controller {
 
     public void getTableCards(int from, int to) {
 
-        Pane pane = new Pane();
         for (int cardID = from; cardID < to; cardID++) {
             Card card = Poker.tableCards.get(cardID);
             for (Table_ t : Table_.values()) {
@@ -110,7 +109,7 @@ public class Controller {
     public void getGameScene() {
         GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
         Animation.fadeIn(table);
-        root.getChildren().add(table.getImageView());
+        this.root.getChildren().add(table.getImageView());
     }
 
     public void getTurn() {
@@ -118,12 +117,13 @@ public class Controller {
     }
 
     public void getStartBtn() {
-        Button btn = game.getPokerGraphic().getButtons().get(0);
+        Button btn = this.game.getPokerGraphic().getButtons().get(0);
         btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(), this, btn));
-        root.getChildren().add(btn);
+        this.root.getChildren().add(btn);
     }
 
-    public void getUIitems() {
+    public void getSlider() {
+        root.getChildren().add(game.getPokerGraphic().getSliderLabel());
         root.getChildren().add(game.getPokerGraphic().getSlider());
     }
 

@@ -25,7 +25,7 @@ public class BtnClickHandler implements EventHandler<Event> {
                 // New Scene BG
                 c.getGameScene();
                 // Get UI Items
-                c.getUIitems();
+                c.getSlider();
                 // User info
                 c.getUserInfo();
                 // User chips

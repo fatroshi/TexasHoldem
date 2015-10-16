@@ -87,6 +87,10 @@ public class PokerGraphic {
 
     }
 
+    /**
+     * Handles changes in slider, stores the value in sliderLabel
+     * and also updates the pokerBet
+     */
     public void sliderHandler() {
         double value = round(slider.getValue(), 0);
         String strValue = String.valueOf(value);

@@ -19,7 +19,9 @@ public class Poker {
     public static List<Card> tableCards;
     //
     public static int activeUser;
+    public static int oldActiveUser;
     public static double bet;
+    public static double newBet;
     public static double raise;
     public static double pott;
     // Dealer.Hand (52 cards)
@@ -30,6 +32,8 @@ public class Poker {
     // All players
     private List<Player> players;
     private Map<Integer, Player> playersBestHand = new HashMap<>();
+    // For round function
+    private int playCounter;
 
     public Poker() {
         //
@@ -54,9 +58,30 @@ public class Poker {
         playerBig = playerId;
     }
 
+    /**
+     * Sets new bet from the slider
+     * @param setBet
+     */
     public static void setBet(double setBet) {
-        bet = setBet;
+        newBet = setBet;
     }
+
+    /**
+     * Check game round,
+     * This will be used for knowing when to show cards
+     */
+    public void round(){
+        // 1. How many active players
+        // 2. if the counter = (acive players) - 1, one round
+        // When to reset the counter ?
+        // well we will se that!
+
+        if(playCounter == getActivePlayers()){
+            System.out.println("New round");
+            playCounter = 0;
+        }
+    }
+
 
     public double getRaise() {
         return raise;
@@ -441,31 +466,63 @@ public class Poker {
     }
 
     public void nextUser() {
+        // Store old activeUser
+        oldActiveUser = activeUser;
         // Add to activeUser
         int nextActiveUser = activeUser + 1;
         // Find next active User
         if (nextActiveUser < players.size()) {
             activeUser = nextActiveUser;
             // Find and set next active player
-            if (setActivePlayer()) {
-                // Show current selected user
-                pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
-                // Get player info.
-                double balance = players.get(activeUser).getBalance();
-                pokerGraphic.updateSlider(balance,activeUser, bet, raise);
-            }
-
+            // and update game
+            updateGame();
 
         } else {
             // Reset
             activeUser = 0;
-            if (setActivePlayer()) {
-                // Show current selected user
-                pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
-                // Get player info.
-                double balance = players.get(activeUser).getBalance();
-                pokerGraphic.updateSlider(balance,activeUser, bet, raise);
+            // Find and set next active player
+            // and update game
+            updateGame();
+
+        }
+    }
+
+    public void updateGame(){
+        if (setActivePlayer()) {
+
+
+            // Check round
+            this.round();
+            //Check if it was a raise
+            String oldPlayer = players.get(oldActiveUser).getUsername();
+
+            if(newBet > bet) {
+                bet = newBet;
+                // Raise
+                System.out.println("[ From " + oldPlayer + " ] It was a RAISE");
+                // reset play counter
+                playCounter = 1;
+            }else if(newBet == 0){
+                // FOLD
+                playCounter++;
+            }else if(newBet < bet){
+                // All in
+                System.out.println("[ From " + oldPlayer + " ] All in from user");
+                playCounter++;
+            }else{
+                // Check
+                System.out.println("[ From " + oldPlayer + " ] It was CHECK");
+                playCounter++;
             }
+
+            // For current active user
+
+            // Show current selected user
+            pokerGraphic.setUserBG(activeUser, Color.DARKGREEN);
+            // Get player info.
+            double balance = players.get(activeUser).getBalance();
+            pokerGraphic.updateSlider(balance,activeUser, bet, raise);
+
         }
     }
 

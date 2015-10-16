@@ -8,6 +8,7 @@ import User.Hand;
 import User.Player;
 import javafx.scene.paint.Color;
 
+import javax.sound.midi.Soundbank;
 import java.util.*;
 
 /**
@@ -31,7 +32,7 @@ public class Poker {
     TableLogic table;
     // All players
     private List<Player> players;
-    private Map<Integer, Player> playersBestHand = new HashMap<>();
+    private Map<Integer[], Player> playersBestHand = new HashMap<>();
     // For round function
     private int rounds;
     private int playCounter;
@@ -49,6 +50,8 @@ public class Poker {
         tableCards = new ArrayList<>();
         // Id of current selected user
         activeUser = 0;
+        // Store player and best hand for the player
+        playersBestHand = new HashMap<>();
     }
 
     public static int getPlayerBig() {
@@ -92,24 +95,60 @@ public class Poker {
             }else if(this.rounds == 3){ // Third round
                 // 4-5
                 System.out.println(" Third round");
+            }else if (this.rounds == 4){
+                // CHECK WHO ONE
+                System.out.println(" 4 round");
+
+
+                Map<Integer[], Player> bestHands = new HashMap<>();
+
+                for (int i = 0; i < players.size(); i++) {
+                    Hand hand = players.get(i).getHand();
+                    bestHands.put(bestHand(hand), players.get(i));
+                }
+
+
+                // Store hand rank
+                Integer[] topRank = {0,0,0,0};
+                int sameHandCounter = 0;
+                Player winner = null;
+                for (Map.Entry<Integer[], Player> entry : bestHands.entrySet())
+                {
+                    Integer[] rank = entry.getKey();
+                    Player player = entry.getValue();
+
+                    System.out.println("Hand of: " + player.getUsername());
+
+                    for (int i = 0; i < rank.length; i++) {
+                        System.out.print(" " + rank[i]);
+                    }
+
+
+                    System.out.println();
+
+                    for (int i = 3; i < rank.length; i++) {
+                        if(rank[i] == topRank[i]) {
+                            sameHandCounter++;
+                            continue;
+
+                        }else if(rank[i] > topRank[i]){
+                            // Found the new winner
+                            winner = player;
+                            System.out.println(" New winner " + player.getUsername());
+                            System.arraycopy(rank,0,topRank,0,4);
+                            break;
+                        }
+                    }
+
+                    if(sameHandCounter == 5){
+                        System.out.println("Both players have same hand!!!");
+                    }
+
+                }
             }
         }
 
         return rounds;
-    }
-
-
-    public double getRaise() {
-        return raise;
-    }
-
-    public double getPott() {
-        return pott;
-    }
-
-    private Player activePlayer() {
-        Player player = players.get(activeUser);
-        return player;
     }
 
     public void raise() {
@@ -189,6 +228,7 @@ public class Poker {
                         card.getImageView().setX(cl.getX());
                         card.getImageView().setY(cl.getY());
                         card.getImageView().setRotate(cl.getRotation());
+                        card.setImageFrontView();
                         // Toggle card when clicked
                         //card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
                     }
@@ -249,11 +289,15 @@ public class Poker {
         // Deal same 5 cards to each player
         for (int i = 0; i < quantityOfDeals; i++) {
             Card card = deck.dealCard();
-
+            card.setImageFrontView();
             tableCards.add(card);
 
+            for (int j = 0; j < players.size(); j++) {
+                players.get(j).getHand().addCard(card);
+            }
         }
     }
+
 
     public List<Player> getPlayers() {
         return this.players;
@@ -263,6 +307,15 @@ public class Poker {
         return this.players.get(index);
     }
 
+    /**
+     * Returns the best hand
+     * element [0] --> Refers to Poker rank 1-10. 1 = Highcard ... 10 = Royal Flush
+     * element [1] --> Refers to Highest Pair, or Tree of a kind
+     * element [2] --> Refers to pair
+     * element [3] --> Refers to highest card in the hand
+     * @param hand
+     * @return values check in enum class Poker_
+     */
     public Integer[] bestHand(Hand hand) {
 
         //tmpRqBestHand
@@ -280,12 +333,14 @@ public class Poker {
         // Check Royal Flush, Straight flush, flush
         tmpRsBestHand = getFlush(rsCards);
 
+        // Get the best hand
         if (tmpRsBestHand[0] > tmpRqBestHand[0]) {
             bestHand = tmpRsBestHand;
         } else {
             bestHand = tmpRqBestHand;
         }
 
+        // Print out the best hand with current cards
         for (Poker_ p : Poker_.values()) {
             if (bestHand[0] == p.getRank()) {
                 System.out.println(p.name());
@@ -295,6 +350,11 @@ public class Poker {
         return bestHand;
     }
 
+    /**
+     * Store Rank and quantity of each card in the hand
+     * @param hand
+     * @return
+     */
     public Map<Integer, Integer> getRqCards(Hand hand) {
 
         // Store card rank, quantity
@@ -318,6 +378,11 @@ public class Poker {
         return rqCards;
     }
 
+    /**
+     * Store rank and suit of each card in the hand
+     * @param hand
+     * @return
+     */
     public Map<Integer, Integer> getRsCards(Hand hand) {
 
         // Store card rank, suit
@@ -330,6 +395,11 @@ public class Poker {
         return rsCards;
     }
 
+    /**
+     * Search for Pair, three of a kind and four of a kind in the hand
+     * @param rqCards
+     * @return
+     */
     public Integer[] getPairThreeFour(Map<Integer, Integer> rqCards) {
         Integer[] bestHand = {0, 0, 0, 0};
 
@@ -380,30 +450,35 @@ public class Poker {
         }
 
         // PRINT OUT firstQuantity AND secondQuantity
-        System.out.println("First  Dealer.Rank_       --> quantity: " + bestHand[1]);
-        System.out.println("Second Dealer.Rank_       --> quantity: " + bestHand[2]);
-        System.out.println("Fifth card top rank: " + bestHand[3]);
+        System.out.println("First         --> quantity: " + bestHand[1]);
+        System.out.println("Second        --> quantity: " + bestHand[2]);
+        System.out.println("Fifth card: " + bestHand[3]);
 
         // PRINT OUT THE BEST HAND
         // bestHand = {Poker.Poker_:rank, Dealer.Card rank firstQuantity, secondQuantity, fifth best card}
 
 
-        // STORE THE RANK AFTER FOUND WHAT WE GOT
+        // STORE THE POKER RANK AFTER FOUND WHAT WE GOT
         // CREATE 2 NEW VAR, FOR RANK
 
         for (Poker_ p : Poker_.values()) {
+            // Comparing to the enum values
             if (bestHand[1] == p.getFirstQuantity() && bestHand[2] == p.getSecondQuantity()) {
-                bestHand[0] = p.getRank();
-                // Compare rank with result from getFlush
-                bestHand[1] = firstQuantityRank;
-                bestHand[2] = secondQuantityRank;
-                bestHand[3] = highestRank;
+                bestHand[0] = p.getRank();          // What we got, Royal Flush, Flust etc
+                bestHand[1] = firstQuantityRank;    // highest pair or three of a kind
+                bestHand[2] = secondQuantityRank;   // second pair
+                bestHand[3] = highestRank;          // fifth card
             }
         }
 
         return bestHand;
     }
 
+    /**
+     * Search for Royal Flush, Straight Flush, Straight and flush in the hand
+     * @param rsCards
+     * @return
+     */
     public Integer[] getFlush(Map<Integer, Integer> rsCards) {
         Integer[] tmpBestHand = {0, 0, 0, 0};
 

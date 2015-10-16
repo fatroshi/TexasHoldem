@@ -40,8 +40,8 @@ public class Controller {
     public void createPlayers(Pane root) {
         game.addPlayer("Lawen", 1000);
         game.addPlayer("Farhad", 2130);
-        game.addPlayer("Felicia", 4213);
-        game.addPlayer("Elise", 4219);
+        //game.addPlayer("Felicia", 4213);
+        //game.addPlayer("Elise", 4219);
     }
 
     public void getUserInfo() {
@@ -151,6 +151,4 @@ public class Controller {
             }
         }
     }
-
-
 }

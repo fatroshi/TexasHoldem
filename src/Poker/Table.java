@@ -59,13 +59,17 @@ public class Table {
     private int playCounter;          // increases for call,bet. Sets to 0 for raise
     
     // Graphics
-    private Graphic graphic   = new Graphic();
-    private Slider slider     = graphic.createSlider(0,100,10);       // Slider for player to make bet, call, raise
-    private Label sliderLabel = graphic.createLabel(240,465,24);
-    private Label statusLabel = graphic.createLabel(240,435,24);    // Will be shown when; check,raise,call, all in, fold
+    private Graphic graphic;          // Where we get our graphics from, except the cards
+    private Slider slider;            // Slider for player to make bet, call, raise
+    private Label sliderLabel;        // Create label for slider
+    private Label statusLabel;        // Will be shown when; check,raise,call, all in, fold
     
     public Table(){
-        tableButtons = graphic.createTableButtons();
+        graphic         = new Graphic();
+        slider          = graphic.createSlider(0,100,10);       // Slider for player to make bet, call, raise
+        sliderLabel     = graphic.createLabel(240,465,24);      // Create label for slider
+        statusLabel     = graphic.createLabel(240,435,24);      // Will be shown when; check,raise,call, all in, fold
+        tableButtons    = graphic.createTableButtons();
         
     }
 

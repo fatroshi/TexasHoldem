@@ -1,4 +1,3 @@
-import Poker.Poker;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -21,33 +20,11 @@ public class BtnClickHandler implements EventHandler<Event> {
     public void handle(Event evt) {
 
         // Update slider
-        c.getGame().getPokerGraphic().sliderHandler();
+        //c.getGame().getPokerGraphic().sliderHandler();
 
         switch (this.text){
             case "START":
-                // New Scene BG
-                c.getGameScene();
-                // Get UI Items
-                c.getSlider();
-                // User info
-                c.getUserInfo();
-                // User chips
-                c.getUserChips();
-                // Dealer deal 2 cards for each player
-                c.getGame().dealTwoCards();
-                // Add to scene
-                c.getFirstTwoCards();
-                // Set active user
-                //Dealer deal 5 for the table
-                c.getGame().dealCards(5);
-                // Remove start btn
-                c.getUserBtn();
-                //btn.setVisible(false);
-                btn.setVisible(false);
-                // Show game buttons
-                c.getGame().getPokerGraphic().showGameButtons();
-                // Select player
-                //c.getGame().nextUser();
+                loadGameData();
                 break;
             case "CHECK":
                 //
@@ -71,5 +48,30 @@ public class BtnClickHandler implements EventHandler<Event> {
         }
 
     }
+
+    public void loadGameData(){
+        // New Scene BG
+        c.getGameScene();
+        // Get UI Items
+        c.getSlider();
+        // User info
+        c.getUserInfo();
+        // User chips
+        c.getUserChips();
+        // Dealer deal 2 cards for each player
+        c.getGame().dealTwoCards();
+        // Add to scene
+        c.getFirstTwoCards();
+        // Set active user
+        //Dealer deal 5 for the table
+        c.getGame().dealCards(5);
+        // Remove start btn
+        c.getUserBtn();
+        //btn.setVisible(false);
+        btn.setVisible(false);
+        // Show game buttons
+        c.getGame().showTableButtons();
+    }
+
 
 }

@@ -44,6 +44,5 @@ public class AlertWindow {
         w.setScene(scene);
         w.initStyle(StageStyle.TRANSPARENT);
         w.showAndWait();
-
     }
 }

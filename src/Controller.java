@@ -13,14 +13,14 @@ import javafx.scene.shape.Rectangle;
  */
 public class Controller {
     // Create game
-    private Poker game;
+    private Table game;
     // Place holder for items
     private Pane root;
     // Round
     int round;
 
     public Controller() {
-        game = new Poker();
+        game = new Table();
         root = new Pane();
         round = 0;
     }
@@ -29,7 +29,7 @@ public class Controller {
         return this.root;
     }
 
-    public Poker getGame() {
+    public Table getGame() {
         return this.game;
     }
 
@@ -48,11 +48,11 @@ public class Controller {
     public void getUserInfo() {
         for (int i = 0; i < this.game.getPlayers().size(); i++) {
             // Get user background
-            Rectangle r = this.game.getPokerGraphic().getPlayerBG(i);
+            Rectangle r = this.game.getPlayersBg().get(i);
             // Get username
-            Label username = this.game.getPokerGraphic().getUsernameLabel(i);
+            Label username = this.game.getUsernameLabels().get(i);
             // Get balance
-            Label balance = this.game.getPokerGraphic().getBalanceLabel(i);
+            Label balance = this.game.getBalanceLabels().get(i);
             // Add to root scene
             root.getChildren().addAll(r, username, balance);
         }
@@ -81,7 +81,7 @@ public class Controller {
     public void getTableCards(int from, int to) {
 
         for (int cardID = from; cardID < to; cardID++) {
-            Card card = Poker.tableCards.get(cardID);
+            Card card = this.game.getTableCards().get(cardID);
 
             for (Table_ t : Table_.values()) {
                 if (t.getCardId() == (cardID + 2)) {
@@ -98,8 +98,8 @@ public class Controller {
     }
 
     public void getUserBtn() {
-        for (int i = 1; i < game.getPokerGraphic().getButtons().size(); i++) {
-            Button btn = game.getPokerGraphic().getButton(i);
+        for (int i = 1; i < game.getTableButtons().size(); i++) {
+            Button btn = game.getTableButtons().get(i);
             // Assign EventHandler
             btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(), this, btn));
             root.getChildren().add(btn);
@@ -121,15 +121,17 @@ public class Controller {
     }
 
     public void getStartBtn() {
-        Button btn = this.game.getPokerGraphic().getButtons().get(0);
+        Button btn = this.game.getTableButtons().get(0);
         btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(), this, btn));
         this.root.getChildren().add(btn);
     }
 
+    // This funktion should be written to 2
+    // one for slider, one for labels
     public void getSlider() {
-        root.getChildren().add(game.getPokerGraphic().getSliderLabel());
-        root.getChildren().add(game.getPokerGraphic().getStatusLabel());
-        root.getChildren().add(game.getPokerGraphic().getSlider());
+        root.getChildren().add(game.getSliderLabel());
+        root.getChildren().add(game.getStatusLabel());
+        root.getChildren().add(game.getSlider());
     }
 
     public void getRound(){

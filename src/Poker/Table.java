@@ -59,8 +59,8 @@ public class Table {
     private int playCounter;          // increases for call,bet. Sets to 0 for raise
     
     // Graphics
-    private Graphic graphic = new Graphic();
-    private Slider slider   = graphic.createSlider(0,100,10);       // Slider for player to make bet, call, raise
+    private Graphic graphic   = new Graphic();
+    private Slider slider     = graphic.createSlider(0,100,10);       // Slider for player to make bet, call, raise
     private Label sliderLabel = graphic.createLabel(240,465,24);
     private Label statusLabel = graphic.createLabel(240,435,24);    // Will be shown when; check,raise,call, all in, fold
     

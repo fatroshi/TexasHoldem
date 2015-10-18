@@ -89,8 +89,8 @@ public class Table implements Subject{
     @Override
     public void notifyObservers() {
         System.out.println("* Notify the slider");
-
-            int sliderIndex = this.listOfObservers.contains(graphic);
+        // Update set: min, max
+        this.listOfObservers.get(0).updateSlider(this.bet);
 
 
     }
@@ -188,8 +188,8 @@ public class Table implements Subject{
     }
 
     public void raise() {
-
-
+        // Notify Observers
+        notifyObservers();
 
         AlertWindow.show(" Raise", " Raise: " + players.get(this.activeUser).getUsername(), 200, 100);
         //System.out.println(players.get(this.activeUser) + ": Raise ");

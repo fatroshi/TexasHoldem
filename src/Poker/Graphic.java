@@ -15,7 +15,18 @@ import java.util.List;
 /**
  * Created by Farhad on 17/10/15.
  */
+
 public class Graphic implements Observer{
+
+    private Slider slider;
+    private Label sliderLabel;
+    private Label statusLabel;
+
+    public Graphic(){
+        slider = this.createSlider(10,100,50);      // Slider fot betting
+        sliderLabel = new Label();                  // Label for the slider
+        statusLabel = new Label();                  // Label for showing current status: bet/call/raise
+    }
 
     /**
      * Create a slider set min,max and start value
@@ -231,22 +242,8 @@ public class Graphic implements Observer{
 
 
     @Override
-    public void update(String name) {
+    public void updateSlider(double currentValue, String sliderLabel) {
 
     }
 
-    @Override
-    public void updateSliderLabel(String sliderLabel) {
-
-    }
-
-    @Override
-    public void updateUserLabel(String usernameLabel) {
-
-    }
-
-    @Override
-    public void updateStatusLabel(String statusLabel) {
-
-    }
 }

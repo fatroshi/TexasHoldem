@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * Created by Farhad on 17/10/15.
  */
-public class Table {
+public class Table implements Subject{
 
     private List<Rectangle> playersBg               = new ArrayList<>(); // Background for player profile
     private List<Label> balanceLabels               = new ArrayList<>(); // Label for showing balance for the player
@@ -61,7 +61,10 @@ public class Table {
     private Slider slider;            // Slider for player to make bet, call, raise
     private Label sliderLabel;        // Create label for slider
     private Label statusLabel;        // Will be shown when; check,raise,call, all in, fold
-    
+
+
+    private List<Observer> listOfObservers = new ArrayList<>();
+
     public Table(){
         graphic         = new Graphic();
         slider          = graphic.createSlider(0,100,10);       // Slider for player to make bet, call, raise
@@ -69,6 +72,26 @@ public class Table {
         statusLabel     = graphic.createLabel(240,435,24);      // Will be shown when; check,raise,call, all in, fold
         tableButtons    = graphic.createTableButtons();
         
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        this.listOfObservers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        this.listOfObservers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        System.out.println("* Notify all registered customers, when the product is in stores");
+
+        for (Observer observer: this.listOfObservers){
+
+            observer.updateSlider(sliderLabel);
+        }
     }
 
     /**
@@ -845,6 +868,8 @@ public class Table {
     public void showTableButtons(){
         graphic.showTableButtons(this.tableButtons);
     }
+
+
 }
 
     

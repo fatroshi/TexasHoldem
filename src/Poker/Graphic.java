@@ -18,6 +18,8 @@ import java.util.List;
 
 public class Graphic implements Observer{
 
+
+
     private Slider slider;
     private Label sliderLabel;
     private Label statusLabel;
@@ -26,6 +28,10 @@ public class Graphic implements Observer{
         slider = this.createSlider(10,100,50);      // Slider fot betting
         sliderLabel = new Label();                  // Label for the slider
         statusLabel = new Label();                  // Label for showing current status: bet/call/raise
+    }
+
+    public Slider getSlider() {
+        return slider;
     }
 
     /**
@@ -242,8 +248,8 @@ public class Graphic implements Observer{
 
 
     @Override
-    public void updateSlider(double currentValue, String sliderLabel) {
-
+    public void updateSlider(double currentBet) {
+        this.slider.setValue(currentBet);
     }
 
 }

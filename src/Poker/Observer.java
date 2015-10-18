@@ -8,5 +8,5 @@ import java.awt.*;
  * Created by Farhad on 18/10/15.
  */
 public interface Observer {
-    public void updateSlider(double currentValue, String sliderLabel);
+    public void updateSlider(double currentValue);
 }

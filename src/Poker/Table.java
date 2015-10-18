@@ -67,11 +67,13 @@ public class Table implements Subject{
 
     public Table(){
         graphic         = new Graphic();
-        slider          = graphic.createSlider(0,100,10);       // Slider for player to make bet, call, raise
+        slider          = graphic.getSlider();                  // Slider for player to make bet, call, raise
         sliderLabel     = graphic.createLabel(240,465,24);      // Create label for slider
         statusLabel     = graphic.createLabel(240,435,24);      // Will be shown when; check,raise,call, all in, fold
         tableButtons    = graphic.createTableButtons();
-        
+
+        // Register Observer
+        this.listOfObservers.add(graphic);
     }
 
     @Override
@@ -86,12 +88,11 @@ public class Table implements Subject{
 
     @Override
     public void notifyObservers() {
-        System.out.println("* Notify all registered customers, when the product is in stores");
+        System.out.println("* Notify the slider");
 
-        for (Observer observer: this.listOfObservers){
+            int sliderIndex = this.listOfObservers.contains(graphic);
 
-            observer.updateSlider(sliderLabel);
-        }
+
     }
 
     /**
@@ -187,6 +188,9 @@ public class Table implements Subject{
     }
 
     public void raise() {
+
+
+
         AlertWindow.show(" Raise", " Raise: " + players.get(this.activeUser).getUsername(), 200, 100);
         //System.out.println(players.get(this.activeUser) + ": Raise ");
 

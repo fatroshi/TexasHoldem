@@ -248,8 +248,9 @@ public class Graphic implements Observer{
 
 
     @Override
-    public void updateSlider(double currentBet) {
+    public void updateSlider(double currentBet, double userBalance) {
         this.slider.setValue(currentBet);
+        this.slider.setMax(userBalance);
     }
 
 }

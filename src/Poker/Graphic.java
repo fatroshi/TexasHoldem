@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Farhad on 17/10/15.
  */
-public class Graphic {
+public class Graphic implements Observer{
 
     /**
      * Create a slider set min,max and start value
@@ -230,4 +230,23 @@ public class Graphic {
     }
 
 
+    @Override
+    public void update(String name) {
+
+    }
+
+    @Override
+    public void updateSliderLabel(String sliderLabel) {
+
+    }
+
+    @Override
+    public void updateUserLabel(String usernameLabel) {
+
+    }
+
+    @Override
+    public void updateStatusLabel(String statusLabel) {
+
+    }
 }

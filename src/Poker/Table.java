@@ -9,8 +9,6 @@
  *
  */
 
-
-
 package Poker;
 
 import Dealer.*;
@@ -118,9 +116,14 @@ public class Table {
         return rounds;
     }
 
+    /**
+     * Compare each player in the list, returns the player/s that one
+     * @return
+     */
 
     public Player getWinner() {
         Map<Integer[], Player> bestHands = new HashMap<>();
+
 
         for (int i = 0; i < players.size(); i++) {
             Hand hand = players.get(i).getHand();
@@ -154,10 +157,11 @@ public class Table {
                 // split the cash
             }
         }
+
+        List<Player> winners = new ArrayList<>();
+
         return players.get(winner);
     }
-
-
 
     public void raise() {
         AlertWindow.show(" Raise", " Raise: " + players.get(this.activeUser).getUsername(), 200, 100);

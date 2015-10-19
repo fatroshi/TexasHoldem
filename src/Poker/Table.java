@@ -55,6 +55,8 @@ public class Table implements Subject{
     private double raise;             // The raise value 
     private Label potLabel;           // Store the total pot value
     private double pot;               // Total current pot in the game
+    private double tableBet;
+    private boolean raiseFlag;        // Check if previous player raised the bet
 
     private int rounds;               // Counts the poker rounds, used for showing cards and when the game in done.
     private int playCounter;          // increases for call,bet. Sets to 0 for raise
@@ -78,6 +80,7 @@ public class Table implements Subject{
         foldBtn         = graphic.createButton("FOLD");         // player folds
         potLabel        = graphic.getPotLabel();
 
+
         // Register Observer
         registerObserver(graphic);
     }
@@ -97,11 +100,15 @@ public class Table implements Subject{
         // Update set: min, max
         for (Observer observer: listOfObservers){
             observer.updateSlider(this.slider.getValue(), players.get(this.activeUser).getBalance(), this.msg);
-            observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance(), this.slider.getValue());
+            observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance(), this.newBet);
+            observer.updateTablePotLabel(this.pot);
         }
     }
 
 
+    public Label getPotLabel(){
+        return this.potLabel;
+    }
 
     public Button getStartBtn() {
         return startBtn;
@@ -634,10 +641,9 @@ public class Table implements Subject{
     }
 
     public void fold() {
-        // return back the cash dude!!!!
-        Player player = getActivePlayer();
-        player.depositBalance(player.getBet());
-        notifyObservers();
+        // Reset table bet
+        // Current bet
+        this.tableBet = 0;
 
         if (oneActivePlayer()) {
             //We got a winner
@@ -708,16 +714,27 @@ public class Table implements Subject{
                 player.setBet(this.newBet);                             // Store the bet
                 this.bet = newBet;
 
-                //Store in table pot
+                // Store in table pot
                 this.pot += this.newBet;
+                System.out.println("Pot is: " + pot);
+                // Current bet
+                this.tableBet = this.newBet;
 
                 // Reset playCounter
                 playCounter = 1;
 
                 // Set message for next user
                 this.msg = " Raise";
+                notifyObservers();
+
+                // Set raise flag
+                this.raiseFlag = true;
             }else if(this.newBet == this.bet){
                 //this.msg = "call";
+
+                //Reset table bet
+                // We don't want to add the previous bet
+                this.tableBet = 0;
 
                 // Increase playCounter,
                 // counter is used to know when the next round is
@@ -738,12 +755,11 @@ public class Table implements Subject{
                 // Increase playCounter,
                 // counter is used to know when the next round is
                 playCounter++;
-
                 //Store in table pot
-                this.pot += this.newBet;
-
+                //this.pot += this.newBet;
+                // Current bet
+                this.tableBet = this.newBet;
             }
-
 
             // Go to next player
             play();
@@ -762,7 +778,7 @@ public class Table implements Subject{
                 this.round();
                 // Notify Observers
                 // Updates the slider for current user
-                notifyObservers();
+                //notifyObservers();
                 // When slider is clicked
                 slider.setOnMouseClicked(event -> notifyObservers());
                 // When the slider is dragged

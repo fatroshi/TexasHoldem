@@ -255,11 +255,13 @@ public class Graphic implements Observer{
     public void decreaseUserBalance(int activeUser, double userBalance, double bet) {
         double newBalance = round(userBalance - bet,2);
         String strBalance = String.valueOf(newBalance);
-
-
-
         blanceLabels.get(activeUser).setText(strBalance);
+    }
 
+    @Override
+    public void updateTablePotLabel(double pot) {
+        pot = round(pot, 2);
+        this.potLabel.setText(String.valueOf(pot));
     }
 
 

@@ -128,6 +128,12 @@ public class Controller {
         root.getChildren().add(btn);
     }
 
+    public void getPotLabel() {
+        Label potLabel = game.getPotLabel();
+        // Add to scene
+        root.getChildren().add(potLabel);
+    }
+
     // This function should be written to 2
     // one for slider, one for labels
     public void getSlider() {

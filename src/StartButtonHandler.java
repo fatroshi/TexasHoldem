@@ -41,6 +41,8 @@ public class StartButtonHandler implements EventHandler<Event> {
         c.getPlayBtn();
         // Get fold btn
         c.getFoldBtn();
+        // Get total pot label
+        c.getPotLabel();
         c.getGame().updateGame();
     }
 

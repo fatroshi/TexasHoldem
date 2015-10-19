@@ -1,4 +1,9 @@
+package highscore;
 
+import highscore.HighScore;
+import highscore.HighScoreComparator;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -6,8 +11,8 @@ import java.util.Collections;
  *
  * @author avi
  */
-public class HighScoreList {
-    private ArrayList<HighScore> highscorelist; 
+public class HighScoreList implements Serializable {
+    private ArrayList<HighScore> highscorelist;
     
     public HighScoreList(){
         highscorelist = new ArrayList<HighScore>();

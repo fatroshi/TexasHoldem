@@ -1,3 +1,6 @@
+package highscore;
+
+import highscore.HighScore;
 
 import java.util.Comparator;
 

@@ -2,9 +2,10 @@
  * Created by Farhad Atroshi on 12/10/15.
  */
 
-import Poker.AlertWindow;
+
 import Poker.GameBackground;
 import Poker.GameBackground_;
+import highscore.AlertWindow;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -27,7 +28,7 @@ public class MainView extends Application{
     Map<Pane,List<ImageView>> graphics = new HashMap<>();
     Stage window;
 
-
+    // testing
 
     public static void main(String[] args) {
         // Set program as a javaFx application

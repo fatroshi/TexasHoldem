@@ -1,3 +1,5 @@
+package highscore;
+
 import java.io.Serializable;
 
 /**
@@ -9,7 +11,7 @@ public class HighScore implements Serializable {
     private String hand;
     private int pot;
     
-    public HighScore(String username,String hand,double pot){
+    public HighScore (String username,String hand,double pot){
         this.username = username;
         this.hand = hand;
         this.pot = (int)pot;

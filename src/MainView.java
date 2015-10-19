@@ -28,7 +28,7 @@ public class MainView extends Application{
     Map<Pane,List<ImageView>> graphics = new HashMap<>();
     Stage window;
 
-
+    // testing
 
     public static void main(String[] args) {
         // Set program as a javaFx application

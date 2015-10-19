@@ -38,8 +38,8 @@ public class Controller {
     }
 
     public void createPlayers(Pane root) {
-        game.addPlayer("Mr Cohen", 10);
-        game.addPlayer("Mr Atroshi", 12);
+        game.addPlayer("Mr Cohen", 50);
+        game.addPlayer("Mr Atroshi", 82);
         //game.addPlayer("Felicia", 13);
         //game.addPlayer("Elise", 12);
     }

@@ -745,102 +745,61 @@ public class Table implements Subject{
         // Set to 2 decimal
         this.newBet = slider.getValue();
         this.newBet = roundDouble(this.newBet,0);
+        notifyObservers();
 
         if(canBet(player)){
-            // Check if its all in for user
-            // ALL IN for the user (need some modifications)
-            if (player.getBalance() < this.newBet) { // ALL IN
-                // Increase player
-                playCounter++;
 
-                // Decrease balance for the user
-                player.debitBalance(player.getBalance());
-                player.setBet(player.getBalance());
+            if(this.newBet > this.bet) {                                                    // RAISE
+                System.out.println(" RAISE from: " + player.getUsername());
 
-                // Display username of the user that accepted the raisr
-                this.msg = "ALL IN by" + player.getUsername();
+                // Set bet to the new value
+                this.bet = this.newBet;
 
-                // Set slider value to zero
-                this.slider.setValue(0);
+                // Update playBtn
+                playBtn.setText("CALL or RAISE");
 
-                // Update graphic
-                notifyObservers();
+                // Update slider
+                this.slider.setMin(this.newBet);
 
-
-            }else if(this.raiseFlag == true){       // CALL
-                // Increase player
-                playCounter++;
-
-                // Increase pot with this call
-                this.pot += this.newBet;
-
-                System.out.println(player.getBalance() + " BEFORE CALL");
-
-                // Decrease balance for the user
-                player.debitBalance(this.newBet);
-                player.setBet(this.newBet);
-
-                System.out.println(player.getBalance() + " AFTER CALL");
-
-                // Display username of the user that accepted the raise
-                this.msg = "Call by" + player.getUsername();
-
-                // Set slider value to zero
-                this.slider.setValue(0);
-
-                // Update graphic
-                notifyObservers();
-
-                // Set newBet and bet equal, the user has accepted the challenge
-                this.newBet = this.bet;
-
-                // Turn off the flag
-                this.raiseFlag = false;
-
-            }else if(this.newBet > this.bet){       // RAISE
-
-                // Reset the playCounter, we need to count all over again
-                this.playCounter = 1;
-
-                // Increase pot with this raise
-                this.pot += this.newBet;
-
-                //Update slider
-                this.slider.setValue(this.newBet);
-
-                // Decrease balance for the user
-                player.debitBalance(this.newBet);
-                player.setBet(this.newBet);
-
-                // Display the player who raised
+                // Set status text
                 this.msg = "Raise by " + player.getUsername();
 
-                // Update graphic
+                // Update status label (this.msg --> will be the text)
                 notifyObservers();
 
-                // Turn on raise flag
-                this.raiseFlag = true;
+            }else if(this.newBet == this.bet && this.newBet != 0 && this.bet != 0){         // CALL
+                System.out.println("CALL from: " + player.getUsername());
 
-            }else if(this.newBet == this.bet){      // CHECK
-                // Increase player
-                playCounter++;
 
-                // Display username of player that checked
-                this.msg = "Check by " + player.getUsername();
+                // Reset slider value
+                this.slider.setValue(0);
 
-                // Update graphic
-                notifyObservers();
+                // Update playBtn
+                playBtn.setText("PLAY");
+
+
+                // Reset values for bet and newBet
+                this.bet = 0;
+                this.newBet = 0;
+
+            }else if(this.newBet < this.bet){                                              // ALL IN ?
+                // CHECK IF ITS ALL IN,
+                // ELSE THE USER THAT THIS IS NOT ACCEPTED
+                System.out.println("Could this be all in??? " + player.getUsername());
+
+            }else if(this.newBet == 0 && this.bet == 0){                                    // CHECK
+                System.out.println("CHECK from:" + player.getUsername());
 
             }else{
-                System.out.println(" In the else...");
+                System.out.println("Else something ... " + "newBet: " + newBet + " bet: " + bet);
             }
-
-
             // Go to next player
             play();
         }
 
     }
+
+
 
     public void raise(Player player){
         // update user object

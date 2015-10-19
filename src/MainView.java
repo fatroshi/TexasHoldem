@@ -54,10 +54,14 @@ public class MainView extends Application{
         Menu fileMenu       = new Menu("File");
         MenuItem openItem   = new MenuItem("Open");
         MenuItem closeItem  = new MenuItem("Close");
+        MenuItem highscoreItem  = new MenuItem("Highscore");
         MenuItem exitItem   = new MenuItem("Exit");
 
         // END
-        fileMenu.getItems().addAll(openItem, closeItem, exitItem);
+        fileMenu.getItems().addAll(openItem, closeItem,highscoreItem, exitItem);
+        
+        // shows highscorelist
+        highscoreItem.setOnAction(event -> AlertWindow.show("Highscore List","send\nthree\nlist\nhere\nas\nList",3000,3000));
         //
         mb.getMenus().addAll(fileMenu);
         topVBox.getChildren().add(mb);

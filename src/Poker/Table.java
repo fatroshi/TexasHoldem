@@ -101,6 +101,8 @@ public class Table implements Subject{
         }
     }
 
+
+
     public Button getStartBtn() {
         return startBtn;
     }
@@ -694,14 +696,28 @@ public class Table implements Subject{
     public void canPlay(){
         // Check if player can bet
         Player player = getActivePlayer();
+        // Set to 2 decimal
+        this.newBet = slider.getValue();
+        this.newBet = roundDouble(this.newBet,2);
 
         if(canBet(player)){
             // Check if its all in for user
-            if(player.getBalance() < this.newBet){
-                // Round the bet to 2 decimals
-                this.newBet = roundDouble(this.newBet, 2);
 
-                //
+            if(this.newBet > this.bet){
+                // update user object
+                System.out.println("Before bet" + player.getBalance());
+                player.debitBalance(this.newBet);                       // Decrease player balance
+                player.setBet(this.newBet);                             // Store the bet
+                System.out.println("After bet:" + player.getBalance());
+                this.msg = " Raise";
+                this.bet = newBet;
+            }else if(this.newBet == this.bet){
+                this.msg = "call";
+            }
+
+            // ALL IN
+            if (player.getBalance() < this.newBet) {
+                // ALL IN FOR THIS PLAYER
                 this.playBtn.setText(player.getBalance() + " ALL IN");
                 System.out.println(player.getBalance() + " ALL IN");
 
@@ -710,15 +726,8 @@ public class Table implements Subject{
                 double balance = player.getBalance();               // Get player balance
                 player.debitBalance(balance);                       // Decrease player balance, the balance should be zero (ALL IN)
                 player.setBet(balance);                             // Store it as bet
-            }else{
-                // update user object
-                System.out.println("Before bet" + player.getBalance());
-
-                player.debitBalance(this.newBet);                   // Decrease player balance
-                player.setBet(this.newBet);                         // Store the bet
-                System.out.println("After bet:" + player.getBalance());
-
             }
+
 
             // Go to next player
             play();
@@ -738,21 +747,28 @@ public class Table implements Subject{
                 // Store username of the previous player
                 String oldPlayer = players.get(this.oldActiveUser).getUsername();
 
+
                 // Get new bet from slider, round to 2 decimals
 
                 // Reset the message
-                this.msg = "";
+                this.msg = "Wellcome to the poker game";
 
                 // Notify Observers
                 // Updates the slider for current user
                 notifyObservers();
                 // When slider is clicked
-                slider.setOnMouseClicked(even -> notifyObservers());
+                slider.setOnMouseClicked(event -> notifyObservers());
                 // When the slider is dragged
                 slider.setOnMouseDragged(event -> notifyObservers());
 
+
+
             }
         }
+    }
+
+    public void dummy(){
+        System.out.println("from dummy");
     }
 
     /**

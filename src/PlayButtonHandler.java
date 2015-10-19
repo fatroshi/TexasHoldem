@@ -17,6 +17,6 @@ public class PlayButtonHandler implements EventHandler<Event> {
         System.out.println("i just got cliiiicked maaaan");
         controller.getGame().canPlay();
 
-        //controller.getRound();
+        controller.getRound();
     }
 }

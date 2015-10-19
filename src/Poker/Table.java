@@ -172,7 +172,8 @@ public class Table implements Subject{
                 System.out.println(" 4 round");
 
                 // Check who the winner is
-                //getWinner();
+                dealPot(this.pot,getWinner());
+                notifyObservers();
             }
         }
 

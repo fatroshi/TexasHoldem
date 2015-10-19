@@ -702,7 +702,7 @@ public class Table implements Subject{
 
         if(canBet(player)){
             // Check if its all in for user
-
+            // If so then do somethong
             if(this.newBet > this.bet){
                 // update user object
                 System.out.println("Before bet" + player.getBalance());

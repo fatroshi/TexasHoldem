@@ -174,6 +174,9 @@ public class Table implements Subject{
                 // Check who the winner is
                 dealPot(this.pot,getWinner());
                 notifyObservers();
+
+                System.out.println(players.get(0).getBalance() + " Balance: AVI");
+                System.out.println(players.get(0).getBalance() + " Balance: Farhad");
             }
         }
 

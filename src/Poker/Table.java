@@ -173,7 +173,7 @@ public class Table implements Subject{
 
                 // Check who the winner is
                 dealPot(this.pot,getWinner());
-                //notifyObservers();
+                notifyObservers();
             }
         }
 

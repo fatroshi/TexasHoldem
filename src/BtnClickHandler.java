@@ -26,21 +26,12 @@ public class BtnClickHandler implements EventHandler<Event> {
             case "START":
                 loadGameData();
                 break;
-            case "CHECK":
+            case "PLAY":
                 //
                 //c.getGame().round(); controller should check round!
                 c.getRound();
                 // Set next active user
-                c.getGame().check();
-                break;
-            case "BET":
-                c.getGame().bet();
-                break;
-            case "RAISE":
-                c.getGame().raise();
-                break;
-            case "CALL":
-                c.getGame().call();
+                c.getGame().play();
                 break;
             case "FOLD":
                 c.getGame().fold();
@@ -71,6 +62,8 @@ public class BtnClickHandler implements EventHandler<Event> {
         btn.setVisible(false);
         // Show game buttons
         c.getGame().showTableButtons();
+        //
+        c.getGame().updateGame();
     }
 
 

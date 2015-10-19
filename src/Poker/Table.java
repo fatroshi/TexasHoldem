@@ -61,19 +61,19 @@ public class Table implements Subject{
     private Slider slider;            // Slider for player to make bet, call, raise
     private Label sliderLabel;        // Create label for slider
     private Label statusLabel;        // Will be shown when; check,raise,call, all in, fold
-
+    private String msg;               // Used for passing strings to objects from class Graphics
 
     private List<Observer> listOfObservers = new ArrayList<>();
 
     public Table(){
         graphic         = new Graphic();
         slider          = graphic.getSlider();                  // Slider for player to make bet, call, raise
-        sliderLabel     = graphic.createLabel(240,465,24);      // Create label for slider
-        statusLabel     = graphic.createLabel(240,435,24);      // Will be shown when; check,raise,call, all in, fold
+        sliderLabel     = graphic.getSliderLabel();             // Create label for slider
+        statusLabel     = graphic.getStatusLabel();             // Will be shown when; check,raise,call, all in, fold
         tableButtons    = graphic.createTableButtons();
 
         // Register Observer
-        this.listOfObservers.add(graphic);
+        registerObserver(graphic);
     }
 
     @Override
@@ -88,11 +88,11 @@ public class Table implements Subject{
 
     @Override
     public void notifyObservers() {
-        System.out.println("* Notify the slider");
         // Update set: min, max
-        this.listOfObservers.get(0).updateSlider(this.bet);
-
-
+        for (Observer observer: listOfObservers){
+            observer.updateSlider(this.slider.getValue(), players.get(this.activeUser).getBalance(), this.msg);
+            observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance(),this.slider.getValue());
+        }
     }
 
     /**
@@ -109,7 +109,7 @@ public class Table implements Subject{
      */
     public int round(){
         // 1. How many active players
-        // 2. if the counter = (acive players) - 1, one round
+        // 2. if the playCounter = (acive players) - 1, one round
         // When to reset the counter ?
         // well we will se that!
 
@@ -187,45 +187,6 @@ public class Table implements Subject{
         return players.get(winner);
     }
 
-    public void raise() {
-        // Notify Observers
-        notifyObservers();
-
-        AlertWindow.show(" Raise", " Raise: " + players.get(this.activeUser).getUsername(), 200, 100);
-        //System.out.println(players.get(this.activeUser) + ": Raise ");
-
-        if (oneActivePlayer()) {
-            //We got a winner
-            setWinnerBG();
-        } else {
-            // Set next user
-            nextUser();
-        }
-
-    }
-
-    public void bet() {
-        // Check if player can bet
-
-        if (oneActivePlayer()) {
-            //We got a winner
-            setWinnerBG();
-        } else {
-            // Set next user
-            nextUser();
-        }
-    }
-
-    public void call() {
-        if (oneActivePlayer()) {
-            //We got a winner
-            setWinnerBG();
-        } else {
-            // Set next user
-            nextUser();
-        }
-    }
-
     public void fold() {
         if (oneActivePlayer()) {
             //We got a winner
@@ -244,13 +205,24 @@ public class Table implements Subject{
         }
     }
 
-    public void check() {
+    public void play() {
+
+
+        // Find a better place for this
+        this.updateGame();
+
         if (oneActivePlayer()) {
             //We got a winner
             setWinnerBG();
         } else {
             // Set next user
-            nextUser();
+            this.nextUser();
+            // Update background  for current active user
+            // Show current selected user by changing the background color
+            graphic.updatePlayerBg(this.playersBg.get(this.activeUser), Color.DARKGREEN);
+            // Change back the background color
+            graphic.updatePlayerBg(this.playersBg.get(this.oldActiveUser), Color.BLACK);
+
         }
     }
 
@@ -313,8 +285,8 @@ public class Table implements Subject{
         Label usernameLabel = graphic.createUsernameLabel(player, playerIndex);
         this.usernameLabels.add(usernameLabel);
         // Add balance to balanceLabels
-        Label balandeLabel = graphic.createBalanceLabel(player,playerIndex);
-        this.balanceLabels.add(balandeLabel);
+        Label balanceLabel = graphic.createBalanceLabel(player,playerIndex);
+        this.balanceLabels.add(balanceLabel);
         // Add bg to bgPlayers
         Rectangle playerBg = graphic.createPlayerBg(playerIndex);
         this.playersBg.add(playerBg);
@@ -334,7 +306,7 @@ public class Table implements Subject{
      * Removes player from the game by calling the players method player.active(false);
      */
     public void removePlayerInGame() {
-        getPlayer(this.activeUser).active(false);
+        getPlayer(this.activeUser).setActive(false);
         System.out.println(players.get(this.activeUser).getUsername() + " Removed, ID: " + this.activeUser);
     }
 
@@ -655,14 +627,14 @@ public class Table implements Subject{
             this.activeUser = nextActiveUser;
             // Find and set next active player
             // and update game
-            updateGame();
+            //updateGame();
 
         } else {
             // Reset
             this.activeUser = 0;
             // Find and set next active player
             // and update game
-            updateGame();
+            //updateGame();
 
         }
     }
@@ -674,46 +646,82 @@ public class Table implements Subject{
      */
     public void updateGame(){
         if (setActivePlayer()) {
+            // Check the new bet
+            //this.newBet = this.slider.getValue();
+            // Round the double to 2 decimals
+            //this.newBet = roundDouble(this.newBet, 2);
             // Check round
+
+
             if(this.rounds < 5) {
                 this.round();
-                //Check if it was a raise
+                // Store username of the previous player
                 String oldPlayer = players.get(this.oldActiveUser).getUsername();
-                String msg = "";
 
-                if (newBet > bet) {
-                    bet = newBet;
-                    // Raise
-                    msg = oldPlayer + " RAISE";
-                    // reset play counter
-                    playCounter = 1;
-                } else if (newBet == 0) {
-                    // FOLD
-                    playCounter++;
-                } else if (newBet < bet) {
-                    // All in
-                    //msg = oldPlayer + " All IN";
-                    playCounter++;
-                } else {
-                    // Check
-                    msg = oldPlayer + " CHECK";
-                    playCounter++;
+                // Get new bet from slider
+                this.newBet = this.slider.getValue();
+
+                // Set the bet as newBet
+
+                //this.bet = this.newBet; // Will change this later
+
+                // Reset the message
+                this.msg = "";
+
+
+                // Check if player can bet
+                Player player = getActivePlayer();
+
+                if(canBet(player)){
+                    // Should increase the players balance
+                    if(this.newBet > this.bet) {
+                        // RAISE
+                        this.tableButtons.get(1).setText("Call");
+                    }else if(this.newBet == this.bet){
+                        // CHECK
+                        this.tableButtons.get(1).setText("Check");
+                    }
+
+                }else{
+                    // Player cant play if the balance is 0
+                    // Else all in for the user
+                    this.tableButtons.get(1).setText(player.getBalance() + " ALL IN");
+                    System.out.println(player.getBalance() + " ALL IN");
                 }
 
-                // Display previous action from user
-                graphic.updateLabel(this.statusLabel,msg,Color.WHITESMOKE);
 
-                // For current active user
+                // Notify Observers
+                // Updates the slider for current user
+                notifyObservers();
+                // When slider is clicked
+                slider.setOnMouseClicked(even -> notifyObservers());
+                // When the slider is dragged
+                slider.setOnMouseDragged(event -> notifyObservers());
 
-                // Show current selected user
-                graphic.updatePlayerBg(this.playersBg.get(this.activeUser), Color.DARKGREEN);
-                // Get player info.
-                double balance = players.get(this.activeUser).getBalance();
-                graphic.updateSlider(this.slider, this.sliderLabel, balance,this.activeUser, bet, raise);
             }
 
         }
     }
+
+    /**
+     * Check if the player can bet
+     * @param player
+     * @return
+     */
+    public boolean canBet(Player player){
+        boolean canBet = false;
+        if(player.getBalance() >= this.bet){
+            canBet = true;
+        }
+
+        return  canBet;
+    }
+
+
+    public Player getActivePlayer(){
+        return this.players.get(activeUser);
+    }
+
 
     /**
      * Count all active players in the game
@@ -873,7 +881,21 @@ public class Table implements Subject{
         graphic.showTableButtons(this.tableButtons);
     }
 
+    /**
+     * Found at: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
+     *
+     * @param value
+     * @param places
+     * @return
+     */
+    public static double roundDouble(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
 
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 }
 
     

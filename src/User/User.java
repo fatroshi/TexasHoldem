@@ -18,6 +18,10 @@ abstract public class User {
     private Hand hand;
     private boolean active;
 
+
+
+    private double bet;
+
     public User() {
 
     }
@@ -31,11 +35,19 @@ abstract public class User {
         this.active = true;
     }
 
+    public double getBet() {
+        return bet;
+    }
+
+    public void setBet(double bet) {
+        this.bet = bet;
+    }
+
     public boolean isActive() {
         return this.active;
     }
 
-    public void active(boolean b) {
+    public void setActive(boolean b) {
         this.active = false;
     }
 

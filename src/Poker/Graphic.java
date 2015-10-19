@@ -18,16 +18,16 @@ import java.util.List;
 
 public class Graphic implements Observer{
 
-
-
     private Slider slider;
     private Label sliderLabel;
     private Label statusLabel;
+    private Label usernameLabel;
+    private List<Label> blanceLabels = new ArrayList<>();
 
     public Graphic(){
-        slider = this.createSlider(10,100,50);      // Slider fot betting
-        sliderLabel = new Label();                  // Label for the slider
-        statusLabel = new Label();                  // Label for showing current status: bet/call/raise
+        slider = this.createSlider(10,100,0);           // Slider fot betting (min,max,currentSliderValue)
+        sliderLabel = createLabel(240, 465, 24);        // Label for the slider
+        statusLabel = createLabel(240, 435, 24);        // Label for showing current status: bet/call/raise
     }
 
     public Slider getSlider() {
@@ -54,7 +54,6 @@ public class Graphic implements Observer{
         slider.setLayoutY(510);
         slider.setTooltip(new Tooltip("Check or Raise"));
         slider.setStyle("-fx-color: RED;");
-
         return slider;
     }
 
@@ -73,6 +72,15 @@ public class Graphic implements Observer{
         slider.setMax(playerBalance);
 
         return currentBet;
+    }
+
+
+    public Label getSliderLabel(){
+       return this.sliderLabel;
+    }
+
+    public Label getStatusLabel(){
+        return this.statusLabel;
     }
 
     /**
@@ -112,17 +120,19 @@ public class Graphic implements Observer{
         // Index of the player in array
         int id = playerIndex;
         // Create label for username
-        Label username = new Label(player.getUsername());
+        this.usernameLabel = new Label(player.getUsername());
         // Set x,y for label
         for (Table_ t : Table_.values()) {
             if (id == t.getUserId()) {
-                username.setLayoutX(t.getXlayout() - 20);
-                username.setLayoutY(t.getYlayout() + 95);
-                username.setTextFill(Color.LIGHTGRAY);
-                username.setFont(Font.font(18));
+                usernameLabel.setLayoutX(t.getXlayout() - 20);
+                usernameLabel.setLayoutY(t.getYlayout() + 95);
+                usernameLabel.setTextFill(Color.LIGHTGRAY);
+                usernameLabel.setFont(Font.font(18));
             }
         }
-        return username;
+
+
+        return this.usernameLabel;
 
     }
 
@@ -136,18 +146,19 @@ public class Graphic implements Observer{
         // Index of the player in array
         int id = playerIndex;
         // Create Label for balance
-        Label balance = new Label("$ " + String.valueOf(player.getBalance()));
+        Label label = new Label("$ " + String.valueOf(player.getBalance()));
         // Set x,y for label
         for (Table_ t : Table_.values()) {
             if (id == t.getUserId()) {
                 // balance
-                balance.setLayoutX(t.getXlayout() - 20);
-                balance.setLayoutY(t.getYlayout() + 118);
-                balance.setTextFill(Color.GREEN);
+                label.setLayoutX(t.getXlayout() - 20);
+                label.setLayoutY(t.getYlayout() + 118);
+                label.setTextFill(Color.GREEN);
             }
         }
         // Add to array
-        return balance;
+        this.blanceLabels.add(label);
+        return label;
     }
     
     /**
@@ -248,9 +259,49 @@ public class Graphic implements Observer{
 
 
     @Override
-    public void updateSlider(double currentBet, double userBalance) {
+    public void updateSlider(double currentBet, double userBalance, String message) {
+        // Update the slider
+        System.out.println("Slider got updated by the update method in graphic");
         this.slider.setValue(currentBet);
         this.slider.setMax(userBalance);
+
+        double value = round(slider.getValue(), 0);
+        String strValue = String.valueOf(value);
+        // Slider label
+        sliderLabel.setText("$ " + strValue);
+
+        // Status label
+        this.statusLabel.setText(message);
+    }
+
+    @Override
+    public void decreaseUserBalance(int index, double userBalance, double bet) {
+        double newBalance = round((userBalance - bet), 2);
+        String strBalance = String.valueOf(newBalance);
+        //this.blanceLabel.setText(newBalance);
+        if(bet <= userBalance) {
+            // Set text
+            this.blanceLabels.get(index).setText(strBalance);
+        }else{
+            // Set text to zero
+            this.blanceLabels.get(index).setText("0");
+        }
+    }
+
+    /**
+     * Found at: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
+     *
+     * @param value
+     * @param places
+     * @return
+     */
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
 
 }

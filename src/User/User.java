@@ -18,9 +18,6 @@ abstract public class User {
     private Hand hand;
     private boolean active;
 
-
-
-
     private double totalBet;
     private double bet;
 

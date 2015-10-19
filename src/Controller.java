@@ -1,7 +1,6 @@
 import Dealer.Card;
 import Dealer.Chip;
 import Poker.*;
-import User.Player;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -41,8 +40,8 @@ public class Controller {
     public void createPlayers(Pane root) {
         game.addPlayer("Lawen", 10);
         game.addPlayer("Farhad", 12);
-        game.addPlayer("Felicia", 13);
-        game.addPlayer("Elise", 12);
+        //game.addPlayer("Felicia", 13);
+        //game.addPlayer("Elise", 12);
     }
 
     public void getUserInfo() {
@@ -97,18 +96,8 @@ public class Controller {
         }
     }
 
-    public void getUserBtn() {
-        for (int i = 1; i < game.getTableButtons().size(); i++) {
-            Button btn = game.getTableButtons().get(i);
-            // Assign EventHandler
-            btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(), this, btn));
-            root.getChildren().add(btn);
-        }
-    }
 
-    public void addPaneToPane(Pane p, Pane root) {
-        root.getChildren().add(p);
-    }
+
 
     public void getGameScene() {
         GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
@@ -116,17 +105,30 @@ public class Controller {
         this.root.getChildren().add(table.getImageView());
     }
 
-    public void getTurn() {
+    public void getPlayBtn() {
+        Button btn = game.getPlayBtn();
+        // Assign EventHandler
+        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayButtonHandler(this));
+        root.getChildren().add(btn);
+
+    }
+
+    public void getFoldBtn() {
+        Button btn = game.getFoldBtn();
+        // Assign EventHandler
+        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new FoldButtonHandler(this));
+        root.getChildren().add(btn);
 
     }
 
     public void getStartBtn() {
-        Button btn = this.game.getTableButtons().get(0);
-        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new BtnClickHandler(btn.getText(), this, btn));
-        this.root.getChildren().add(btn);
+        Button btn = game.getStartBtn();
+        // Assign EventHandler
+        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new StartButtonHandler(this));
+        root.getChildren().add(btn);
     }
 
-    // This funktion should be written to 2
+    // This function should be written to 2
     // one for slider, one for labels
     public void getSlider() {
         root.getChildren().add(game.getSliderLabel());

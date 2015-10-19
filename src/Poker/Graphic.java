@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -207,48 +208,29 @@ public class Graphic implements Observer{
     }
 
 
-    /** SHOUD FIND A BETTER SOLUTION
-     * Return a list of buttons for the game
-     * @return
-     */
-    public List<Button> createTableButtons() {
-        List<Button> buttons = new ArrayList<>();
 
-        Button btn;
+    public Button createButton(String name){
+        Button btn = new Button();
         for (ButtonLayout b : ButtonLayout.values()) {
-            btn = new Button(b.name());
-            // Style btn
-            String css = "-fx-stroke: #4e5b65; " +
-                    "-fx-background-color:" + b.getColor() + ";" +
-                    "-fx-stroke: green;";
-            btn.setStyle(css);
-            btn.setTextFill(Color.WHITESMOKE);
-            // Set size
-            btn.setMinWidth(90);
-            btn.setMinHeight(40);
 
-            // Set x,y layout
-            btn.setLayoutX(b.getX());
-            btn.setLayoutY(b.getY());
+            if(b.name() == name) {
+                btn.setText(b.name());
+                // Style btn
+                String css = "-fx-stroke: #4e5b65; " +
+                        "-fx-background-color:" + b.getColor() + ";" +
+                        "-fx-stroke: green;";
+                btn.setStyle(css);
+                btn.setTextFill(Color.WHITESMOKE);
+                // Set size
+                btn.setMinWidth(90);
+                btn.setMinHeight(40);
 
-            if (btn.getText() != "START") {
-                btn.setVisible(false);
-            } else {
-                // Start btn
-                btn.setMinWidth(200);
-                btn.setMinHeight(70);
-                btn.setFont(Font.font(25));
                 // Set x,y layout
-                //btn.setLayoutX(380);
-                //btn.setLayoutY(530);
+                btn.setLayoutX(b.getX());
+                btn.setLayoutY(b.getY());
             }
-
-            // Assign EventHandler
-            //btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayerButtonsHandler(b,this,btn));
-            // Add to list
-            buttons.add(btn);
         }
-        return buttons;
+        return btn;
     }
 
     /**
@@ -280,18 +262,22 @@ public class Graphic implements Observer{
         this.statusLabel.setText(message);
     }
 
-    @Override
-    public void decreaseUserBalance(int index, double userBalance, double bet) {
+
+    public Label decBalanceLabel(Label label, double userBalance, double bet) {
+        Label updatedLabel = label;
+
         double newBalance = round((userBalance - bet), 2);
         String strBalance = String.valueOf(newBalance);
         //this.blanceLabel.setText(newBalance);
         if(bet <= userBalance) {
             // Set text
-            this.blanceLabels.get(index).setText(strBalance);
+            updatedLabel.setText(strBalance);
         }else{
             // Set text to zero
-            this.blanceLabels.get(index).setText("0");
+            updatedLabel.setText("0");
         }
+
+        return updatedLabel;
     }
 
     /**

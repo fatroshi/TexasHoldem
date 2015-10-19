@@ -36,7 +36,6 @@ public class Table implements Subject{
     private List<Rectangle> playersBg               = new ArrayList<>(); // Background for player profile
     private List<Label> balanceLabels               = new ArrayList<>(); // Label for showing balance for the player
     private List<Label> usernameLabels              = new ArrayList<>(); // Label for showing username of the player
-    private List<Button> tableButtons;                                   // Game buttons, PLAY, FOLD
 
     private Deck deck                               = new Deck();        // Dealer.Hand (52 cards)
     private List<Card> tableCards                   = new ArrayList<>(); // Store all table cards, total of 5
@@ -45,6 +44,9 @@ public class Table implements Subject{
     private Map<Integer[], Player> playersBestHand  = new HashMap<>();   // List for storing player and the players best poker hand
 
     // Variables used by all players
+    private Button startBtn;          // The start btn, Starts the game
+    private Button playBtn;           // Play btn. Call,Raise,Check
+    private Button foldBtn;           // Player fold
     private int playerBig;            // Not sure if this will be used!!! Update later!
     private int activeUser;           // Id of current active player (Active --> Still in the game)
     private int oldActiveUser;        // Id of previous active player
@@ -53,7 +55,6 @@ public class Table implements Subject{
     private double raise;             // The raise value 
     private Label potLabel;           // Store the total pot value
     private double pot;               // Total current pot in the game
-    private boolean userFold;         // Use to check if the user has fold
 
     private int rounds;               // Counts the poker rounds, used for showing cards and when the game in done.
     private int playCounter;          // increases for call,bet. Sets to 0 for raise
@@ -72,7 +73,9 @@ public class Table implements Subject{
         slider          = graphic.getSlider();                  // Slider for player to make bet, call, raise
         sliderLabel     = graphic.getSliderLabel();             // Create label for slider
         statusLabel     = graphic.getStatusLabel();             // Will be shown when; check,raise,call, all in, fold
-        tableButtons    = graphic.createTableButtons();
+        startBtn        = graphic.createButton("START");        // Start the game
+        playBtn         = graphic.createButton("PLAY");         // Play: check,call,raise
+        foldBtn         = graphic.createButton("FOLD");         // player folds
         potLabel        = graphic.getPotLabel();
 
         // Register Observer
@@ -94,8 +97,32 @@ public class Table implements Subject{
         // Update set: min, max
         for (Observer observer: listOfObservers){
             observer.updateSlider(this.slider.getValue(), players.get(this.activeUser).getBalance(), this.msg);
-            observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance(), this.slider.getValue());
+            //observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance(), this.slider.getValue());
         }
+    }
+
+    public Button getStartBtn() {
+        return startBtn;
+    }
+
+    public void setStartBtn(Button startBtn) {
+        this.startBtn = startBtn;
+    }
+
+    public Button getPlayBtn() {
+        return playBtn;
+    }
+
+    public void setPlayBtn(Button playBtn) {
+        this.playBtn = playBtn;
+    }
+
+    public Button getFoldBtn() {
+        return foldBtn;
+    }
+
+    public void setFoldBtn(Button foldBtn) {
+        this.foldBtn = foldBtn;
     }
 
     /**
@@ -148,95 +175,6 @@ public class Table implements Subject{
      * @return
      */
 
-    public Player getWinner() {
-        Map<Integer[], Player> bestHands = new HashMap<>();
-
-
-        for (int i = 0; i < players.size(); i++) {
-            Hand hand = players.get(i).getHand();
-            bestHands.put(bestHand(hand), players.get(i));
-        }
-        // Store hand rank
-        Integer[] topRank = {0, 0, 0, 0};
-
-        int sameHandCounter = 0;
-        int winner = -1;
-        for (Map.Entry<Integer[], Player> entry : bestHands.entrySet()) {
-            Integer[] rank = entry.getKey();
-            Player player = entry.getValue();
-
-            if(rank[0] > topRank[0]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] > topRank[1]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] > topRank[2]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] > topRank[3]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] == topRank[3]){
-                // Player has same hand
-                // Do something
-                // Store id of the player... or the object...
-                // split the cash
-            }
-        }
-
-        List<Player> winners = new ArrayList<>();
-
-        return players.get(winner);
-    }
-
-    public void fold() {
-        // return back the cash dude!!!!
-        this.userFold = true;
-
-        Player player = getActivePlayer();
-        player.depositBalance(player.getBet());
-        notifyObservers();
-
-        if (oneActivePlayer()) {
-            //We got a winner
-
-        } else {
-            //Set active = false
-            removePlayerInGame();
-            //Do somthing with user cards
-            Card c1 = players.get(this.activeUser).getHand().getCard(0);
-            Card c2 = players.get(this.activeUser).getHand().getCard(1);
-
-            Animation.fadeOut(c1);
-            Animation.fadeOut(c2);
-            // Set next user
-            nextUser();
-        }
-    }
-
-    public void play() {
-
-
-
-
-        if (oneActivePlayer()) {
-            //We got a winner
-            setWinnerBG();
-        } else {
-            // Set next user
-            this.nextUser();
-            // Update background  for current active user
-            // Show current selected user by changing the background color
-            graphic.updatePlayerBg(this.playersBg.get(this.activeUser), Color.DARKGREEN);
-            // Change back the background color
-            graphic.updatePlayerBg(this.playersBg.get(this.oldActiveUser), Color.BLACK);
-
-        }
-
-        // Find a better place for this
-        this.updateGame();
-    }
 
     /**
      * Set all properties for the cards,
@@ -651,6 +589,141 @@ public class Table implements Subject{
         }
     }
 
+    public Player getWinner() {
+        Map<Integer[], Player> bestHands = new HashMap<>();
+
+
+        for (int i = 0; i < players.size(); i++) {
+            Hand hand = players.get(i).getHand();
+            bestHands.put(bestHand(hand), players.get(i));
+        }
+        // Store hand rank
+        Integer[] topRank = {0, 0, 0, 0};
+
+        int sameHandCounter = 0;
+        int winner = -1;
+        for (Map.Entry<Integer[], Player> entry : bestHands.entrySet()) {
+            Integer[] rank = entry.getKey();
+            Player player = entry.getValue();
+
+            if(rank[0] > topRank[0]){
+                winner = players.indexOf(player);
+                System.arraycopy(rank, 0, topRank, 0, 4);
+            }else if(rank[0] == topRank[0] && rank[1] > topRank[1]){
+                winner = players.indexOf(player);
+                System.arraycopy(rank, 0, topRank, 0, 4);
+            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] > topRank[2]){
+                winner = players.indexOf(player);
+                System.arraycopy(rank, 0, topRank, 0, 4);
+            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] > topRank[3]){
+                winner = players.indexOf(player);
+                System.arraycopy(rank, 0, topRank, 0, 4);
+            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] == topRank[3]){
+                // Player has same hand
+                // Do something
+                // Store id of the player... or the object...
+                // split the cash
+            }
+        }
+
+        List<Player> winners = new ArrayList<>();
+
+        return players.get(winner);
+    }
+
+    public void fold() {
+        // return back the cash dude!!!!
+        Player player = getActivePlayer();
+        player.depositBalance(player.getBet());
+        notifyObservers();
+
+        if (oneActivePlayer()) {
+            //We got a winner
+
+        } else {
+            //Set active = false
+            removePlayerInGame();
+            //Do somthing with user cards
+            Card c1 = players.get(this.activeUser).getHand().getCard(0);
+            Card c2 = players.get(this.activeUser).getHand().getCard(1);
+
+            Animation.fadeOut(c1);
+            Animation.fadeOut(c2);
+            // Set next user
+            nextUser();
+        }
+    }
+
+
+    public void gameStart(){
+        // Update background  for current active user
+        // Show current selected user by changing the background color
+        // We know that the firs user has index 0
+        graphic.updatePlayerBg(this.playersBg.get(0), Color.DARKGREEN);
+
+    }
+
+    public void play() {
+
+        if (oneActivePlayer()) {
+            //We got a winner
+            setWinnerBG();
+        } else {
+            // Set next user
+            this.nextUser();
+            // Update background  for current active user
+            // Show current selected user by changing the background color
+            graphic.updatePlayerBg(this.playersBg.get(this.activeUser), Color.DARKGREEN);
+            // Change back the background color
+            graphic.updatePlayerBg(this.playersBg.get(this.oldActiveUser), Color.BLACK);
+
+        }
+
+        // Find a better place for this
+        this.updateGame();
+    }
+
+    public void OnSliderChange(){
+        Player player = getActivePlayer();
+        double tmpBalance = this.slider.getValue();
+        String balance = String.valueOf(player.getBalance());
+
+
+
+    }
+
+    public void canPlay(){
+        // Check if player can bet
+        Player player = getActivePlayer();
+
+        if(canBet(player)){
+            // Update user balance (User object)
+            player.debitBalance(this.newBet);
+            player.setBet(this.newBet);
+            // Update user balance label
+            balanceLabels.get(this.activeUser).setText("");
+
+            // Should decrease the players balance
+            if(this.newBet > this.bet) {
+                // RAISE
+                this.playBtn.setText("Call");
+            }else if(this.newBet == this.bet){
+                // CHECK
+                this.playBtn.setText("Check");
+                // CHECK
+            }
+
+        }else{
+            // Player cant play if the balance is 0
+            // Else all in for the user
+            this.playBtn.setText(player.getBalance() + " ALL IN");
+            System.out.println(player.getBalance() + " ALL IN");
+        }
+
+        // Go to next player
+        play();
+    }
+
     /**
      * Game control,
      * updates graphic elements
@@ -664,7 +737,6 @@ public class Table implements Subject{
             //this.newBet = roundDouble(this.newBet, 2);
             // Check round
 
-
             if(this.rounds < 5) {
                 this.round();
                 // Store username of the previous player
@@ -676,38 +748,15 @@ public class Table implements Subject{
                 // Reset the message
                 this.msg = "";
 
-                // Check if player can bet
-                Player player = getActivePlayer();
-
-                if(canBet(player)){
-                    // Update user balance
-                    player.debitBalance(this.newBet);
-                    player.setBet(this.newBet);
-
-                    // Should decrease the players balance
-                    if(this.newBet > this.bet) {
-                        // RAISE
-                        this.tableButtons.get(1).setText("Call");
-                    }else if(this.newBet == this.bet){
-                        // CHECK
-                        this.tableButtons.get(1).setText("Check");
-                    }
-
-                }else{
-                    // Player cant play if the balance is 0
-                    // Else all in for the user
-                    this.tableButtons.get(1).setText(player.getBalance() + " ALL IN");
-                    System.out.println(player.getBalance() + " ALL IN");
-                }
-
+                this.canPlay();
 
                 // Notify Observers
                 // Updates the slider for current user
-                notifyObservers();
+                //notifyObservers();
                 // When slider is clicked
-                slider.setOnMouseClicked(even -> notifyObservers());
+                //slider.setOnMouseClicked(even -> notifyObservers());
                 // When the slider is dragged
-                slider.setOnMouseDragged(event -> notifyObservers());
+                //slider.setOnMouseDragged(event -> notifyObservers());
 
             }
 
@@ -872,9 +921,6 @@ public class Table implements Subject{
         return this.tableCards;
     }
 
-    public  List<Button> getTableButtons(){
-        return this.tableButtons;
-    }
 
     public Slider getSlider(){
         return this.slider;
@@ -888,9 +934,6 @@ public class Table implements Subject{
         return this.sliderLabel;
     }
 
-    public void showTableButtons(){
-        graphic.showTableButtons(this.tableButtons);
-    }
 
     /**
      * Found at: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places

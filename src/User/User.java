@@ -20,6 +20,8 @@ abstract public class User {
 
 
 
+
+    private double totalBet;
     private double bet;
 
     public User() {
@@ -35,12 +37,21 @@ abstract public class User {
         this.active = true;
     }
 
+    public double getTotalBet() {
+        return totalBet;
+    }
+
+    public void setTotalBet(double totalBet) {
+        this.totalBet = totalBet;
+    }
+
     public double getBet() {
         return bet;
     }
 
     public void setBet(double bet) {
         this.bet = bet;
+        this.totalBet += this.bet;
     }
 
     public boolean isActive() {
@@ -167,4 +178,6 @@ abstract public class User {
     public void setSaldo(double balance) {
         this.balance = balance;
     }
+
+
 }

@@ -37,7 +37,7 @@ public class Table implements Subject{
     private List<Label> balanceLabels               = new ArrayList<>(); // Label for showing balance for the player
     private List<Label> usernameLabels              = new ArrayList<>(); // Label for showing username of the player
     private List<Button> tableButtons;                                   // Game buttons, PLAY, FOLD
-    
+
     private Deck deck                               = new Deck();        // Dealer.Hand (52 cards)
     private List<Card> tableCards                   = new ArrayList<>(); // Store all table cards, total of 5
     
@@ -51,7 +51,9 @@ public class Table implements Subject{
     private double bet;               // Current bet in game
     private double newBet;            // User to check if bet has been changed
     private double raise;             // The raise value 
+    private Label potLabel;           // Store the total pot value
     private double pot;               // Total current pot in the game
+    private boolean userFold;         // Use to check if the user has fold
 
     private int rounds;               // Counts the poker rounds, used for showing cards and when the game in done.
     private int playCounter;          // increases for call,bet. Sets to 0 for raise
@@ -71,6 +73,7 @@ public class Table implements Subject{
         sliderLabel     = graphic.getSliderLabel();             // Create label for slider
         statusLabel     = graphic.getStatusLabel();             // Will be shown when; check,raise,call, all in, fold
         tableButtons    = graphic.createTableButtons();
+        potLabel        = graphic.getPotLabel();
 
         // Register Observer
         registerObserver(graphic);
@@ -91,7 +94,7 @@ public class Table implements Subject{
         // Update set: min, max
         for (Observer observer: listOfObservers){
             observer.updateSlider(this.slider.getValue(), players.get(this.activeUser).getBalance(), this.msg);
-            observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance(),this.slider.getValue());
+            observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance(), this.slider.getValue());
         }
     }
 
@@ -188,6 +191,13 @@ public class Table implements Subject{
     }
 
     public void fold() {
+        // return back the cash dude!!!!
+        this.userFold = true;
+
+        Player player = getActivePlayer();
+        player.depositBalance(player.getBet());
+        notifyObservers();
+
         if (oneActivePlayer()) {
             //We got a winner
 
@@ -208,8 +218,7 @@ public class Table implements Subject{
     public void play() {
 
 
-        // Find a better place for this
-        this.updateGame();
+
 
         if (oneActivePlayer()) {
             //We got a winner
@@ -224,6 +233,9 @@ public class Table implements Subject{
             graphic.updatePlayerBg(this.playersBg.get(this.oldActiveUser), Color.BLACK);
 
         }
+
+        // Find a better place for this
+        this.updateGame();
     }
 
     /**
@@ -658,22 +670,21 @@ public class Table implements Subject{
                 // Store username of the previous player
                 String oldPlayer = players.get(this.oldActiveUser).getUsername();
 
-                // Get new bet from slider
-                this.newBet = this.slider.getValue();
-
-                // Set the bet as newBet
-
-                //this.bet = this.newBet; // Will change this later
+                // Get new bet from slider, round to 2 decimals
+                this.newBet = roundDouble(this.slider.getValue(),2);
 
                 // Reset the message
                 this.msg = "";
-
 
                 // Check if player can bet
                 Player player = getActivePlayer();
 
                 if(canBet(player)){
-                    // Should increase the players balance
+                    // Update user balance
+                    player.debitBalance(this.newBet);
+                    player.setBet(this.newBet);
+
+                    // Should decrease the players balance
                     if(this.newBet > this.bet) {
                         // RAISE
                         this.tableButtons.get(1).setText("Call");

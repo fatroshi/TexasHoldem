@@ -3,7 +3,7 @@
  * Created by Farhad Atroshi on 07/10/15.
  * 
  */
-public class HighScore {
+public class HighScore implements Serializable {
     private String username;
     private String hand;
     private int pot;

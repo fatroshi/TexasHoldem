@@ -708,7 +708,7 @@ public class Table implements Subject{
 
         if(canBet(player)){
             // Check if its all in for user
-            if(this.newBet > this.bet){
+            if(this.newBet > this.bet) {
                 // update user object
                 player.debitBalance(this.newBet);                       // Decrease player balance
                 player.setBet(this.newBet);                             // Store the bet
@@ -725,12 +725,37 @@ public class Table implements Subject{
 
                 // Set message for next user
                 this.msg = " Raise";
+
+                // Update by the observers
                 notifyObservers();
 
                 // Set raise flag
                 this.raiseFlag = true;
+            }else if(this.raiseFlag == true){
+
+                this.msg = "Call";
+                // update user object
+                player.debitBalance(this.newBet);                       // Decrease player balance
+                player.setBet(this.newBet);                             // Store the bet
+                this.bet = newBet;
+
+                // Reset playCounter
+                playCounter = 1;
+
+                // Store in table pot
+                this.pot += this.newBet;
+                System.out.println("Pot is: " + pot);
+                // Current bet
+                this.tableBet = this.newBet;
+
+                // Set raise flag to false
+                this.raiseFlag = false;
+
+                // Update by the observers
+                notifyObservers();
+
             }else if(this.newBet == this.bet){
-                //this.msg = "call";
+                this.msg = "Check";
 
                 //Reset table bet
                 // We don't want to add the previous bet
@@ -741,7 +766,7 @@ public class Table implements Subject{
                 playCounter++;
             }
 
-            // ALL IN for the user
+            // ALL IN for the user (need some modifications)
             if (player.getBalance() < this.newBet) {
                 // ALL IN FOR THIS PLAYER
                 this.playBtn.setText(player.getBalance() + " ALL IN");

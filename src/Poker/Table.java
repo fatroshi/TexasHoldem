@@ -702,89 +702,55 @@ public class Table implements Subject{
     public void canPlay(){
         // Check if player can bet
         Player player = getActivePlayer();
+
         // Set to 2 decimal
         this.newBet = slider.getValue();
-        this.newBet = roundDouble(this.newBet,2);
+        this.newBet = roundDouble(this.newBet,0);
 
         if(canBet(player)){
             // Check if its all in for user
-            if(this.newBet > this.bet) {
-                // update user object
-                player.debitBalance(this.newBet);                       // Decrease player balance
-                player.setBet(this.newBet);                             // Store the bet
-                this.bet = newBet;
+            // ALL IN for the user (need some modifications)
+            if (player.getBalance() < this.newBet) {
 
-                // Store in table pot
-                this.pot += this.newBet;
-                System.out.println("Pot is: " + pot);
-                // Current bet
-                this.tableBet = this.newBet;
+                // Increase playCounter,
+                // counter is used to know when the next round is
+                playCounter++;
 
+                this.allIn(player);
+
+            }else if(this.newBet > this.bet) {
                 // Reset playCounter
                 playCounter = 1;
-
-                // Set message for next user
-                this.msg = " Raise";
-
-                // Update by the observers
-                notifyObservers();
 
                 // Set raise flag
                 this.raiseFlag = true;
+
+                // Call method
+                this.raise(player);
+
+
             }else if(this.raiseFlag == true){
-
-                this.msg = "Call";
-                // update user object
-                player.debitBalance(this.newBet);                       // Decrease player balance
-                player.setBet(this.newBet);                             // Store the bet
-                this.bet = newBet;
-
                 // Reset playCounter
                 playCounter = 1;
-
-                // Store in table pot
-                this.pot += this.newBet;
-                System.out.println("Pot is: " + pot);
-                // Current bet
-                this.tableBet = this.newBet;
 
                 // Set raise flag to false
                 this.raiseFlag = false;
 
-                // Update by the observers
-                notifyObservers();
+                //
+                this.call(player);
+                this.newBet = 0;
+                this.bet = 0;
 
             }else if(this.newBet == this.bet){
-                this.msg = "Check";
-
-                //Reset table bet
-                // We don't want to add the previous bet
-                this.tableBet = 0;
-
                 // Increase playCounter,
                 // counter is used to know when the next round is
                 playCounter++;
+
+
+                this.check(player);
             }
 
-            // ALL IN for the user (need some modifications)
-            if (player.getBalance() < this.newBet) {
-                // ALL IN FOR THIS PLAYER
-                this.playBtn.setText(player.getBalance() + " ALL IN");
-                System.out.println(player.getBalance() + " ALL IN");
 
-                //
-                // Update user balance (User object)
-                double balance = player.getBalance();               // Get player balance
-                player.debitBalance(balance);                       // Decrease player balance, the balance should be zero (ALL IN)
-                player.setBet(balance);                             // Store it as bet
-                // Increase playCounter,
-                // counter is used to know when the next round is
-                playCounter++;
-                //Store in table pot
-                //this.pot += this.newBet;
-                // Current bet
-                this.tableBet = this.newBet;
-            }
 
             // Go to next player
             play();
@@ -792,6 +758,85 @@ public class Table implements Subject{
 
     }
 
+    public void raise(Player player){
+        // update user object
+        //player.debitBalance(this.newBet);                       // Decrease player balance
+        //player.setBet(this.newBet);                             // Store the bet
+        this.bet = this.newBet;
+
+        // Store in table pot
+        this.pot += this.newBet;
+
+        System.out.println(String.valueOf(this.pot) + " The fucking pot");
+
+        System.out.println("Pot is in raise: " + pot);
+        // Current bet
+        this.tableBet = this.newBet;
+
+        // Set message for next user
+        this.msg = " Raise by " + player.getUsername();
+
+        //Update text of playBtn
+        playBtn.setText("Call");
+
+        // Update by the observers
+        notifyObservers();
+
+    }
+
+    public void call(Player player){
+        this.msg = "Call by " + player.getUsername();
+        // update user object
+        //player.debitBalance(this.newBet);                       // Decrease player balance
+        //player.setBet(this.newBet);                             // Store the bet
+        this.bet = newBet;
+
+        // Store in table pot
+        //this.pot += this.newBet;
+        System.out.println("Pot is call: " + pot);
+        // Current bet
+        this.tableBet = this.newBet;
+
+
+
+        //Update text of playBtn
+        playBtn.setText("Play");
+
+        // Update by the observers
+        notifyObservers();
+    }
+
+    public void check(Player player){
+        this.msg = "Check by " + player.getUsername();
+
+        //Reset table bet
+        // We don't want to add the previous bet
+        this.tableBet = 0;
+
+        // Reset bet
+        this.newBet = 0;
+        this.bet = 0;
+
+        // Update by the observers
+        notifyObservers();
+    }
+
+    public void allIn(Player player){
+        // ALL IN FOR THIS PLAYER
+
+        // Update user balance (User object)
+        double balance = player.getBalance();               // Get player balance
+        player.debitBalance(balance);                       // Decrease player balance, the balance should be zero (ALL IN)
+        player.setBet(balance);                             // Store it as bet
+
+        //Store in table pot
+        //this.pot += this.newBet;
+        // Current bet
+        this.tableBet = this.newBet;
+
+
+        notifyObservers();
+    }
     /**
      * Game control,
      * updates graphic elements
@@ -802,8 +847,7 @@ public class Table implements Subject{
             if(this.rounds < 5) {
                 this.round();
                 // Notify Observers
-                // Updates the slider for current user
-                //notifyObservers();
+
                 // When slider is clicked
                 slider.setOnMouseClicked(event -> notifyObservers());
                 // When the slider is dragged
@@ -812,9 +856,6 @@ public class Table implements Subject{
         }
     }
 
-    public void dummy(){
-        System.out.println("from dummy");
-    }
 
     /**
      * Check if the player can bet
@@ -823,7 +864,7 @@ public class Table implements Subject{
      */
     public boolean canBet(Player player){
         boolean canBet = false;
-        if(player.getBalance() >= this.bet){
+        if(player.getBalance() >= this.bet || player.getBalance() > 0){
             canBet = true;
         }
 

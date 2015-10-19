@@ -242,7 +242,7 @@ public class Graphic implements Observer{
         this.slider.setValue(currentBet);
         this.slider.setMax(userBalance);
 
-        double value = round(slider.getValue(), 2);
+        double value = round(slider.getValue(), 0);
         String strValue = String.valueOf(value);
         // Slider label
         sliderLabel.setText("$ " + strValue);
@@ -253,14 +253,16 @@ public class Graphic implements Observer{
 
     @Override
     public void decreaseUserBalance(int activeUser, double userBalance, double bet) {
-        double newBalance = round(userBalance - bet,2);
-        String strBalance = String.valueOf(newBalance);
-        blanceLabels.get(activeUser).setText(strBalance);
+        if(bet > 0) {
+            double newBalance = round(userBalance - bet, 0);
+            String strBalance = String.valueOf(newBalance);
+            blanceLabels.get(activeUser).setText(strBalance);
+        }
     }
 
     @Override
     public void updateTablePotLabel(double pot) {
-        pot = round(pot, 2);
+        pot = round(pot, 0);
         this.potLabel.setText(String.valueOf(pot));
     }
 

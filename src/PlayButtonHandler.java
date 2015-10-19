@@ -14,9 +14,7 @@ public class PlayButtonHandler implements EventHandler<Event> {
 
     @Override
     public void handle(Event evt) {
-        System.out.println("i just got cliiiicked maaaan");
         controller.getGame().canPlay();
-
         controller.getRound();
     }
 }

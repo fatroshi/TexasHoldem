@@ -173,7 +173,7 @@ public class Table implements Subject{
 
                 // Check who the winner is
                 dealPot(this.pot,getWinner());
-                notifyObservers();
+                //notifyObservers();
             }
         }
 
@@ -748,36 +748,68 @@ public class Table implements Subject{
             // ALL IN for the user (need some modifications)
             if (player.getBalance() < this.newBet) {
 
-                // Increase playCounter,
-                // counter is used to know when the next round is
+            }else if(this.raiseFlag == true){       // CALL
+                // Increase player
                 playCounter++;
-                this.allIn(player);
 
-            }else if(this.newBet > this.bet) {
-                // Reset playCounter
-                playCounter = 1;
-                // Set raise flag
-                this.raiseFlag = true;
-                // Call method
-                this.raise(player);
+                // Increase pot with this call
+                this.pot += this.bet;
 
-            }else if(this.raiseFlag == true){
-                // Reset playCounter
-                playCounter++;
-                //
-                this.call(player);
+                // Decrease balance for the user
+                player.debitBalance(this.bet);
+                player.setBet(this.bet);
 
-                // Set raise flag to false
+                // Display username of the user that accepted the raisr
+                this.msg = "Call by" + player.getUsername();
+
+                // Set slider value to zero
+                this.slider.setValue(0);
+
+                // Update graphic
+                notifyObservers();
+
+                // Set newBet and bet equal, the user has accepted the challenge
+                this.newBet = this.bet;
+
+                // Turn off the flag
                 this.raiseFlag = false;
 
-            }else if(this.newBet == this.bet){
-                // Increase playCounter,
-                // counter is used to know when the next round is
+            }else if(this.newBet > this.bet){       // RAISE
+                // Reset the playCounter, we need to count all over again
+                this.playCounter = 1;
+
+                // Increase pot with this raise
+                this.pot += this.newBet;
+
+                //Update slider
+                this.slider.setValue(this.newBet);
+
+                // Decrease balance for the user
+                player.debitBalance(this.newBet);
+                player.setBet(this.newBet);
+
+                // Display the player who raised
+                this.msg = "Raise by " + player.getUsername();
+
+                // Update graphic
+                notifyObservers();
+
+                // Turn on raise flag
+                this.raiseFlag = true;
+
+            }else if(this.newBet == this.bet){      // CHECK
+                // Increase player
                 playCounter++;
 
-                this.check(player);
-            }
+                // Display username of player that checked
+                this.msg = "Check by " + player.getUsername();
 
+                // Update graphic
+                notifyObservers();
+
+            }else{
+                System.out.println(" In the else...");
+            }
 
 
             // Go to next player
@@ -833,6 +865,9 @@ public class Table implements Subject{
 
         // Update by the observers
         notifyObservers();
+
+        //
+        this.newBet = this.bet;
     }
 
     public void check(Player player){
@@ -843,8 +878,7 @@ public class Table implements Subject{
         this.tableBet = 0;
 
         // Reset bet
-        this.newBet = 0;
-        this.bet = 0;
+
 
         // Update by the observers
         notifyObservers();

@@ -598,9 +598,10 @@ public class Table implements Subject{
         }
     }
 
-    public Player getWinner() {
+    public List<Player> getWinner() {
         Map<Integer[], Player> bestHands = new HashMap<>();
 
+        List<Player> winners = new ArrayList<>();
 
         for (int i = 0; i < players.size(); i++) {
             Hand hand = players.get(i).getHand();
@@ -609,7 +610,6 @@ public class Table implements Subject{
         // Store hand rank
         Integer[] topRank = {0, 0, 0, 0};
 
-        int sameHandCounter = 0;
         int winner = -1;
         for (Map.Entry<Integer[], Player> entry : bestHands.entrySet()) {
             Integer[] rank = entry.getKey();
@@ -632,12 +632,14 @@ public class Table implements Subject{
                 // Do something
                 // Store id of the player... or the object...
                 // split the cash
+                winners.add(player);
             }
+
+            Player p =  players.get(winner);
+            winners.add(p);
         }
 
-        List<Player> winners = new ArrayList<>();
-
-        return players.get(winner);
+        return  winners;
     }
 
     // without map winners with their bets

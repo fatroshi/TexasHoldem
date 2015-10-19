@@ -704,14 +704,21 @@ public class Table implements Subject{
             // Check if its all in for user
             if(this.newBet > this.bet){
                 // update user object
-                System.out.println("Before bet" + player.getBalance());
                 player.debitBalance(this.newBet);                       // Decrease player balance
                 player.setBet(this.newBet);                             // Store the bet
-                System.out.println("After bet:" + player.getBalance());
-                this.msg = " Raise";
                 this.bet = newBet;
+
+                // Reset playCounter
+                playCounter = 1;
+
+                // Set message for next user
+                this.msg = " Raise";
             }else if(this.newBet == this.bet){
-                this.msg = "call";
+                //this.msg = "call";
+
+                // Increase playCounter,
+                // counter is used to know when the next round is
+                playCounter++;
             }
 
             // ALL IN for the user
@@ -725,6 +732,9 @@ public class Table implements Subject{
                 double balance = player.getBalance();               // Get player balance
                 player.debitBalance(balance);                       // Decrease player balance, the balance should be zero (ALL IN)
                 player.setBet(balance);                             // Store it as bet
+                // Increase playCounter,
+                // counter is used to know when the next round is
+                playCounter++;
             }
 
 
@@ -743,15 +753,6 @@ public class Table implements Subject{
         if (setActivePlayer()) {
             if(this.rounds < 5) {
                 this.round();
-                // Store username of the previous player
-                String oldPlayer = players.get(this.oldActiveUser).getUsername();
-
-
-                // Get new bet from slider, round to 2 decimals
-
-                // Reset the message
-                this.msg = "Wellcome to the poker game";
-
                 // Notify Observers
                 // Updates the slider for current user
                 notifyObservers();
@@ -759,9 +760,6 @@ public class Table implements Subject{
                 slider.setOnMouseClicked(event -> notifyObservers());
                 // When the slider is dragged
                 slider.setOnMouseDragged(event -> notifyObservers());
-
-
-
             }
         }
     }

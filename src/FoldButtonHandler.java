@@ -14,6 +14,9 @@ public class FoldButtonHandler implements EventHandler<Event> {
     @Override
     public void handle(Event evt) {
 
+        controller.getGame().fold();
+
+        controller.getRound();
 
     }
 }

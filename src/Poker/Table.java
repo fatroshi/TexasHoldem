@@ -763,7 +763,7 @@ public class Table implements Subject{
 
             }else if(this.raiseFlag == true){
                 // Reset playCounter
-                playCounter = 1;
+                playCounter++;
                 //
                 this.call(player);
 

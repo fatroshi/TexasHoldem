@@ -746,20 +746,40 @@ public class Table implements Subject{
         if(canBet(player)){
             // Check if its all in for user
             // ALL IN for the user (need some modifications)
-            if (player.getBalance() < this.newBet) {
+            if (player.getBalance() < this.newBet) { // ALL IN
+                // Increase player
+                playCounter++;
+
+                // Decrease balance for the user
+                player.debitBalance(player.getBalance());
+                player.setBet(player.getBalance());
+
+                // Display username of the user that accepted the raisr
+                this.msg = "ALL IN by" + player.getUsername();
+
+                // Set slider value to zero
+                this.slider.setValue(0);
+
+                // Update graphic
+                notifyObservers();
+
 
             }else if(this.raiseFlag == true){       // CALL
                 // Increase player
                 playCounter++;
 
                 // Increase pot with this call
-                this.pot += this.bet;
+                this.pot += this.newBet;
+
+                System.out.println(player.getBalance() + " BEFORE CALL");
 
                 // Decrease balance for the user
-                player.debitBalance(this.bet);
-                player.setBet(this.bet);
+                player.debitBalance(this.newBet);
+                player.setBet(this.newBet);
 
-                // Display username of the user that accepted the raisr
+                System.out.println(player.getBalance() + " AFTER CALL");
+
+                // Display username of the user that accepted the raise
                 this.msg = "Call by" + player.getUsername();
 
                 // Set slider value to zero
@@ -775,6 +795,7 @@ public class Table implements Subject{
                 this.raiseFlag = false;
 
             }else if(this.newBet > this.bet){       // RAISE
+
                 // Reset the playCounter, we need to count all over again
                 this.playCounter = 1;
 

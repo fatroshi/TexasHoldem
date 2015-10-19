@@ -12,7 +12,6 @@ public class PlayButtonHandler implements EventHandler<Event> {
         this.controller = controller;
     }
 
-
     @Override
     public void handle(Event evt) {
         System.out.println("i just got cliiiicked maaaan");

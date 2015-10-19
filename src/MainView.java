@@ -2,6 +2,7 @@
  * Created by Farhad Atroshi on 12/10/15.
  */
 
+import Poker.AlertWindow;
 import Poker.GameBackground;
 import Poker.GameBackground_;
 import javafx.application.Application;
@@ -61,7 +62,7 @@ public class MainView extends Application{
         fileMenu.getItems().addAll(openItem, closeItem,highscoreItem, exitItem);
         
         // shows highscorelist
-        highscoreItem.setOnAction(event -> AlertWindow.show("Highscore List","send\nthree\nlist\nhere\nas\nList",3000,3000));
+        highscoreItem.setOnAction(event -> AlertWindow.show("Highscore List", "send\nthree\nlist\nhere\nas\nList", 3000, 3000));
         //
         mb.getMenus().addAll(fileMenu);
         topVBox.getChildren().add(mb);

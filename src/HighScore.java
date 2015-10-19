@@ -1,3 +1,4 @@
+import java.io.Serializable;
 
 /**
  * Created by Farhad Atroshi on 07/10/15.

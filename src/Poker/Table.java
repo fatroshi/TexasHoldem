@@ -97,7 +97,7 @@ public class Table implements Subject{
         // Update set: min, max
         for (Observer observer: listOfObservers){
             observer.updateSlider(this.slider.getValue(), players.get(this.activeUser).getBalance(), this.msg);
-            //observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance(), this.slider.getValue());
+            observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance(), this.slider.getValue());
         }
     }
 
@@ -667,6 +667,8 @@ public class Table implements Subject{
         graphic.updatePlayerBg(this.playersBg.get(0), Color.DARKGREEN);
         this.slider.setMax(player.getBalance());
         this.slider.setValue(0);
+
+
     }
 
     public void play() {
@@ -682,7 +684,6 @@ public class Table implements Subject{
             graphic.updatePlayerBg(this.playersBg.get(this.activeUser), Color.DARKGREEN);
             // Change back the background color
             graphic.updatePlayerBg(this.playersBg.get(this.oldActiveUser), Color.BLACK);
-
         }
 
         // Find a better place for this
@@ -695,31 +696,34 @@ public class Table implements Subject{
         Player player = getActivePlayer();
 
         if(canBet(player)){
-            // Update user balance (User object)
-            player.debitBalance(this.newBet);
-            player.setBet(this.newBet);
-            // Update user balance label
-            balanceLabels.get(this.activeUser).setText("");
+            // Check if its all in for user
+            if(player.getBalance() < this.newBet){
+                // Round the bet to 2 decimals
+                this.newBet = roundDouble(this.newBet, 2);
 
-            // Should decrease the players balance
-            if(this.newBet > this.bet) {
-                // RAISE
-                this.playBtn.setText("Call");
-            }else if(this.newBet == this.bet){
-                // CHECK
-                this.playBtn.setText("Check");
-                // CHECK
+                //
+                this.playBtn.setText(player.getBalance() + " ALL IN");
+                System.out.println(player.getBalance() + " ALL IN");
+
+                //
+                // Update user balance (User object)
+                double balance = player.getBalance();               // Get player balance
+                player.debitBalance(balance);                       // Decrease player balance, the balance should be zero (ALL IN)
+                player.setBet(balance);                             // Store it as bet
+            }else{
+                // update user object
+                System.out.println("Before bet" + player.getBalance());
+
+                player.debitBalance(this.newBet);                   // Decrease player balance
+                player.setBet(this.newBet);                         // Store the bet
+                System.out.println("After bet:" + player.getBalance());
+
             }
 
-        }else{
-            // Player cant play if the balance is 0
-            // Else all in for the user
-            this.playBtn.setText(player.getBalance() + " ALL IN");
-            System.out.println(player.getBalance() + " ALL IN");
+            // Go to next player
+            play();
         }
 
-        // Go to next player
-        play();
     }
 
     /**
@@ -729,35 +733,25 @@ public class Table implements Subject{
      */
     public void updateGame(){
         if (setActivePlayer()) {
-            // Check the new bet
-            //this.newBet = this.slider.getValue();
-            // Round the double to 2 decimals
-            //this.newBet = roundDouble(this.newBet, 2);
-            // Check round
-
             if(this.rounds < 5) {
                 this.round();
                 // Store username of the previous player
                 String oldPlayer = players.get(this.oldActiveUser).getUsername();
 
                 // Get new bet from slider, round to 2 decimals
-                this.newBet = roundDouble(this.slider.getValue(),2);
 
                 // Reset the message
                 this.msg = "";
 
-                this.canPlay();
-
                 // Notify Observers
                 // Updates the slider for current user
-                //notifyObservers();
+                notifyObservers();
                 // When slider is clicked
-                //slider.setOnMouseClicked(even -> notifyObservers());
+                slider.setOnMouseClicked(even -> notifyObservers());
                 // When the slider is dragged
-                //slider.setOnMouseDragged(event -> notifyObservers());
+                slider.setOnMouseDragged(event -> notifyObservers());
 
             }
-
         }
     }
 
@@ -774,6 +768,7 @@ public class Table implements Subject{
 
         return  canBet;
     }
+
 
 
     public Player getActivePlayer(){

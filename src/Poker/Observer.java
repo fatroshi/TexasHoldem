@@ -9,6 +9,6 @@ import java.awt.*;
  */
 public interface Observer {
     public void updateSlider(double currentValue, double max, String messages);
-    //public void decreaseUserBalance(int activeUser, double userBalance, double bet);
+    public void decreaseUserBalance(int activeUser, double userBalance, double bet);
 
 }

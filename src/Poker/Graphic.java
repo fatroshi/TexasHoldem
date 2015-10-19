@@ -233,23 +233,12 @@ public class Graphic implements Observer{
         return btn;
     }
 
-    /**
-     * Set buttons visible property to true
-     * @param buttons
-     */
-    public void showTableButtons(List<Button> buttons) {
-        for (int i = 0; i < buttons.size(); i++) {
-            if (buttons.get(i).getText() != "START") {
-                buttons.get(i).setVisible(true);
-            }
-        }
-    }
 
 
     @Override
     public void updateSlider(double currentBet, double userBalance, String message) {
         // Update the slider
-        System.out.println("Slider got updated by the update method in graphic");
+        //System.out.println("Slider got updated by the update method in graphic");
         this.slider.setValue(currentBet);
         this.slider.setMax(userBalance);
 
@@ -262,23 +251,17 @@ public class Graphic implements Observer{
         this.statusLabel.setText(message);
     }
 
-
-    public Label decBalanceLabel(Label label, double userBalance, double bet) {
-        Label updatedLabel = label;
-
-        double newBalance = round((userBalance - bet), 2);
+    @Override
+    public void decreaseUserBalance(int activeUser, double userBalance, double bet) {
+        double newBalance = round(userBalance - bet,2);
         String strBalance = String.valueOf(newBalance);
-        //this.blanceLabel.setText(newBalance);
-        if(bet <= userBalance) {
-            // Set text
-            updatedLabel.setText(strBalance);
-        }else{
-            // Set text to zero
-            updatedLabel.setText("0");
-        }
 
-        return updatedLabel;
+
+
+        blanceLabels.get(activeUser).setText(strBalance);
+
     }
+
 
     /**
      * Found at: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places

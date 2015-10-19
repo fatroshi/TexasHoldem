@@ -6,7 +6,7 @@ import java.util.Collections;
  *
  * @author avi
  */
-public class HighScoreList implements Serializable{
+public class HighScoreList {
     private ArrayList<HighScore> highscorelist; 
     
     public HighScoreList(){

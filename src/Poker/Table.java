@@ -655,12 +655,18 @@ public class Table implements Subject{
     }
 
 
+    /**
+     * Settings when the game starts
+     */
     public void gameStart(){
         // Update background  for current active user
         // Show current selected user by changing the background color
         // We know that the firs user has index 0
-        graphic.updatePlayerBg(this.playersBg.get(0), Color.DARKGREEN);
+        Player player = players.get(0);
 
+        graphic.updatePlayerBg(this.playersBg.get(0), Color.DARKGREEN);
+        this.slider.setMax(player.getBalance());
+        this.slider.setValue(0);
     }
 
     public void play() {
@@ -683,14 +689,6 @@ public class Table implements Subject{
         this.updateGame();
     }
 
-    public void OnSliderChange(){
-        Player player = getActivePlayer();
-        double tmpBalance = this.slider.getValue();
-        String balance = String.valueOf(player.getBalance());
-
-
-
-    }
 
     public void canPlay(){
         // Check if player can bet

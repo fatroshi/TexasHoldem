@@ -640,6 +640,39 @@ public class Table implements Subject{
         return players.get(winner);
     }
 
+    // without map winners with their bets
+    public void dealPot(double pot,List<Player> winners){
+        double potToDeal;
+        int count =0;
+        boolean equalTotalBet = false;
+
+        // checks if winners bet the same amount of money
+        for(int i = 0; i <winners.size() -1 ;i++ ){
+            if(winners.get(i).getTotalBet() == winners.get(i+1).getTotalBet()){
+                count++;
+            }
+        }
+        if (winners.size() == 1){
+            winners.get(0).setSaldo(pot);
+        }
+        else if (winners.size() > 1 && count == winners.size()-1){
+
+            potToDeal = pot / winners.size();
+            // deals the pot to players
+            for (int i = 0; i < winners.size() ;i++){
+                winners.get(i).setSaldo(winners.get(i).getBalance() + potToDeal);
+            }
+
+        }
+        // if winners bet different amount they get their totalbet back
+        else{
+            for (int i = 0 ; i < winners.size();i++){
+                winners.get(i).setSaldo(winners.get(i).getBalance() + winners.get(i).getTotalBet());
+            }
+        }
+
+    }
+
     public void fold() {
         // Reset table bet
         // Current bet

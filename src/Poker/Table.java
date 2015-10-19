@@ -715,7 +715,7 @@ public class Table implements Subject{
                 this.msg = "call";
             }
 
-            // ALL IN
+            // ALL IN for the user
             if (player.getBalance() < this.newBet) {
                 // ALL IN FOR THIS PLAYER
                 this.playBtn.setText(player.getBalance() + " ALL IN");

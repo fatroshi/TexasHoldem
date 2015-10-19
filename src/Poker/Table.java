@@ -708,6 +708,9 @@ public class Table implements Subject{
                 player.setBet(this.newBet);                             // Store the bet
                 this.bet = newBet;
 
+                //Store in table pot
+                this.pot += this.newBet;
+
                 // Reset playCounter
                 playCounter = 1;
 
@@ -735,6 +738,10 @@ public class Table implements Subject{
                 // Increase playCounter,
                 // counter is used to know when the next round is
                 playCounter++;
+
+                //Store in table pot
+                this.pot += this.newBet;
+
             }
 
 

@@ -5,7 +5,7 @@
 
 import Poker.GameBackground;
 import Poker.GameBackground_;
-import highscore.AlertWindow;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -63,7 +63,7 @@ public class MainView extends Application{
         fileMenu.getItems().addAll(openItem, closeItem,highscoreItem, exitItem);
         
         // shows highscorelist
-        highscoreItem.setOnAction(event -> AlertWindow.show("Highscore List", "send\nthree\nlist\nhere\nas\nList", 3000, 3000));
+        //highscoreItem.setOnAction(event -> AlertWindow.show("Highscore List", "send\nthree\nlist\nhere\nas\nList", 3000, 3000));
         //
         mb.getMenus().addAll(fileMenu);
         topVBox.getChildren().add(mb);

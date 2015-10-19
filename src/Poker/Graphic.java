@@ -252,12 +252,9 @@ public class Graphic implements Observer{
     }
 
     @Override
-    public void decreaseUserBalance(int activeUser, double userBalance, double bet) {
-        if(bet > 0) {
-            double newBalance = round(userBalance - bet, 0);
-            String strBalance = String.valueOf(newBalance);
+    public void decreaseUserBalance(int activeUser, double userBalance) {
+            String strBalance = String.valueOf(userBalance);
             blanceLabels.get(activeUser).setText(strBalance);
-        }
     }
 
     @Override

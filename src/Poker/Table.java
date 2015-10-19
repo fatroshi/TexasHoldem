@@ -100,7 +100,7 @@ public class Table implements Subject{
         // Update set: min, max
         for (Observer observer: listOfObservers){
             observer.updateSlider(this.slider.getValue(), players.get(this.activeUser).getBalance(), this.msg);
-            observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance(), this.newBet);
+            observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance());
             observer.updateTablePotLabel(this.pot);
         }
     }
@@ -748,37 +748,29 @@ public class Table implements Subject{
                 // Increase playCounter,
                 // counter is used to know when the next round is
                 playCounter++;
-
                 this.allIn(player);
 
             }else if(this.newBet > this.bet) {
                 // Reset playCounter
                 playCounter = 1;
-
                 // Set raise flag
                 this.raiseFlag = true;
-
                 // Call method
                 this.raise(player);
-
 
             }else if(this.raiseFlag == true){
                 // Reset playCounter
                 playCounter = 1;
+                //
+                this.call(player);
 
                 // Set raise flag to false
                 this.raiseFlag = false;
-
-                //
-                this.call(player);
-                this.newBet = 0;
-                this.bet = 0;
 
             }else if(this.newBet == this.bet){
                 // Increase playCounter,
                 // counter is used to know when the next round is
                 playCounter++;
-
 
                 this.check(player);
             }
@@ -793,8 +785,8 @@ public class Table implements Subject{
 
     public void raise(Player player){
         // update user object
-        //player.debitBalance(this.newBet);                       // Decrease player balance
-        //player.setBet(this.newBet);                             // Store the bet
+        player.debitBalance(this.newBet);                       // Decrease player balance
+        player.setBet(this.newBet);                             // Store the bet
         this.bet = this.newBet;
 
         // Store in table pot
@@ -830,10 +822,11 @@ public class Table implements Subject{
         // Current bet
         this.tableBet = this.newBet;
 
-
-
         //Update text of playBtn
         playBtn.setText("Play");
+
+        // Reset the slider value
+        this.slider.setValue(0);
 
         // Update by the observers
         notifyObservers();

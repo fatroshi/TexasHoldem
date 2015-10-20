@@ -1,3 +1,3 @@
-# TexasHoldem
-School project, still in beta.
+# TexasHoldem (JavaFX)
+School project , still in beta.
 

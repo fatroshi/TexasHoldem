@@ -829,14 +829,25 @@ public class Table implements Subject{
         // Set bet to the new value
         this.bet = this.newBet;
 
-        // Update playBtn
-        playBtn.setText("CALL or RAISE");
+        System.out.println("FROM raise: newBet " + newBet + " bet: " + bet + " Balance: " + player.getBalance() );
 
-        // Update slider
-        this.slider.setMin(this.newBet);
+        // Use to disable the slider
+        boolean allInFlag = false;
+        // CHECK IF ALL IN
+        if(0 == player.getBalance()){
+            // Set status text
+            this.msg = "ALL IN by " + player.getUsername();
+            // Update playBtn
+            playBtn.setText("CALL");
+            // Set flag to disable slider
+            allInFlag = true;
+        }else{
+            // Set status text
+            this.msg = "Raise by " + player.getUsername();
+            // Update playBtn
+            playBtn.setText("CALL or RAISE");
+        }
 
-        // Set status text
-        this.msg = "Raise by " + player.getUsername();
 
         // Update the pot
         this.pot += tmpBet;
@@ -844,8 +855,16 @@ public class Table implements Subject{
         // Update status label (this.msg --> will be the text)
         notifyObservers();
 
+        if(allInFlag == true) {
+            // Disable slider for next user
+            this.slider.setDisable(true);
+        }
+
+        // Update slider
+        this.slider.setMin(this.newBet);
+
         // Reset playCounter
-        playCounter = 0;
+        playCounter = 1;
     }
 
     public void call(Player player){
@@ -922,6 +941,9 @@ public class Table implements Subject{
         // Increase playCounter
         playCounter++;
 
+        // Reset all bet
+        this.bet = 0;
+        this.newBet = 0;
 
         System.out.println(" ALL IN " + player.getUsername() + " newBet: " + newBet + " bet: " + bet);
     }

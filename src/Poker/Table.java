@@ -622,33 +622,35 @@ public class Table implements Subject{
             Integer[] rank = entry.getKey();
             Player player = entry.getValue();
 
-            if(rank[0] > topRank[0]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] > topRank[1]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] > topRank[2]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] > topRank[3]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] == topRank[3]){
-                // Player has same hand
-                // Do something
-                // Store id of the player... or the object...
-                // split the cash
-                winners.add(player);
-            }
+            if(player.isActive()) {
+                if (rank[0] > topRank[0]) {
+                    winner = players.indexOf(player);
+                    System.arraycopy(rank, 0, topRank, 0, 4);
+                } else if (rank[0] == topRank[0] && rank[1] > topRank[1]) {
+                    winner = players.indexOf(player);
+                    System.arraycopy(rank, 0, topRank, 0, 4);
+                } else if (rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] > topRank[2]) {
+                    winner = players.indexOf(player);
+                    System.arraycopy(rank, 0, topRank, 0, 4);
+                } else if (rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] > topRank[3]) {
+                    winner = players.indexOf(player);
+                    System.arraycopy(rank, 0, topRank, 0, 4);
+                } else if (rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] == topRank[3]) {
+                    // Player has same hand
+                    // Do something
+                    // Store id of the player... or the object...
+                    // split the cash
+                    winners.add(player);
+                }
 
-            if(loopCounter > 0) {
-                Player p = players.get(winner);
-                System.out.println(p.getUsername() + " ** WON ** ");
-                winners.add(p);
-            }
+                if (loopCounter > 0) {
+                    Player p = players.get(winner);
+                    System.out.println(p.getUsername() + " ** WON ** ");
+                    winners.add(p);
+                }
 
-            loopCounter++;
+                loopCounter++;
+            }
         }
 
         return  winners;

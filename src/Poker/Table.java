@@ -743,7 +743,7 @@ public class Table implements Subject{
 
         //
         for (Card card: tableCards){
-            card.
+            //card.
         }
     }
 

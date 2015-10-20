@@ -1,5 +1,5 @@
 # TexasHoldem
 School project, still in beta.
 
-## Authors: 
-### Farhad Atroshi and Avi Cohen
+### Authors:  
+Farhad Atroshi and Avi Cohen

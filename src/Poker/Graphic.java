@@ -29,8 +29,8 @@ public class Graphic implements Observer{
     public Graphic(){
         slider = this.createSlider(0,100,0);           // Slider fot betting (min,max,currentSliderValue)
         sliderLabel = createLabel(240, 465, 24);        // Label for the slider
-        statusLabel = createLabel(240, 435, 24);        // Label for showing current status: bet/call/raise
-        potLabel    = createLabel(240,200,24);
+        statusLabel = createLabel(400, 575, 24);        // Label for showing current status: bet/call/raise
+        potLabel    = createLabel(445,390,24);
     }
 
     public Slider getSlider() {
@@ -260,7 +260,12 @@ public class Graphic implements Observer{
     @Override
     public void updateTablePotLabel(double pot) {
         pot = round(pot, 0);
-        this.potLabel.setText(String.valueOf(pot));
+
+        String strPot = "Pot $ " + String.valueOf(pot);
+
+        this.potLabel.setTextFill(Color.LIGHTGREEN);
+
+        this.potLabel.setText(strPot);
     }
 
 

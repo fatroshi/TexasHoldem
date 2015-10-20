@@ -892,10 +892,11 @@ public class Table implements Subject{
         System.out.println("CHECK from:" + player.getUsername());
 
         // Set status text
-        this.msg = "Check " + player.getUsername();
+        this.msg = "Check by " + player.getUsername();
 
         // Increase playCounter
         playCounter++;
+        notifyObservers();
     }
 
     public void allIn(Player player){

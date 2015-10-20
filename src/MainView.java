@@ -21,6 +21,7 @@ import sun.awt.util.IdentityArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import highscore.*;
 
 
 public class MainView extends Application{
@@ -28,6 +29,8 @@ public class MainView extends Application{
     Map<Pane,List<ImageView>> graphics = new HashMap<>();
     Stage window;
 
+    HighScoreList hsl = new HighScoreList();
+    DB db = new DB("dbScoreList.bin");
     // testing
 
     public static void main(String[] args) {
@@ -63,7 +66,7 @@ public class MainView extends Application{
         fileMenu.getItems().addAll(openItem, closeItem,highscoreItem, exitItem);
         
         // shows highscorelist
-        highscoreItem.setOnAction(event -> highscore.AlertWindow.show("highscore List", "send\nthree\nlist\nhere\nas\nList", 3000, 3000));
+        highscoreItem.setOnAction(event -> highscore.AlertWindow.show("highscore List",db.getData().toString(), 3000, 3000));
         //
         mb.getMenus().addAll(fileMenu);
         topVBox.getChildren().add(mb);

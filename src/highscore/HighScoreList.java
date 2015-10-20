@@ -27,7 +27,7 @@ public class HighScoreList implements Serializable {
         }
            
     }
-    
+
     public ArrayList<HighScore> getHighScoreList(){
         return this.highscorelist;
     }
@@ -35,6 +35,11 @@ public class HighScoreList implements Serializable {
     
     @Override
     public String toString(){
-        return highscorelist.toString();
+        String info = "HighScoreList";
+        for (int i = 0; i<highscorelist.size();i++){
+            info = info + " \n " + highscorelist.get(i).toString();
+        }
+
+        return info;
     }
 }

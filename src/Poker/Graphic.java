@@ -30,7 +30,7 @@ public class Graphic implements Observer{
         slider = this.createSlider(0,100,0);           // Slider fot betting (min,max,currentSliderValue)
         sliderLabel = createLabel(240, 465, 24);        // Label for the slider
         statusLabel = createLabel(400, 575, 24);        // Label for showing current status: bet/call/raise
-        potLabel    = createLabel(445,390,24);
+        potLabel    = createLabel(443,340,24);
     }
 
     public Slider getSlider() {

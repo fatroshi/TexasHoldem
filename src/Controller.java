@@ -81,10 +81,10 @@ public class Controller {
 
         for (int cardID = from; cardID < to; cardID++) {
             Card card = this.game.getTableCards().get(cardID);
-
+            int space = 6;
             for (Table_ t : Table_.values()) {
                 if (t.getCardId() == (cardID + 2)) {
-                    card.getImageView().setX(150);
+                    card.getImageView().setX(130 + space * cardID) ;
                     card.getImageView().setY(-100);
                     Animation.move(card, t.getX() * card.getImageView().getImage().getWidth() - 150, t.getY() + 100);
                     card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));

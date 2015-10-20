@@ -210,7 +210,7 @@ public class Table implements Subject{
                         card.getImageView().setX(cl.getX());
                         card.getImageView().setY(cl.getY());
                         card.getImageView().setRotate(cl.getRotation());
-                        card.setImageFrontView();
+                        //card.setImageFrontView();
                         // Toggle card when clicked
                         //card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
                     }

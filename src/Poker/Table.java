@@ -772,8 +772,6 @@ public class Table implements Subject{
 
         double splitPot = pot / quantityOfWinners;
 
-
-
         for (Player player: winners){
             player.depositBalance(splitPot);
         }

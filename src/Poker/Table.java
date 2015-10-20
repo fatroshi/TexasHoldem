@@ -172,7 +172,7 @@ public class Table implements Subject{
                 System.out.println(" 4 round");
 
                 // Check who the winner is
-                dealPot(this.pot,getWinner());
+                splitPot(this.pot,getWinner());
                 notifyObservers();
 
                 System.out.println(players.get(0).getBalance() + " Balance: AVI");
@@ -737,6 +737,18 @@ public class Table implements Subject{
         this.updateGame();
     }
 
+    public void splitPot(double pot, List<Player> winners){
+        for (Player player: players){
+            int indexPlayer = players.indexOf(player);
+            for (Player winner: winners){
+                int indexWinner = players.indexOf(winner);
+                if(indexPlayer == indexWinner){
+                    // We found the winner
+                    System.out.println(winner.getUsername() + " WON");
+                }
+            }
+        }
+    }
 
     public void canPlay(){
         // Check if player can bet
@@ -769,8 +781,6 @@ public class Table implements Subject{
         }
 
     }
-
-
 
     public void raise(Player player){
         System.out.println(" RAISE from: " + player.getUsername());

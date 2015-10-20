@@ -151,6 +151,8 @@ public class Controller {
             switch (this.round) {
                 case 1:
                     this.getTableCards(0, 3);
+                    ((Pane) this.root.getParent()).getChildren().removeAll();
+
                     break;
                 case 2:
                     this.getTableCards(3, 4);
@@ -158,7 +160,8 @@ public class Controller {
                 case 3:
                     this.getTableCards(4, 5);
                 case 4:
-
+                    // Restart the game
+                    ((Pane) this.root.getParent()).getChildren().removeAll();
                     break;
             }
         }

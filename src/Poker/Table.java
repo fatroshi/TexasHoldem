@@ -172,8 +172,10 @@ public class Table implements Subject{
                 System.out.println(" 4 round");
 
                 // Check who the winner is
-                splitPot(this.pot,getWinner());
+                splitPot(this.pot, getWinner());
                 notifyObservers();
+
+                gameRestart();
 
                 System.out.println(players.get(0).getBalance() + " Balance: AVI");
                 System.out.println(players.get(0).getBalance() + " Balance: Farhad");
@@ -615,6 +617,7 @@ public class Table implements Subject{
         Integer[] topRank = {0, 0, 0, 0};
 
         int winner = -1;
+        int loopCounter = 0;
         for (Map.Entry<Integer[], Player> entry : bestHands.entrySet()) {
             Integer[] rank = entry.getKey();
             Player player = entry.getValue();
@@ -639,8 +642,13 @@ public class Table implements Subject{
                 winners.add(player);
             }
 
-            Player p =  players.get(winner);
-            winners.add(p);
+            if(loopCounter > 0) {
+                Player p = players.get(winner);
+                System.out.println(p.getUsername() + " ** WON ** ");
+                winners.add(p);
+            }
+
+            loopCounter++;
         }
 
         return  winners;
@@ -709,13 +717,34 @@ public class Table implements Subject{
         // Update background  for current active user
         // Show current selected user by changing the background color
         // We know that the firs user has index 0
-        Player player = players.get(0);
 
-        graphic.updatePlayerBg(this.playersBg.get(0), Color.DARKGREEN);
-        this.slider.setMax(player.getBalance());
+
+        for (Player player: players){
+            if(player.getBalance() > 0){
+                int indexOfPlayer = players.indexOf(player);
+                graphic.updatePlayerBg(this.playersBg.get(indexOfPlayer), Color.DARKGREEN);
+                this.slider.setMax(player.getBalance());
+                this.slider.setValue(0);
+                break;
+            }
+        }
+   }
+
+    public void gameRestart(){
+
+        // Reset all variables
+        this.pot = 0;
+        this.newBet = 0;
+        this.bet = 0;
+
+        // Reset slider
+        this.slider.setMin(0);
         this.slider.setValue(0);
 
-
+        //
+        for (Card card: tableCards){
+            card.
+        }
     }
 
     public void play() {
@@ -738,16 +767,15 @@ public class Table implements Subject{
     }
 
     public void splitPot(double pot, List<Player> winners){
-        for (Player player: players){
-            int indexPlayer = players.indexOf(player);
-            for (Player winner: winners){
-                int indexWinner = players.indexOf(winner);
-                if(indexPlayer == indexWinner){
-                    // We found the winner
-                    System.out.println(winner.getUsername() + " WON");
-                }
-            }
+
+        int quantityOfWinners = winners.size();
+
+        double splitPot = pot / quantityOfWinners;
+
+        for (Player player: winners){
+            player.depositBalance(pot);
         }
+
     }
 
     public void canPlay(){

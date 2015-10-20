@@ -27,10 +27,7 @@ public class HighScoreList implements Serializable {
         }
            
     }
-    // Spara bara pott och username skit i vilken hand de hader
-    // sen har du inte den senaste versionen av spelet heller...
-    // en sek
-    //
+
     public ArrayList<HighScore> getHighScoreList(){
         return this.highscorelist;
     }

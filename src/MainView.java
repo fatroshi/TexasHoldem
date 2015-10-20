@@ -79,20 +79,7 @@ public class MainView extends Application{
         // Create players, get user info, get chips for each player
         controller.createPlayers(paneRoot);
 
-        /*
-        // On click start!
-        controller.game.dealTwoCards();
 
-        // Get the first 2 cards for each player
-        controller.getFirstTwoCards(paneRoot);
-
-        // Deal 5 cards
-        controller.game.dealCards(5);
-        controller.getTableCards(1, 3);
-
-        // Card 4 5
-        controller.getTableCards(4, 5, paneRoot);
-        */
         // Get user btn
         controller.getStartBtn();
 

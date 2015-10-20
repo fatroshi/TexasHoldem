@@ -34,14 +34,14 @@ import java.util.Map;
 public class Table implements Subject{
 
     private List<Rectangle> playersBg               = new ArrayList<>(); // Background for player profile
-    private List<Label> balanceLabels               = new ArrayList<>(); // Label for showing balance for the player
-    private List<Label> usernameLabels              = new ArrayList<>(); // Label for showing username of the player
+    private List<Label> balanceLabels               = new ArrayList<>(); // Label for showing player balance
+    private List<Label> usernameLabels              = new ArrayList<>(); // Label for showing player username
 
     private Deck deck                               = new Deck();        // Dealer.Hand (52 cards)
     private List<Card> tableCards                   = new ArrayList<>(); // Store all table cards, total of 5
     
     private List<Player> players                    = new ArrayList<>(); // List for storing the players
-    private Map<Integer[], Player> playersBestHand  = new HashMap<>();   // List for storing player and the players best poker hand
+    private Map<Integer[], Player> playersBestHand  = new HashMap<>();   // List for storing player and best hand for each player
 
     // Variables used by all players
     private Button startBtn;          // The start btn, Starts the game

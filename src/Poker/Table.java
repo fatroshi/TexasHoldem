@@ -34,14 +34,14 @@ import java.util.Map;
 public class Table implements Subject{
 
     private List<Rectangle> playersBg               = new ArrayList<>(); // Background for player profile
-    private List<Label> balanceLabels               = new ArrayList<>(); // Label for showing balance for the player
-    private List<Label> usernameLabels              = new ArrayList<>(); // Label for showing username of the player
+    private List<Label> balanceLabels               = new ArrayList<>(); // Label for showing player balance
+    private List<Label> usernameLabels              = new ArrayList<>(); // Label for showing player username
 
     private Deck deck                               = new Deck();        // Dealer.Hand (52 cards)
     private List<Card> tableCards                   = new ArrayList<>(); // Store all table cards, total of 5
     
     private List<Player> players                    = new ArrayList<>(); // List for storing the players
-    private Map<Integer[], Player> playersBestHand  = new HashMap<>();   // List for storing player and the players best poker hand
+    private Map<Integer[], Player> playersBestHand  = new HashMap<>();   // List for storing player and best hand for each player
 
     // Variables used by all players
     private Button startBtn;          // The start btn, Starts the game
@@ -210,7 +210,7 @@ public class Table implements Subject{
                         card.getImageView().setX(cl.getX());
                         card.getImageView().setY(cl.getY());
                         card.getImageView().setRotate(cl.getRotation());
-                        card.setImageFrontView();
+                        //card.setImageFrontView();
                         // Toggle card when clicked
                         //card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
                     }
@@ -622,33 +622,35 @@ public class Table implements Subject{
             Integer[] rank = entry.getKey();
             Player player = entry.getValue();
 
-            if(rank[0] > topRank[0]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] > topRank[1]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] > topRank[2]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] > topRank[3]){
-                winner = players.indexOf(player);
-                System.arraycopy(rank, 0, topRank, 0, 4);
-            }else if(rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] == topRank[3]){
-                // Player has same hand
-                // Do something
-                // Store id of the player... or the object...
-                // split the cash
-                winners.add(player);
-            }
+            if(player.isActive()) {
+                if (rank[0] > topRank[0]) {
+                    winner = players.indexOf(player);
+                    System.arraycopy(rank, 0, topRank, 0, 4);
+                } else if (rank[0] == topRank[0] && rank[1] > topRank[1]) {
+                    winner = players.indexOf(player);
+                    System.arraycopy(rank, 0, topRank, 0, 4);
+                } else if (rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] > topRank[2]) {
+                    winner = players.indexOf(player);
+                    System.arraycopy(rank, 0, topRank, 0, 4);
+                } else if (rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] > topRank[3]) {
+                    winner = players.indexOf(player);
+                    System.arraycopy(rank, 0, topRank, 0, 4);
+                } else if (rank[0] == topRank[0] && rank[1] == topRank[1] && rank[2] == topRank[2] && rank[3] == topRank[3]) {
+                    // Player has same hand
+                    // Do something
+                    // Store id of the player... or the object...
+                    // split the cash
+                    winners.add(player);
+                }
 
-            if(loopCounter > 0) {
-                Player p = players.get(winner);
-                System.out.println(p.getUsername() + " ** WON ** ");
-                winners.add(p);
-            }
+                if (loopCounter > 0) {
+                    Player p = players.get(winner);
+                    System.out.println(p.getUsername() + " ** WON ** ");
+                    winners.add(p);
+                }
 
-            loopCounter++;
+                loopCounter++;
+            }
         }
 
         return  winners;
@@ -772,8 +774,6 @@ public class Table implements Subject{
 
         double splitPot = pot / quantityOfWinners;
 
-
-
         for (Player player: winners){
             player.depositBalance(splitPot);
         }
@@ -829,14 +829,25 @@ public class Table implements Subject{
         // Set bet to the new value
         this.bet = this.newBet;
 
-        // Update playBtn
-        playBtn.setText("CALL or RAISE");
+        System.out.println("FROM raise: newBet " + newBet + " bet: " + bet + " Balance: " + player.getBalance() );
 
-        // Update slider
-        this.slider.setMin(this.newBet);
+        // Use to disable the slider
+        boolean allInFlag = false;
+        // CHECK IF ALL IN
+        if(0 == player.getBalance()){
+            // Set status text
+            this.msg = "ALL IN by " + player.getUsername();
+            // Update playBtn
+            playBtn.setText("CALL");
+            // Set flag to disable slider
+            allInFlag = true;
+        }else{
+            // Set status text
+            this.msg = "Raise by " + player.getUsername();
+            // Update playBtn
+            playBtn.setText("CALL or RAISE");
+        }
 
-        // Set status text
-        this.msg = "Raise by " + player.getUsername();
 
         // Update the pot
         this.pot += tmpBet;
@@ -844,8 +855,16 @@ public class Table implements Subject{
         // Update status label (this.msg --> will be the text)
         notifyObservers();
 
+        if(allInFlag == true) {
+            // Disable slider for next user
+            this.slider.setDisable(true);
+        }
+
+        // Update slider
+        this.slider.setMin(this.newBet);
+
         // Reset playCounter
-        playCounter = 0;
+        playCounter = 1;
     }
 
     public void call(Player player){
@@ -892,10 +911,11 @@ public class Table implements Subject{
         System.out.println("CHECK from:" + player.getUsername());
 
         // Set status text
-        this.msg = "Check " + player.getUsername();
+        this.msg = "Check by " + player.getUsername();
 
         // Increase playCounter
         playCounter++;
+        notifyObservers();
     }
 
     public void allIn(Player player){
@@ -921,6 +941,9 @@ public class Table implements Subject{
         // Increase playCounter
         playCounter++;
 
+        // Reset all bet
+        this.bet = 0;
+        this.newBet = 0;
 
         System.out.println(" ALL IN " + player.getUsername() + " newBet: " + newBet + " bet: " + bet);
     }

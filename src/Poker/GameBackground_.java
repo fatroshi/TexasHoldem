@@ -1,8 +1,11 @@
-package Poker;
-
 /**
  * Created by Farhad Atroshi on 08/10/15.
+ * This enum class is when setting backgrounds
  */
+
+package Poker;
+
+
 public enum GameBackground_ {
     TABLE("../resource/bg/table.png"),
     TABLE_BLACK("../resource/bg/tableStart.png"),

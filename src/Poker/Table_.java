@@ -1,8 +1,11 @@
-package Poker;
-
 /**
  * Created by Farhad Atroshi on 12/10/15.
+ * This enum class is used for setting card position and rotation.
  */
+
+package Poker;
+
+
 public enum Table_ {
     // CARDS, CardId,x,y,rotation
     FIRST(0, 72, 0, 0),

@@ -1,11 +1,15 @@
+/**
+ * Created by Farhad Atroshi on 15/10/15.
+ *
+ * This class is used for the animations of the cards.
+ */
+
 package Poker;
 
 import javafx.animation.*;
 import javafx.util.Duration;
 
-/**
- * Created by Farhad Atroshi on 15/10/15.
- */
+
 public class Animation {
 
     public static void move(double x, double y, Picture p) {

@@ -2,6 +2,9 @@ package Layout;
 
 /**
  * Created by Farhad Atroshi on 14/10/15.
+ *
+ * This enum class is used for position and colorization of the buttons
+ *
  */
 public enum ButtonLayout {
     // USER BTN

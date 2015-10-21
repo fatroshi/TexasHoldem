@@ -2,6 +2,8 @@ package Layout;
 
 /**
  * Created by Farhad Atroshi on 13/10/15.
+ *
+ * This enum class is used for the layout position of each player.
  */
 public enum UserLayout {
     P0(0,-150,100,"../resource/bg/bg_profile.png"),

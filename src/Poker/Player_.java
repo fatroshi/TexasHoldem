@@ -1,8 +1,11 @@
-package Poker;
-
 /**
  * Created by Farhad Atroshi on 15/10/15.
+ * This enum class is used for when checking the game status.
  */
+
+package Poker;
+
+
 public enum Player_ {
 
     ALL_IN(0),

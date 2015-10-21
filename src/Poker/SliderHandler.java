@@ -1,10 +1,13 @@
+/**
+ * Created by Farhad on 17/10/15.
+ * This class is used for creating the game slider.
+ */
+
 package Poker;
 
 import javafx.scene.control.*;
 
-/**
- * Created by Farhad on 17/10/15.
- */
+
 public class SliderHandler {
 
 
@@ -13,10 +16,7 @@ public class SliderHandler {
         String strValue = String.valueOf(value);
         // Slider label
         sliderLabel.setText("$ " + strValue);
-        // Set new bet
 
-        // We shoud use object observer!!!!
-        //Poker.setBet(Double.parseDouble(strValue));
     }
 
     /**

@@ -1,8 +1,13 @@
-package Poker;
-
 /**
  * Created by Farhad Atroshi on 15/10/15.
+ *
+ * This class is created for were to put cards  for each of the player.
+ * this class is not used in the game.
  */
+
+package Poker;
+
+
 public enum Animation_ {
     // DECK POS
     FOLD_P0(0, 150, 100),

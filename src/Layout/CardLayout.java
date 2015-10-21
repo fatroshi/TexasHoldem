@@ -2,6 +2,9 @@ package Layout;
 
 /**
  * Created by Farhad Atroshi on 13/10/15.
+ *
+ * This eum class is used for setting the table card positions.
+ *
  */
 public enum CardLayout {
 

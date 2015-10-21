@@ -1,3 +1,8 @@
+/**
+ * Subject observer
+ *
+ */
+
 package Poker;
 
 /**

@@ -2,6 +2,8 @@ package Layout;
 
 /**
  * Created by Farhad Atroshi on 13/10/15.
+ * This enum class is used for creating chips.
+ * Setting  correct value, position for each user.
  */
 public enum ChipLayout {
     //

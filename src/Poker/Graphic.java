@@ -1,3 +1,11 @@
+/**
+ * Created by Farhad on 17/10/15.
+ *
+ * This class is used for generating controllers / graphics for the game.
+ * Is used by the class Table.
+ */
+
+
 package Poker;
 
 import Layout.ButtonLayout;
@@ -13,9 +21,6 @@ import javafx.scene.text.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Farhad on 17/10/15.
- */
 
 public class Graphic implements Observer{
 

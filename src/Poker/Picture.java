@@ -1,11 +1,14 @@
+/**
+ * Created by Farhad Atroshi on 07/10/15.
+ * This class is used when creating the cards.
+ */
+
+
 package Poker;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-/**
- * Created by Farhad Atroshi on 07/10/15.
- */
 abstract public class Picture extends ImageView {
     private ImageView imageView;
     private Image image;

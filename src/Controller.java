@@ -81,7 +81,6 @@ public class Controller {
         }
     }
 
-
     public void getFirstTwoCards() {
         for (int i = 0; i < this.game.getPlayerCards().size(); i++) {
             Card card = this.game.getPlayerCards().get(i);

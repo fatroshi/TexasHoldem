@@ -36,28 +36,21 @@ public class Table implements Subject{
     private List<Rectangle> playersBg               = new ArrayList<>(); // Background for player profile
     private List<Label> balanceLabels               = new ArrayList<>(); // Label for showing player balance
     private List<Label> usernameLabels              = new ArrayList<>(); // Label for showing player username
-
     private Deck deck                               = new Deck();        // Dealer.Hand (52 cards)
     private List<Card> tableCards                   = new ArrayList<>(); // Store all table cards, total of 5
-    
     private List<Player> players                    = new ArrayList<>(); // List for storing the players
-    private Map<Integer[], Player> playersBestHand  = new HashMap<>();   // List for storing player and best hand for each player
 
     // Variables used by all players
     private Button startBtn;          // The start btn, Starts the game
     private Button playBtn;           // Play btn. Call,Raise,Check
     private Button foldBtn;           // Player fold
-    private int playerBig;            // Not sure if this will be used!!! Update later!
     private int activeUser;           // Id of current active player (Active --> Still in the game)
     private int oldActiveUser;        // Id of previous active player
     private double bet;               // Current bet in game
     private double newBet;            // User to check if bet has been changed
-    private double raise;             // The raise value 
     private Label potLabel;           // Store the total pot value
     private double pot;               // Total current pot in the game
     private double tableBet;
-    private boolean raiseFlag;        // Check if previous player raised the bet
-
     private int rounds;               // Counts the poker rounds, used for showing cards and when the game in done.
     private int playCounter;          // increases for call,bet. Sets to 0 for raise
     
@@ -773,7 +766,6 @@ public class Table implements Subject{
         // Remove player cards
         for (int i = 0; i < players.size(); i++) {
             players.get(i).getHand().clearHand();
-            players.get(i).getHand().clearHand();
         }
 
         // Reset deck
@@ -781,7 +773,6 @@ public class Table implements Subject{
         deck.shuffleCards();
 
         // Set all players active, players with balance > 0
-
 
         // notify observers
         notifyObservers();

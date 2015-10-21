@@ -1,5 +1,11 @@
+package View;
+
 import Dealer.Card;
 import Dealer.Chip;
+import Handler.CardClickHandler;
+import Handler.FoldButtonHandler;
+import Handler.PlayButtonHandler;
+import Handler.StartButtonHandler;
 import Poker.*;
 import View.ViewStart;
 import javafx.scene.control.Button;
@@ -9,7 +15,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
-import javax.swing.border.Border;
 import java.util.List;
 
 /**

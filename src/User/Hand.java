@@ -15,7 +15,6 @@ import java.util.List;
 
 public class Hand {
     List<Card> hand;
-    List<Card> tableCards;
 
     public Hand() {
 

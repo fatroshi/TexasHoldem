@@ -336,7 +336,7 @@ public class Table implements Subject{
 
     /**
      * Returns the best hand
-     * element [0] --> Refers to Poker rank 1-10. 1 = Highcard ... 10 = Royal Flush
+     * element [0] --> Refers to Poker rank 1-10. 1 = High card ... 10 = Royal Flush
      * element [1] --> Refers to Highest Pair, or Tree of a kind
      * element [2] --> Refers to pair
      * element [3] --> Refers to highest card in the hand
@@ -1265,6 +1265,3 @@ public class Table implements Subject{
         return (double) tmp / factor;
     }
 }
-
-    
-

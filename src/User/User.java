@@ -1,3 +1,8 @@
+/**
+ * Created by Farhad Atroshi on 07/10/15.
+ * This class is used for creating players.
+ */
+
 package User;
 
 import Dealer.Chip;
@@ -8,9 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Farhad Atroshi on 07/10/15.
- */
+
 abstract public class User {
     private String username;
     private double balance;

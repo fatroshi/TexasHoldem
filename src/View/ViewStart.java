@@ -1,3 +1,9 @@
+/**
+ * Created by Farhad on 07/10/15.
+ * This class is used for accessing stage and to be able to interact with the scene.
+ *
+ */
+
 package View;
 
 import Poker.GameBackground;
@@ -15,9 +21,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Farhad on 07/10/15.
- */
+
 public class ViewStart extends Pane{
 
     Stage stage;

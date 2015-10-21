@@ -1,5 +1,6 @@
 /**
  * Created by Farhad Atroshi on 12/10/15.
+ * Start the game
  */
 
 

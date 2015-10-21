@@ -60,6 +60,10 @@ public class Table implements Subject{
     HighScoreList hsl = new HighScoreList();
     DB db = new DB("dbScoreList.bin");
 
+    /**
+     * Constructor
+     * Initializes nine objects
+     */
     public Table(){
         graphic         = new Graphic();
         slider          = graphic.getSlider();                  // Slider for player to make bet, call, raise

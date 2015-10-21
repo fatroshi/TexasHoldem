@@ -1,3 +1,7 @@
+/**
+ * Handles if the card does not exist
+ */
+
 package Dealer;
 
 /**

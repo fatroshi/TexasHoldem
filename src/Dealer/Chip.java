@@ -1,3 +1,7 @@
+/**
+ * This class creates a chip.
+ */
+
 package Dealer;
 
 import Poker.Picture;

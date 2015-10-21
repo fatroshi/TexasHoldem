@@ -1,3 +1,7 @@
+/**
+ * This class creates chips by creating object from the Chip class.
+ */
+
 package Dealer;
 
 import java.util.ArrayList;

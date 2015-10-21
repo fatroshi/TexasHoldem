@@ -1,3 +1,8 @@
+/**
+ * This class creates a card object.
+ */
+
+
 package Dealer;
 
 import Poker.Picture;

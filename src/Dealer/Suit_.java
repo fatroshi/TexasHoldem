@@ -1,3 +1,6 @@
+/**
+ * This enum class is used for creating a card and setting suit property.
+ */
 package Dealer;
 
 /**

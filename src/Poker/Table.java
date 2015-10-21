@@ -1,12 +1,6 @@
 /**
- * Stuff to fix
- * 5. ******* Make your life easier and use subject observer.... fix this!!!
- * 1. Player BG should change back for other when checking
- * 2. Slider should show current bet
- * 3. Create 2 buttons, play and fold... the slider should decide if it was raise,call,bet
- * 4. Create another Scene ??? or at least create a separated button for start!!
- *    And create separated  buttonHandlers
- *
+ * This class handles the game logic.
+ * The logic for getting cards,chips and the controls items.
  */
 
 package Poker;

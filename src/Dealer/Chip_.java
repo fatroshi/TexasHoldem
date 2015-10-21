@@ -1,3 +1,8 @@
+/**
+ * This enum class is used wen creating a chip.
+ * We store the value of the chip associated with the color/image
+ */
+
 package Dealer;
 
 /**

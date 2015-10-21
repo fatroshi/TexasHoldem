@@ -1,3 +1,8 @@
+/**
+ * Is used when creating a card and linking the correct image to it.
+ * It also sets the value of the card.
+ */
+
 package Dealer;
 
 /**

@@ -1,3 +1,8 @@
+/**
+ * This class is used for creating cards and represents a deck.
+ * It has methods so that you can shuffle the cards, deal and remove cards from the deck object.
+ */
+
 package Dealer;
 
 import java.util.ArrayList;

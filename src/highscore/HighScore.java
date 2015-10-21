@@ -8,12 +8,12 @@ import java.io.Serializable;
  */
 public class HighScore implements Serializable {
     private String username;
-    private String hand;
+    //private String hand;
     private int pot;
     
-    public HighScore (String username,String hand,double pot){
+    public HighScore (String username,double pot){
         this.username = username;
-        this.hand = hand;
+     //  this.hand = hand;
         this.pot = (int)pot;
     }
     
@@ -21,10 +21,10 @@ public class HighScore implements Serializable {
         return this.username;
     }
     
-    public String getHand(){
-        return this.hand;
+    //public String getHand(){
+    //    return this.hand;
         
-    }
+   // }
     
     public int getPot(){
         return this.pot;
@@ -34,7 +34,7 @@ public class HighScore implements Serializable {
     
     @Override
     public String toString(){
-        String info = (" " + this.username + " " + this.hand + " " + this.pot);
+        String info = (" " + this.username + " " + this.pot);
         return info;
     }
 }

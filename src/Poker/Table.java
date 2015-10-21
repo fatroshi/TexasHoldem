@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import highscore.*;
 /**
  * Created by Farhad on 17/10/15.
  */
@@ -70,6 +70,10 @@ public class Table implements Subject{
 
     private List<Observer> listOfObservers = new ArrayList<>();
 
+    HighScoreList hsl = new HighScoreList();
+    DB db = new DB("dbScoreList.bin");
+
+
     public Table(){
         graphic         = new Graphic();
         slider          = graphic.getSlider();                  // Slider for player to make bet, call, raise
@@ -83,6 +87,8 @@ public class Table implements Subject{
 
         // Register Observer
         registerObserver(graphic);
+
+        hsl = db.getData();
     }
 
     @Override
@@ -172,7 +178,8 @@ public class Table implements Subject{
                 System.out.println(" 4 round");
 
                 // Check who the winner is
-                splitPot(this.pot, getWinner());
+                //splitPot(this.pot, getWinner());
+                dealPot(this.pot,getWinner());
                 notifyObservers();
 
                 gameRestart();
@@ -658,7 +665,7 @@ public class Table implements Subject{
 
     // without map winners with their bets
     public void dealPot(double pot,List<Player> winners){
-        double potToDeal;
+        double splitPot;
         int count =0;
         boolean equalTotalBet = false;
 
@@ -669,23 +676,31 @@ public class Table implements Subject{
             }
         }
         if (winners.size() == 1){
-            winners.get(0).setSaldo(pot);
+            System.out.println("only one gets the money");
+
+            winners.get(0).depositBalance(pot);
+            hsl.updateHighScoreList(new HighScore(winners.get(0).getUsername(),pot));
         }
         else if (winners.size() > 1 && count == winners.size()-1){
-
-            potToDeal = pot / winners.size();
+            System.out.println("winners share the money");
+            splitPot = pot / winners.size();
             // deals the pot to players
             for (int i = 0; i < winners.size() ;i++){
-                winners.get(i).setSaldo(winners.get(i).getBalance() + potToDeal);
+                winners.get(i).depositBalance(splitPot);
+                hsl.updateHighScoreList(new HighScore(winners.get(i).getUsername(),splitPot));
             }
 
         }
         // if winners bet different amount they get their totalbet back
         else{
+            System.out.println("winnerts get what they bet");
             for (int i = 0 ; i < winners.size();i++){
-                winners.get(i).setSaldo(winners.get(i).getBalance() + winners.get(i).getTotalBet());
+                winners.get(i).depositBalance(winners.get(i).getTotalBet());
+                hsl.updateHighScoreList(new HighScore(winners.get(i).getUsername(),winners.get(i).getTotalBet()));
             }
         }
+        // hsl.updateHighScoreList(new HighScore(player.getUsername(),splitPot));
+        db.insert(hsl);
 
     }
 
@@ -776,6 +791,8 @@ public class Table implements Subject{
 
         for (Player player: winners){
             player.depositBalance(splitPot);
+            hsl.updateHighScoreList(new HighScore(player.getUsername(),splitPot));
+            db.insert(hsl);
         }
 
     }

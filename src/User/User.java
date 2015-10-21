@@ -56,7 +56,7 @@ abstract public class User {
     }
 
     public void setActive(boolean b) {
-        this.active = false;
+        this.active = b;
     }
 
     public Hand getHand() {

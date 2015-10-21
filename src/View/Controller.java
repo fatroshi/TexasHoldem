@@ -169,7 +169,7 @@ public class Controller {
     }
 
 
-    public void restartGamer(){
+    public void restartGame(){
         // Game rounds
         this.getGame().resetRounds();
 
@@ -208,7 +208,7 @@ public class Controller {
                 System.out.println(" --- Controller round " + this.round + " (Should be 4)");
 
                 // Restart game
-                this.restartGamer();
+                this.restartGame();
                 // Dealer deal 2 cards for each player
                 this.getGame().dealTwoCards();
                 // Add to scene

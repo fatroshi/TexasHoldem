@@ -66,7 +66,6 @@ public class Table implements Subject{
     HighScoreList hsl = new HighScoreList();
     DB db = new DB("dbScoreList.bin");
 
-
     public Table(){
         graphic         = new Graphic();
         slider          = graphic.getSlider();                  // Slider for player to make bet, call, raise
@@ -76,24 +75,33 @@ public class Table implements Subject{
         playBtn         = graphic.createButton("PLAY");         // Play: check,call,raise
         foldBtn         = graphic.createButton("FOLD");         // player folds
         potLabel        = graphic.getPotLabel();
-
-
+        hsl = db.getData();                                     // Load data from database
         // Register Observer
-        registerObserver(graphic);
-
-        hsl = db.getData();
+        registerObserver(graphic);                              // Register observer
     }
 
+    /**
+     * Registers new observers by adding to the listOfObservers
+     * @param observer
+     */
     @Override
     public void registerObserver(Observer observer) {
         this.listOfObservers.add(observer);
     }
 
+    /**
+     * Removes observers from the listOfObservers
+     * @param observer
+     */
     @Override
     public void removeObserver(Observer observer) {
         this.listOfObservers.remove(observer);
     }
 
+    /**
+     * Notifies the observers in the listOfObservers
+     * updates the slider, decreases the user balance, updates the pot label
+     */
     @Override
     public void notifyObservers() {
         // Update set: min, max
@@ -104,33 +112,36 @@ public class Table implements Subject{
         }
     }
 
-
+    /**
+     * Get the pot label
+     * @return returns the label
+     */
     public Label getPotLabel(){
         return this.potLabel;
     }
 
+    /**
+     * Get the start Button
+     * @return the start button
+     */
     public Button getStartBtn() {
         return startBtn;
     }
 
-    public void setStartBtn(Button startBtn) {
-        this.startBtn = startBtn;
-    }
-
+    /**
+     * Get the play button
+     * @return the play button
+     */
     public Button getPlayBtn() {
         return playBtn;
     }
 
-    public void setPlayBtn(Button playBtn) {
-        this.playBtn = playBtn;
-    }
-
+    /**
+     * Get the fold button
+     * @return the fold button
+     */
     public Button getFoldBtn() {
         return foldBtn;
-    }
-
-    public void setFoldBtn(Button foldBtn) {
-        this.foldBtn = foldBtn;
     }
 
     /**
@@ -142,8 +153,10 @@ public class Table implements Subject{
     }
 
     /**
-     * Check game round,
-     * This will be used for knowing when to show cards
+     * Checks game rounds, if its the last round the de pot will
+     * be split between the winners and the game starts over again.
+     *
+     * The Controller class uses this to know which cards to show
      */
     public int round(){
         // 1. How many active players
@@ -187,15 +200,12 @@ public class Table implements Subject{
         return rounds;
     }
 
+    /**
+     * Resets the rounds to zero
+     */
     public void resetRounds(){
         this.rounds = 0;
     }
-
-    /**
-     * Compare each player in the list, returns the player/s that one
-     * @return
-     */
-
 
     /**
      * Set all properties for the cards,
@@ -610,6 +620,11 @@ public class Table implements Subject{
         }
     }
 
+
+    /**
+     * Compares players best hand, return a of players that are the winners
+     * @return list of players that won
+     */
     public List<Player> getWinner() {
         Map<Integer[], Player> bestHands = new HashMap<>();
 
@@ -649,7 +664,7 @@ public class Table implements Subject{
                     winners.add(player);
                 }
 
-                if (loopCounter > 0) {
+                if ((loopCounter > 0 || oneActivePlayer()) && player.isActive()) {
                     Player p = players.get(winner);
                     System.out.println(p.getUsername() + " ** WON ** ");
                     winners.add(p);
@@ -662,11 +677,16 @@ public class Table implements Subject{
         return  winners;
     }
 
-    // without map winners with their bets
+    /**
+     * Splits the pot between winners and updates the high score list if the
+     * pot was high enough.
+     * @param pot total pot
+     * @param winners list of players that won
+     */
     public void dealPot(double pot,List<Player> winners){
         double splitPot;
         int count =0;
-        boolean equalTotalBet = false;
+
 
         // checks if winners bet the same amount of money
         for(int i = 0; i <winners.size() -1 ;i++ ){
@@ -703,13 +723,16 @@ public class Table implements Subject{
 
     }
 
+    /**
+     * If the player folds, the player looses his bets.
+     */
     public void fold() {
         // Reset table bet
         // Current bet
-        this.tableBet = 0;
 
         if (oneActivePlayer()) {
             //We got a winner
+
 
         } else {
             //Set active = false
@@ -720,6 +743,18 @@ public class Table implements Subject{
 
             Animation.fadeOut(c1);
             Animation.fadeOut(c2);
+
+            dealPot(this.pot,getWinner());
+
+            notifyObservers();
+
+            gameRestart();
+
+            for (Player player: players){
+                if(player.isActive()){
+                    System.out.println(" ##### " + player.getUsername() + " " + player.isActive());
+                }
+            }
             // Set next user
             nextUser();
         }
@@ -746,6 +781,9 @@ public class Table implements Subject{
         }
    }
 
+    /**
+     * Resets the variables used in the game and also sets all users to active mode
+     */
     public void gameRestart(){
 
         // Reset all variables
@@ -773,6 +811,11 @@ public class Table implements Subject{
         deck.shuffleCards();
 
         // Set all players active, players with balance > 0
+        for (Player player: players){
+            if(!player.isActive()){
+                player.setActive(true);
+            }
+        }
 
         // notify observers
         notifyObservers();
@@ -781,6 +824,10 @@ public class Table implements Subject{
 
     }
 
+    /**
+     * Checks if we have a winner otherwise it will find the next active user
+     * and also updates the player background.
+     */
     public void play() {
 
         if (oneActivePlayer()) {
@@ -800,7 +847,10 @@ public class Table implements Subject{
         this.updateGame();
     }
 
-
+    /**
+     * Checks if the user balance is > 0 and also handles the bet,raise,check and call.
+     * Updates the pot,slider, slider label and status label.
+     */
     public void canPlay(){
         // Check if player can bet
         Player player = getActivePlayer();
@@ -833,6 +883,10 @@ public class Table implements Subject{
 
     }
 
+    /**
+     * If the user raised the bet updates variables in the game.
+     * @param player the current active player
+     */
     public void raise(Player player){
         System.out.println(" RAISE from: " + player.getUsername());
 
@@ -888,6 +942,10 @@ public class Table implements Subject{
         playCounter = 1;
     }
 
+    /**
+     * If the user Called the raise updates variables in the game.
+     * @param player the current active player
+     */
     public void call(Player player){
         System.out.println("CALL from: " + player.getUsername());
 
@@ -928,6 +986,10 @@ public class Table implements Subject{
         playCounter++;
     }
 
+    /**
+     * If the user checked then update variables in the game.
+     * @param player the current active player
+     */
     public void check(Player player){
         System.out.println("CHECK from:" + player.getUsername());
 
@@ -939,6 +1001,11 @@ public class Table implements Subject{
         notifyObservers();
     }
 
+    /**
+     * If the user went all in the bet updates variables in the game.
+     * and user balance = zero
+     * @param player the current active player
+     */
     public void allIn(Player player){
         // CHECK IF ITS ALL IN,
         // ELSE TELL THE USER THAT THIS IS NOT ACCEPTED
@@ -969,16 +1036,11 @@ public class Table implements Subject{
         System.out.println(" ALL IN " + player.getUsername() + " newBet: " + newBet + " bet: " + bet);
     }
     /**
-     * Game control,
-     * updates graphic elements
-     * (Explain more when done)
+     * updates the slider when dragged or clicked
      */
     public void updateGame(){
         if (setActivePlayer()) {
             if(this.rounds < 5) {
-                //this.round();
-                // Notify Observers
-
                 // When slider is clicked
                 slider.setOnMouseClicked(event -> notifyObservers());
                 // When the slider is dragged
@@ -1003,7 +1065,10 @@ public class Table implements Subject{
     }
 
 
-
+    /**
+     * Gets the current active user
+     * @return
+     */
     public Player getActivePlayer(){
         return this.players.get(activeUser);
     }
@@ -1071,8 +1136,8 @@ public class Table implements Subject{
     }
 
     /**
-     * Get cheap object for the user
-     * @param playerId
+     * Get all cheap object for the user
+     * @param playerId for which player
      * @return list of all chips
      */
     public List<Chip> getPlayerChips(int playerId) {
@@ -1131,31 +1196,60 @@ public class Table implements Subject{
         return chips;
     }
 
+    /**
+     * Get players background
+     * @return
+     */
     public List<Rectangle> getPlayersBg(){
         return this.playersBg;
     }
 
+    /**
+     * Get players balance label
+     * @return list of labels
+     */
     public List<Label> getBalanceLabels(){
         return this.balanceLabels;
     }
 
+    /**
+     * Get players username label
+     * @return list of labels
+     */
     public List<Label> getUsernameLabels(){
         return this.usernameLabels;
     }
 
+    /**
+     * Get table cards
+     * @return list of labels
+     */
     public List<Card> getTableCards(){
         return this.tableCards;
     }
 
-
+    /**
+     * Get the slider
+     * @return the slider
+     */
     public Slider getSlider(){
         return this.slider;
     }
 
+    /**
+     * Get the status label
+     * this is used when a player checks,calls,raises and goes all in
+     * @return statuslabel
+     */
     public Label getStatusLabel(){
         return this.statusLabel;
     }
 
+    /**
+     * Gets the label for the slider
+     * this label shows the quantity chosen by player
+     * @return
+     */
     public Label getSliderLabel(){
         return this.sliderLabel;
     }

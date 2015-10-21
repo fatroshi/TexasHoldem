@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
-import highscore.*;
+
 /**
  * Created by Farhad on 07/10/15.
  */
@@ -27,7 +27,6 @@ public class ViewStart extends Pane{
     List<Pane> tableCards;
     HighScoreList hsl = new HighScoreList();
     DB db = new DB("dbScoreList.bin");
-
     public ViewStart(Stage stage,BorderPane borderPane){
         this.stage = stage;
         this.root = borderPane;
@@ -94,8 +93,8 @@ public class ViewStart extends Pane{
         Menu fileMenu       = new Menu("Game");
         MenuItem highscoreItem  = new MenuItem("Top High Score");
 
-        // Shows highscorelist
-        highscoreItem.setOnAction(event -> highscore.AlertWindow.show("High Score List",db.getData().toString(), 3000, 3000));
+        // shows highscore
+         highscoreItem.setOnAction(event -> highscore.AlertWindow.show("High Score List",db.getData().toString(), 3000, 3000));
         //highscoreItem.setOnAction(event -> highScoreHanlder());
 
         // Add item to menu
@@ -125,8 +124,6 @@ public class ViewStart extends Pane{
     public void highScoreHanlder(){
         // AVI SKRIV VAD SOM SKA GORAS HAR
         System.out.println("High Score got clicked");
-
-        // highscoreItem.setOnAction(event -> highscore.AlertWindow.show("High Score List",db.getData().toString(), 3000, 3000));
     }
     */
 

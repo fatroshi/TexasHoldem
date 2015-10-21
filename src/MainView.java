@@ -30,8 +30,7 @@ public class MainView extends Application{
 
     @Override
     public void start(Stage stage) {
-        window = stage;
-        window.setTitle("KING KONG POKER");
+
 
         // Root
         BorderPane root     = new BorderPane();
@@ -73,9 +72,11 @@ public class MainView extends Application{
         // Add table to scene 
         //root.getChildren().add(start.getImageView());
 
-        // Add to scene
-        //root.setTop(topVBox);
-        //root.setCenter(paneRoot);
+        //
+        window = stage;
+        // Set title for the stage
+        window.setTitle("KING KONG POKER");
+        // Add stuff to the stage
         Scene scene = new Scene(controller.getRootBorderPane(), 1000, 650);
 
         window.setScene(scene);

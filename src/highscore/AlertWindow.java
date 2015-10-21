@@ -36,13 +36,13 @@ public class AlertWindow {
 
         //Create layout
         VBox layout = new VBox(50);
-        layout.setStyle("-fx-background-color: #8fbc8f;");
+        //layout.setStyle("-fx-background-color: #8fbc8f;");
         layout.getChildren().addAll(bodyText, btn);
 
         // Create scene
-        Scene scene = new Scene(layout);
+        Scene scene = new Scene(layout,300,200);
         w.setScene(scene);
-        w.initStyle(StageStyle.TRANSPARENT);
+        // w.initStyle(StageStyle.TRANSPARENT);
         w.showAndWait();
     }
 }

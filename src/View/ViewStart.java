@@ -94,7 +94,7 @@ public class ViewStart extends Pane{
         MenuItem highscoreItem  = new MenuItem("Top High Score");
 
         // shows highscore
-         highscoreItem.setOnAction(event -> highscore.AlertWindow.show("High Score List",db.getData().toString(), 3000, 3000));
+         highscoreItem.setOnAction(event -> highscore.AlertWindow.show("High Score List",db.getData().toString(), 300, 400));
         //highscoreItem.setOnAction(event -> highScoreHanlder());
 
         // Add item to menu

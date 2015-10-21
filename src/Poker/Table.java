@@ -1,4 +1,6 @@
 /**
+ * Created by Farhad on 17/10/15.
+ *
  * This class handles the game logic.
  * The logic for getting cards,chips and the controls items.
  */
@@ -22,9 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import highscore.*;
-/**
- * Created by Farhad on 17/10/15.
- */
+
 public class Table implements Subject{
 
     private List<Rectangle> playersBg               = new ArrayList<>(); // Background for player profile

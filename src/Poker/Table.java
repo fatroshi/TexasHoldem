@@ -159,37 +159,43 @@ public class Table implements Subject{
         // well we will se that!
 
         if(playCounter == getActivePlayers()){
-            System.out.println("New round");
-            // one fill round
             playCounter = 0;
             // Increase rounds
             rounds++;
             if(this.rounds == 1){       // First round
                 // Show 1-3 cards
-                System.out.println(" First rount ");
+                System.out.println(" *** Table Round 1 *** ");
             }else if(this.rounds == 2){ // Second round
                 // 3-4
-                System.out.println(" Second round");
+                System.out.println(" *** Table Round 2 ***");
             }else if(this.rounds == 3){ // Third round
                 // 4-5
-                System.out.println(" Third round");
+                System.out.println(" *** Table Round 3 ***");
             }else if (this.rounds == 4){
                 // CHECK WHO ONE
-                System.out.println(" 4 round");
+                System.out.println(" *** Table Round 4 ***");
 
                 // Check who the winner is
                 //splitPot(this.pot, getWinner());
                 dealPot(this.pot,getWinner());
                 notifyObservers();
 
-                gameRestart();
-
                 System.out.println(players.get(0).getBalance() + " Balance: AVI");
                 System.out.println(players.get(0).getBalance() + " Balance: Farhad");
+
+            }else if(this.rounds == 5){
+                // CHECK WHO ONE
+                System.out.println(" *** Table Round 5 ***");
+                // Reset values
+                gameRestart();
             }
         }
 
         return rounds;
+    }
+
+    public void resetRounds(){
+        this.rounds = 0;
     }
 
     /**
@@ -754,14 +760,34 @@ public class Table implements Subject{
         this.newBet = 0;
         this.bet = 0;
 
+        // Round
+        this.resetRounds();
+        //this.playCounter = 0;
+
         // Reset slider
         this.slider.setMin(0);
         this.slider.setValue(0);
 
-        //
-        for (Card card: tableCards){
-            //card.
+        // Remove all table cards
+        tableCards.clear();
+        // Remove player cards
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).getHand().clearHand();
+            players.get(i).getHand().clearHand();
         }
+
+        // Reset deck
+        deck.fill();
+        deck.shuffleCards();
+
+        // Set all players active, players with balance > 0
+
+
+        // notify observers
+        notifyObservers();
+
+        this.gameStart();
+
     }
 
     public void play() {
@@ -783,19 +809,6 @@ public class Table implements Subject{
         this.updateGame();
     }
 
-    public void splitPot(double pot, List<Player> winners){
-
-        int quantityOfWinners = winners.size();
-
-        double splitPot = pot / quantityOfWinners;
-
-        for (Player player: winners){
-            player.depositBalance(splitPot);
-            hsl.updateHighScoreList(new HighScore(player.getUsername(),splitPot));
-            db.insert(hsl);
-        }
-
-    }
 
     public void canPlay(){
         // Check if player can bet
@@ -814,7 +827,7 @@ public class Table implements Subject{
             }else if(this.newBet == this.bet && this.newBet != 0 && this.bet != 0){         // CALL
                 // Check if the challenge was accepted
                 this.call(player);
-            }else if(this.newBet < this.bet){                                               // ALL IN ?
+            }else if(this.newBet < this.bet){                                               // ALL IN
                 // Check if the user went all in
                 this.allIn(player);
             }else if(this.newBet == 0 && this.bet == 0){                                    // CHECK
@@ -972,7 +985,7 @@ public class Table implements Subject{
     public void updateGame(){
         if (setActivePlayer()) {
             if(this.rounds < 5) {
-                this.round();
+                //this.round();
                 // Notify Observers
 
                 // When slider is clicked

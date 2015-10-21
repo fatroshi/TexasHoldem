@@ -36,6 +36,10 @@ public class Hand {
 
     }
 
+    public void clearHand(){
+        hand.clear();
+    }
+
     public Card removeCard(int index) {
 
         return hand.remove(index);

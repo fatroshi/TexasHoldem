@@ -6,6 +6,7 @@
 import Poker.GameBackground;
 import Poker.GameBackground_;
 
+import View.ViewStart;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -25,8 +26,7 @@ import highscore.*;
 
 
 public class MainView extends Application{
-    List<ImageView> imgViews = new IdentityArrayList<>();
-    Map<Pane,List<ImageView>> graphics = new HashMap<>();
+
     Stage window;
 
     HighScoreList hsl = new HighScoreList();
@@ -45,13 +45,17 @@ public class MainView extends Application{
         window = stage;
         window.setTitle("KING KONG POKER");
 
-        Controller controller = new Controller();
-
-        // Pane
-        Pane paneRoot       = controller.getRootPane();
-
-        // MENU BAR
+        // Root
         BorderPane root     = new BorderPane();
+
+        // View start
+        ViewStart viewStart = new ViewStart(window,root);
+
+        // Game controller
+        Controller controller = new Controller(viewStart);
+
+        /*
+        // MENU BAR
         MenuBar mb          = new MenuBar();
         VBox topVBox        = new VBox();
         VBox centerBox      = new VBox();
@@ -59,37 +63,32 @@ public class MainView extends Application{
         Menu fileMenu       = new Menu("File");
         MenuItem openItem   = new MenuItem("Open");
         MenuItem closeItem  = new MenuItem("Close");
-        MenuItem highscoreItem  = new MenuItem("highscore");
+        MenuItem highscoreItem  = new MenuItem("High Score");
         MenuItem exitItem   = new MenuItem("Exit");
 
         // END
         fileMenu.getItems().addAll(openItem, closeItem,highscoreItem, exitItem);
         
         // shows highscorelist
-        highscoreItem.setOnAction(event -> highscore.AlertWindow.show("highscore List",db.getData().toString(), 3000, 3000));
+        highscoreItem.setOnAction(event -> highscore.AlertWindow.show("High Score List",db.getData().toString(), 3000, 3000));
         //
         mb.getMenus().addAll(fileMenu);
         topVBox.getChildren().add(mb);
-        paneRoot.getChildren().add(topVBox);
+        //paneRoot.getChildren().add(topVBox);
         // END MENU BAR
 
         // TableLogic
         GameBackground start = new GameBackground(GameBackground_.TABLE_BLACK.getImageSrc());
 
+        */
+
         // Add table to scene 
-        root.getChildren().add(start.getImageView());
-
-        // Create players, get user info, get chips for each player
-        controller.createPlayers(paneRoot);
-
-
-        // Get user btn
-        controller.getStartBtn();
+        //root.getChildren().add(start.getImageView());
 
         // Add to scene
-        root.setTop(topVBox);
-        root.setCenter(paneRoot);
-        Scene scene = new Scene(root, 1000, 650);
+        //root.setTop(topVBox);
+        //root.setCenter(paneRoot);
+        Scene scene = new Scene(controller.getRootBorderPane(), 1000, 650);
 
         window.setScene(scene);
         window.show();

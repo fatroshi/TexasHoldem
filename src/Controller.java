@@ -1,11 +1,16 @@
 import Dealer.Card;
 import Dealer.Chip;
 import Poker.*;
+import View.ViewStart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+
+import javax.swing.border.Border;
+import java.util.List;
 
 /**
  * Created by Farhad Atroshi on 14/10/15.
@@ -13,31 +18,40 @@ import javafx.scene.shape.Rectangle;
 public class Controller {
     // Create game
     private Table game;
-    // Place holder for items
-    private Pane root;
+    // Root scene
+    private BorderPane root;
+    // Holder for game background, slider, play btn, fold btn, player username and balance;
+    private Pane paneCenter;
+    // Holder for table cards
+    private List<Pane> tableCards;
+    // Holder for table cards
+    private Pane playerCards;
+    // ViewStart
+    ViewStart viewStart;
     // Round
     int round;
 
-    public Controller() {
-        game = new Table();
-        root = new Pane();
-        round = 0;
+    public Controller(ViewStart viewStart) {
+        this.viewStart = viewStart;                                 // Start view
+        this.root      = viewStart.getRoot();                       // Root (holder for all Panes)
+        this.paneCenter = this.viewStart.getPaneCenter();           // Holder for game play background (image = table)
+        this.game = new Table();                                    // init. the game
+        this.createPlayers();                                       // Create players, get user info, get chips for each player
+        this.round = 0;                                             // Counter for poker rounds
+        this.getStartBtn();                                         // Add start btn to the scene
+        this.tableCards = viewStart.getTableCards();                // Holder for table cards
+        this.playerCards = viewStart.getPlayerCards();              // Holder for player cards
     }
 
-    public Pane getRootPane() {
-        return this.root;
+    public BorderPane getRootBorderPane(){
+        return this.viewStart.getRoot();
     }
 
     public Table getGame() {
         return this.game;
     }
 
-    public void addToPane(Picture o, Pane pane) {
-        // Add each child to pane
-        pane.getChildren().add(o.getImageView());
-    }
-
-    public void createPlayers(Pane root) {
+    public void createPlayers() {
         game.addPlayer("Mr Cohen", 50);
         game.addPlayer("Mr Atroshi", 82);
         //game.addPlayer("Felicia", 13);
@@ -52,8 +66,8 @@ public class Controller {
             Label username = this.game.getUsernameLabels().get(i);
             // Get balance
             Label balance = this.game.getBalanceLabels().get(i);
-            // Add to root scene
-            root.getChildren().addAll(r, username, balance);
+            // Add to paneCenter scene
+            paneCenter.getChildren().addAll(r, username, balance);
         }
     }
 
@@ -62,19 +76,21 @@ public class Controller {
             for (int j = 0; j < this.game.getPlayerChips(i).size(); j++) {
                 Chip chip = this.game.getPlayerChips(i).get(j);
                 // Add to scene
-                this.root.getChildren().add(chip.getImageView());
+                this.paneCenter.getChildren().add(chip.getImageView());
             }
         }
     }
+
 
     public void getFirstTwoCards() {
         for (int i = 0; i < this.game.getPlayerCards().size(); i++) {
             Card card = this.game.getPlayerCards().get(i);
             // Set event handler when card clicked
             card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
-            // Add to scene
-            this.root.getChildren().add(card.getImageView());
+            // Att to player cards pan
+            this.playerCards.getChildren().add(card.getImageView());
         }
+        this.root.getChildren().add(playerCards);
     }
 
     public void getTableCards(int from, int to) {
@@ -92,24 +108,30 @@ public class Controller {
             }
             card.getImageView().setLayoutX(240);
             card.getImageView().setLayoutY(230);
-            this.root.getChildren().add(card.getImageView());
+
+            // Add to pane tableCards
+            Pane cPane = new Pane();
+            cPane.getChildren().add(card.getImageView());
+
+            // Add to tableCards
+            this.tableCards.add(cPane);
+
+            // Add to root
+            this.root.getChildren().add(tableCards.get(cardID));
         }
     }
-
-
-
 
     public void getGameScene() {
         GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
         Animation.fadeIn(table);
-        this.root.getChildren().add(table.getImageView());
+        this.paneCenter.getChildren().add(table.getImageView());
     }
 
     public void getPlayBtn() {
         Button btn = game.getPlayBtn();
         // Assign EventHandler
         btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayButtonHandler(this));
-        root.getChildren().add(btn);
+        paneCenter.getChildren().add(btn);
 
     }
 
@@ -117,7 +139,7 @@ public class Controller {
         Button btn = game.getFoldBtn();
         // Assign EventHandler
         btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new FoldButtonHandler(this));
-        root.getChildren().add(btn);
+        paneCenter.getChildren().add(btn);
 
     }
 
@@ -125,45 +147,73 @@ public class Controller {
         Button btn = game.getStartBtn();
         // Assign EventHandler
         btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new StartButtonHandler(this));
-        root.getChildren().add(btn);
+        paneCenter.getChildren().add(btn);
     }
 
     public void getPotLabel() {
         Label potLabel = game.getPotLabel();
         // Add to scene
-        root.getChildren().add(potLabel);
+        paneCenter.getChildren().add(potLabel);
     }
 
     // This function should be written to 2
     // one for slider, one for labels
     public void getSlider() {
-        root.getChildren().add(game.getSliderLabel());
-        root.getChildren().add(game.getStatusLabel());
-        root.getChildren().add(game.getSlider());
+        paneCenter.getChildren().add(game.getSliderLabel());
+        paneCenter.getChildren().add(game.getStatusLabel());
+        paneCenter.getChildren().add(game.getSlider());
+    }
+
+
+    public void restartGamer(){
+        // Game rounds
+        this.getGame().resetRounds();
+
+        // Controller round
+        this.round = 0;
+
+        // Remove player cards
+        this.root.getChildren().remove(this.playerCards);
+
+        // Remove table Cards
+        for (Pane pane: tableCards){
+            this.root.getChildren().remove(pane);
+        }
+
+        // Restart the game
+        this.game.gameRestart();
+
     }
 
     public void getRound(){
-        int round = this.game.round();
+        int tableRound = this.game.round();
 
-        if(round > this.round) {
-            this.round = round;
+        if(tableRound > this.round) {
+            this.round = tableRound;
 
-            switch (this.round) {
-                case 1:
-                    this.getTableCards(0, 3);
-                    ((Pane) this.root.getParent()).getChildren().removeAll();
+            if(this.round == 1){
+                System.out.println(" --- Controller round " + this.round + " (Should be 1)");
+                this.getTableCards(0, 3);
+            }else if(this.round == 2){
+                System.out.println(" --- Controller round " + this.round + " (Should be 2)");
+                this.getTableCards(3, 4);
+            }else if(this.round == 3){
+                System.out.println(" --- Controller round " + this.round + " (Should be 3)");
+                this.getTableCards(4, 5);
+            }else if(this.round == 4){
+                System.out.println(" --- Controller round " + this.round + " (Should be 4)");
 
-                    break;
-                case 2:
-                    this.getTableCards(3, 4);
-                    break;
-                case 3:
-                    this.getTableCards(4, 5);
-                case 4:
-                    // Restart the game
-                    ((Pane) this.root.getParent()).getChildren().removeAll();
-                    break;
+                // Restart game
+                this.restartGamer();
+                // Dealer deal 2 cards for each player
+                this.getGame().dealTwoCards();
+                // Add to scene
+                this.getFirstTwoCards();
+                // Set active user
+                //Dealer deal 5 for the table
+                this.getGame().dealCards(5);
             }
+
         }
     }
 }

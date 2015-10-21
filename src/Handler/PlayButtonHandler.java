@@ -1,3 +1,6 @@
+/**
+ * Handles when the player clicks the play button, calls methods in the class Table and Controller.
+ */
 package Handler;
 
 import View.Controller;

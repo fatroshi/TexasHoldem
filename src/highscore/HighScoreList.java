@@ -1,3 +1,7 @@
+/**
+ *  This class is used when saving high score to database.
+ */
+
 package highscore;
 
 import highscore.HighScore;

@@ -1,3 +1,15 @@
+/**
+ * Handles the start button, initializes the game.
+ * Get following:
+ * Game scene
+ * slider
+ * user information (username, balance, background)
+ * user chips
+ * deals the cards
+ * adds them to the scene
+ *
+ */
+
 package Handler;
 
 import View.Controller;

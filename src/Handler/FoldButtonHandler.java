@@ -1,3 +1,6 @@
+/**
+ * Handles if the player has fold, restarts the game.
+ */
 package Handler;
 
 

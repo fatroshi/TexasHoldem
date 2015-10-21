@@ -1,3 +1,8 @@
+/**
+ * This class is used for creating a local database file, saving to it and also reading from it.
+ * The database is used for storing the game high score.
+ */
+
 package highscore;
 import org.omg.CORBA.OBJECT_NOT_EXIST;
 

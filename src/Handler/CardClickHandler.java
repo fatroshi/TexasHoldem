@@ -1,3 +1,6 @@
+/**
+ * Handles when a card is clicked, toggles the image (front/back)
+ */
 package Handler;
 
 import Dealer.Card;

@@ -1,11 +1,10 @@
+/**
+ * This class is used for storing the game high score.
+ */
 package highscore;
 
 import java.io.Serializable;
 
-/**
- * Created by Farhad Atroshi on 07/10/15.
- * 
- */
 public class HighScore implements Serializable {
     private String username;
     //private String hand;

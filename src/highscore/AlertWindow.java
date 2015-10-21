@@ -1,3 +1,10 @@
+/**
+ * Created by Farhad Atroshi on 06/10/15.
+ * This class displays an AlertWindow with customizable title and message body
+ * The method displayBox is static and therefore can be called directly from this class.
+ * Inspiration from youtube tutorial: https://youtu.be/SpL3EToqaXA?list=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG
+ */
+
 package highscore;
 
 import javafx.scene.Scene;
@@ -9,12 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-/**
- * Created by Farhad Atroshi on 06/10/15.
- * This class displays an AlertWindow with customizable title and message body
- * The method displayBox is static and therefore can be called directly from this class.
- * Inspiration from youtube tutorial: https://youtu.be/SpL3EToqaXA?list=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG
- */
+
 public class AlertWindow {
     public static void show(String windowTitle, String msg, double width, double height) {
         Stage w = new Stage();

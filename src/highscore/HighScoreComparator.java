@@ -1,3 +1,7 @@
+/**
+ * This class is used for sorting the high score.
+ */
+
 package highscore;
 
 import highscore.HighScore;

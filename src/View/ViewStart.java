@@ -25,7 +25,8 @@ public class ViewStart extends Pane{
     Pane paneCenter;
     Pane  playerCards;
     List<Pane> tableCards;
-
+    HighScoreList hsl = new HighScoreList();
+    DB db = new DB("dbScoreList.bin");
     public ViewStart(Stage stage,BorderPane borderPane){
         this.stage = stage;
         this.root = borderPane;
@@ -92,8 +93,9 @@ public class ViewStart extends Pane{
         Menu fileMenu       = new Menu("Game");
         MenuItem highscoreItem  = new MenuItem("Top High Score");
 
-        // Create event handler
-        highscoreItem.setOnAction(event -> highScoreHanlder());
+        // shows highscore
+         highscoreItem.setOnAction(event -> highscore.AlertWindow.show("High Score List",db.getData().toString(), 3000, 3000));
+        //highscoreItem.setOnAction(event -> highScoreHanlder());
 
         // Add item to menu
         fileMenu.getItems().addAll(highscoreItem);
@@ -118,11 +120,12 @@ public class ViewStart extends Pane{
         // Add table to scene 
         this.root.getChildren().add(start.getImageView());
     }
-
+    /*
     public void highScoreHanlder(){
         // AVI SKRIV VAD SOM SKA GORAS HAR
         System.out.println("High Score got clicked");
     }
+    */
 
 
 

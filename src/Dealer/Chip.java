@@ -14,7 +14,7 @@ public class Chip extends Picture {
     private int chipValue;
     private String chipName;
     // Dealer.Dealer.Chip position in grid, clumn,row
-    private int position[];
+    private int position[]; //tabort
 
     public Chip(int value, String name, String imgSrc) {
         // Call parent constructor

@@ -17,8 +17,8 @@ public class MainView extends Application{
 
     Stage window;
 
-    HighScoreList hsl = new HighScoreList();
-    DB db = new DB("dbScoreList.bin");
+   // HighScoreList hsl = new HighScoreList();
+   // DB db = new DB("dbScoreList.bin");
     // testing
 
     public static void main(String[] args) {

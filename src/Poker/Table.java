@@ -274,14 +274,6 @@ public class Table implements Subject{
     }
 
     /**
-     * Returns the graphic object
-     * @return
-     */
-    public Graphic getGraphic() {
-        return this.graphic;
-    }
-
-    /**
      * Removes player from the game by calling the players method player.active(false);
      */
     public void removePlayerInGame() {

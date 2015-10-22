@@ -115,6 +115,8 @@ public class Controller {
     }
     /**
      * gets the first three cards on table with animation
+     * @param from
+     * @param to
      */
     public void getTableCards(int from, int to) {
 
@@ -202,7 +204,7 @@ public class Controller {
 
     /**
      * restarts the game
-     */
+    */
     public void restartGame(){
         // Game rounds
         this.getGame().resetRounds();
@@ -223,9 +225,9 @@ public class Controller {
 
     }
 
+
     /**
-     * constructor only with image source
-     *@param src
+     * decides what to do in every round
      */
     public void getRound(){
         int tableRound = this.game.round();

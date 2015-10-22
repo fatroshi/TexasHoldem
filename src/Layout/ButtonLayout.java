@@ -20,26 +20,39 @@ public enum ButtonLayout {
     private double x,y;
     private int id;
     private String color;
-
+    /**
+     * initiates the button layout
+     * @param id which botton it is
+     * @param x ,y  coordinates of the button
+     * @param color color of the button
+     */
     ButtonLayout(int id,double x, double y,String color) {
         this.id = id;
         this.x = x;
         this.y = y;
         this.color = color;
     }
-
+    /**
+     * @return x value of the coordinate
+     */
     public double getX(){
         return this.x;
     }
-
+    /**
+     * @return y value of the coordinate
+     */
     public double getY(){
         return this.y;
     }
-
+    /**
+     * @return color of the button
+     */
     public String getColor(){
         return this.color;
     }
-
+    /**
+     * @return id of the button
+     */
     public int getId(){
         return this.id;
     }

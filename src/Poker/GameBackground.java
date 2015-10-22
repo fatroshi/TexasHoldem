@@ -10,6 +10,10 @@ package Poker;
 
 public class GameBackground extends Picture {
 
+
+    /**
+     * @param imgSrc
+     */
     public GameBackground(String imgSrc) {
         super(imgSrc);
     }

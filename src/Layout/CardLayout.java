@@ -21,26 +21,39 @@ public enum CardLayout {
 
     private int cardId,rotation;
     double x,y;
-
+    /**
+     * initiates the card layout
+     * @param cardid which card it is
+     * @param x ,y  coordinates of the button
+     * @param rotation how muck the card will rotate
+     */
     CardLayout(int cardId,double x, double y,int rotation) {
         this.cardId = cardId;
         this.x = x;
         this.y = y;
         this.rotation = rotation;
     }
-
+    /**
+     * @return the cardid
+     */
     public int getCardId(){
         return this.cardId;
     }
-
+    /**
+     * @return x value of the coordinate
+     */
     public double getX(){
         return this.x;
     }
-
+    /**
+     * @return y value of the coordinate
+     */
     public double getY(){
         return this.y;
     }
-
+    /**
+     * @return rotation how much the card will rotate
+     */
     public int getRotation(){
         return this.rotation;
     }

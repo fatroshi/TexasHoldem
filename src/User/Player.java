@@ -1,12 +1,10 @@
-/**
- * Created by Farhad Atroshi on 07/10/15.
- * This class extends User class.
- */
+
 
 package User;
 
 /**
  * @author Farhad & Avi
+ *  This class extends User class.
  * creates a player with name and balance
  */
 

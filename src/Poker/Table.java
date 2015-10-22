@@ -80,7 +80,7 @@ public class Table implements Subject{
 
     /**
      * Registers new observers by adding to the listOfObservers
-     * @param observer
+     * @param observer the objects that will be registered as an observer and added to the listOfObservers.
      */
     @Override
     public void registerObserver(Observer observer) {
@@ -89,7 +89,7 @@ public class Table implements Subject{
 
     /**
      * Removes observers from the listOfObservers
-     * @param observer
+     * @param observer the observer that will be removed from the listOfObserver.
      */
     @Override
     public void removeObserver(Observer observer) {
@@ -144,7 +144,7 @@ public class Table implements Subject{
 
     /**
      * Sets new bet from the slider
-     * @param setBet
+     * @param setBet the value for the bet.
      */
     public void setBet(double setBet) {
         this.newBet = setBet;
@@ -381,7 +381,7 @@ public class Table implements Subject{
     /**
      * Store Rank and quantity of each card in the hand
      * @param hand the card hand of the player
-     * @return
+     * @return  A Map with rank and quantity of the cards in the hand.
      */
     public Map<Integer, Integer> getRqCards(Hand hand) {
 
@@ -409,7 +409,7 @@ public class Table implements Subject{
     /**
      * Store rank and suit of each card in the hand
      * @param hand the card hand of the player
-     * @return
+     * @return A map of Card ranks ant suit
      */
     public Map<Integer, Integer> getRsCards(Hand hand) {
 
@@ -426,7 +426,11 @@ public class Table implements Subject{
     /**
      * Search for Pair, three of a kind and four of a kind in the hand
      * @param rqCards Rank ang quantity of each card in the player hand.
-     * @return
+     * @return the best possible poker hand, values stored in an array.
+     * bestHand[0] = What we got, Royal Flush, Flust etc
+     * bestHand[1] = highest pair or three of a kind
+     * bestHand[2] = second pair
+     * bestHand[3] = highestRank of the fifth card
      */
     public Integer[] getPairThreeFour(Map<Integer, Integer> rqCards) {
         Integer[] bestHand = {0, 0, 0, 0};
@@ -1042,8 +1046,8 @@ public class Table implements Subject{
 
     /**
      * Check if the player can bet
-     * @param player
-     * @return
+     * @param player the current ative player in the game
+     * @return true if the player balance > 0
      */
     public boolean canBet(Player player){
         boolean canBet = false;
@@ -1057,7 +1061,7 @@ public class Table implements Subject{
 
     /**
      * Gets the current active user
-     * @return
+     * @return return the player object
      */
     public Player getActivePlayer(){
         return this.players.get(activeUser);
@@ -1188,7 +1192,7 @@ public class Table implements Subject{
 
     /**
      * Get players background
-     * @return
+     * @return a list of rectangles with fill color black.
      */
     public List<Rectangle> getPlayersBg(){
         return this.playersBg;
@@ -1248,9 +1252,9 @@ public class Table implements Subject{
     /**
      * Found at: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
      *
-     * @param value
-     * @param places
-     * @return
+     * @param value The value that we want to round
+     * @param places Max decimals of the returned value
+     * @return the value
      */
     public static double roundDouble(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();

@@ -336,7 +336,7 @@ public class Table implements Subject{
      * element [1] --> Refers to Highest Pair, or Tree of a kind
      * element [2] --> Refers to pair
      * element [3] --> Refers to highest card in the hand
-     * @param hand
+     * @param hand the best hand.
      * @return values check in enum class Poker_
      */
     public Integer[] bestHand(Hand hand) {
@@ -380,7 +380,7 @@ public class Table implements Subject{
 
     /**
      * Store Rank and quantity of each card in the hand
-     * @param hand
+     * @param hand the card hand of the player
      * @return
      */
     public Map<Integer, Integer> getRqCards(Hand hand) {
@@ -408,7 +408,7 @@ public class Table implements Subject{
 
     /**
      * Store rank and suit of each card in the hand
-     * @param hand
+     * @param hand the card hand of the player
      * @return
      */
     public Map<Integer, Integer> getRsCards(Hand hand) {
@@ -425,7 +425,7 @@ public class Table implements Subject{
 
     /**
      * Search for Pair, three of a kind and four of a kind in the hand
-     * @param rqCards
+     * @param rqCards Rank ang quantity of each card in the player hand.
      * @return
      */
     public Integer[] getPairThreeFour(Map<Integer, Integer> rqCards) {

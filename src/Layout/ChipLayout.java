@@ -2,7 +2,7 @@ package Layout;
 
 /**
  * Created by Farhad Atroshi & Avi
- * This enum class is used for creating chips.
+ * This enum class is used for creating chips, setting them up for each player, and setting values.
  * Setting  correct value, position for each user.
  */
 public enum ChipLayout {

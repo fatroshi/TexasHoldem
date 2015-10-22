@@ -1,13 +1,11 @@
 /**
+ * Created by Farhad Atroshi on 10/10/15.
  * This enum class is used for checking the best hand.
  * For bette explanation please read the comments in the class.
  */
 
 package Poker;
 
-/**
- * Created by Farhad Atroshi on 10/10/15.
- */
 public enum Poker_ {
 
     HIGH_CARD(1, 1, 1),                 // (1,1,1) = (HighCard,card,Poker rank = 1)
@@ -29,6 +27,12 @@ public enum Poker_ {
 
     }
 
+    /**
+     * Used for checking the best hand user can have with 7 cards
+     * @param firstQuantity highest pair, the of a kind
+     * @param secondQuantity pair
+     * @param rank rank of the card
+     */
     Poker_(int firstQuantity, int secondQuantity, int rank) {
 
         this.firstQuantity = firstQuantity;
@@ -36,18 +40,26 @@ public enum Poker_ {
         this.rank = rank;
     }
 
+    /**
+     * Get Poker rank
+     * @return rank of the hand
+     */
     public int getRank() {
         return this.rank;
     }
 
-    private String getName() {
-        return this.name();
-    }
-
+    /**
+     * Get the first quantity
+     * @return the quantity, highest pair,three of a kind,
+     */
     public int getFirstQuantity() {
         return this.firstQuantity;
     }
 
+    /**
+     * Get second quantity
+     * @return return pair at most
+     */
     public int getSecondQuantity() {
         return this.secondQuantity;
     }

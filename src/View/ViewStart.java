@@ -1,5 +1,5 @@
 /**
- * Created by Farhad on 07/10/15.
+ * Created by Farhad & Avi
  * This class is used for accessing stage and to be able to interact with the scene.
  *
  */
@@ -21,10 +21,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author  Farhad & Avi
- *
- */
+
 
 public class ViewStart extends Pane{
 

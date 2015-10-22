@@ -1,6 +1,6 @@
 
 /**
- * Created by Farhad Atroshi on 29/09/15.
+ * Created by Farhad Atroshi & Avi
  * This class is used for holding the player cards.
  * Adding cards and removing cards from the hand.
  */
@@ -12,10 +12,7 @@ import Dealer.NoSuchCardException;
 
 import java.util.ArrayList;
 import java.util.List;
-/**
- * @author Farhad & Avi
- * creates list of cards in the hand
- */
+
 
 public class Hand {
     List<Card> hand;

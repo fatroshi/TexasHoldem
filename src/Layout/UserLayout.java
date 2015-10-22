@@ -5,6 +5,11 @@ package Layout;
  *
  * This enum class is used for the layout position of each player.
  */
+
+/**
+ * Setting upp the position of the background for each player.
+ * Using user id for the linking.
+ */
 public enum UserLayout {
     P0(0,-150,100,"../resource/bg/bg_profile.png"),
     P1(1,-150,320,"../resource/bg/bg_profile.png"),

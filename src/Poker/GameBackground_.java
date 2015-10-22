@@ -6,6 +6,9 @@
 package Poker;
 
 
+/**
+ * Used for when setting upp backgrounds for each view.
+ */
 public enum GameBackground_ {
     TABLE("../resource/bg/table.png"),
     TABLE_BLACK("../resource/bg/tableStart.png"),
@@ -18,6 +21,10 @@ public enum GameBackground_ {
         this.imageSrc = imageSrc;
     }
 
+    /**
+     * Get the image source
+     * @return this image source
+     */
     public String getImageSrc() {
         return this.imageSrc;
     }

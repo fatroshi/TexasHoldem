@@ -39,6 +39,13 @@ public enum Table_ {
 
     }
 
+    /**
+     * Used when setting upp  cards for the user
+     * @param cardId id value of the card, if its the first, second ...
+     * @param x position
+     * @param y position
+     * @param rotation rotation value
+     */
     Table_(int cardId, double x, double y, int rotation) {
         this.cardId = cardId;
         this.x = x;
@@ -46,6 +53,13 @@ public enum Table_ {
         this.rotation = rotation;
     }
 
+    /**
+     * User when setting up layouts for each user
+     * @param userId user id (compares index in players list)
+     * @param xLayout x position of the layout
+     * @param yLayout u position of the layout
+     * @param imageSrcProfile image background for the user
+     */
     Table_(int userId, double xLayout, double yLayout, String imageSrcProfile) {
         this.userId = userId;
         this.xLayout = xLayout;
@@ -54,35 +68,68 @@ public enum Table_ {
     }
 
 
+    /**
+     * Get the image source of the card
+     * @return image source
+     */
     public String getImageSrc() {
         return this.imageSrc;
     }
 
+    /**
+     * Get Layout X-value  position
+     * @return x-value of the layout
+     */
     public double getXlayout() {
         return this.xLayout;
     }
 
+    /**
+     * Get layout Y-value position position
+     * @return y-value position value of the layout
+     */
     public double getYlayout() {
         return this.yLayout;
     }
 
+
+    /**
+     * Get x-value position of the image
+     * @return x-value position
+     */
     public double getX() {
         return this.x;
     }
 
+    /**
+     * Get the Y-value position
+     * @return Y-value position
+     */
     public double getY() {
         return this.y;
     }
 
 
+    /**
+     * Get the user id, this is used for knowing which cards are linked to user
+     * @return id of the user (index in the players list)
+     */
     public int getUserId() {
         return this.userId;
     }
 
+    /**
+     * Get the card id value
+     * @return card id value
+     */
     public int getCardId() {
         return this.cardId;
     }
 
+    /**
+     * Get the rotation value for the card
+     * @return rotaion value
+     */
     public int getRotation() {
         return this.rotation;
     }

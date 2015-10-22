@@ -1,5 +1,5 @@
 /**
- * Created by Farhad Atroshi on 07/10/15.
+ * Created by Farhad Atroshi & Avi
  * This class is used for creating players.
  */
 
@@ -12,11 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-/**
- * @author Farhad & Avi
- * creates user for the game
- */
 
 
 abstract public class User {

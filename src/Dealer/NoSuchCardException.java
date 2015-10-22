@@ -11,7 +11,10 @@ package Dealer;
 public class NoSuchCardException extends RuntimeException {
 
     private String msg;
-
+/**
+ * @param msg the message that will show 
+ *
+ */
     public NoSuchCardException(String msg) {
         this.msg = msg;
     }

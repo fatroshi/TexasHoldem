@@ -19,7 +19,12 @@ public class Chip extends Picture {
     private String chipName;
     // Dealer.Dealer.Chip position in grid, clumn,row
     private int position[]; //tabort
-
+ /**
+ * Constructor
+ * @param value of the chip
+ * @param name of the chip
+ * @param imgSrc name of the image source
+ */
     public Chip(int value, String name, String imgSrc) {
         // Call parent constructor
         super(imgSrc);
@@ -28,15 +33,21 @@ public class Chip extends Picture {
         this.rotate();
 
     }
-
+ /**
+ * @return the chipvalue
+ */
     public int getChipValue() {
         return this.chipValue;
     }
-
+/**
+ * @return the chipname
+ */
     public String getChipName() {
         return this.chipName;
     }
-
+ /**
+ * rotates the chip
+ */
     public void rotate() {
         //this.rotate();
         Random random = new Random();

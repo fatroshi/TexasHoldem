@@ -13,15 +13,25 @@ import java.util.Collections;
 
 /**
  *
- * @author avi
+ * @author Farhad & avi
+ * creates a highscorelist object
+ *
  */
 public class HighScoreList implements Serializable {
     private ArrayList<HighScore> highscorelist;
-    
+
+    /**
+     * Constructor
+     * Initializes highscorelist object
+     */
     public HighScoreList(){
         highscorelist = new ArrayList<HighScore>();
     }
-    
+    //
+    /**
+     * updates the list by pot values takes only ten objects
+     *
+     */
     public void updateHighScoreList(HighScore highscore){
         highscorelist.add(highscore);
         Collections.sort(highscorelist, new HighScoreComparator());
@@ -31,6 +41,11 @@ public class HighScoreList implements Serializable {
         }
            
     }
+
+    /**
+     * @return highscorelist
+     *
+     */
 
     public ArrayList<HighScore> getHighScoreList(){
         return this.highscorelist;

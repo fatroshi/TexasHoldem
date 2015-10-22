@@ -21,6 +21,10 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author  Farhad & Avi
+ *
+ */
 
 public class ViewStart extends Pane{
 
@@ -124,12 +128,7 @@ public class ViewStart extends Pane{
         // Add table to scene 
         this.root.getChildren().add(start.getImageView());
     }
-    /*
-    public void highScoreHanlder(){
-        // AVI SKRIV VAD SOM SKA GORAS HAR
-        System.out.println("High Score got clicked");
-    }
-    */
+
 
 
 

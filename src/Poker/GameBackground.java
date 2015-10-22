@@ -5,7 +5,11 @@
  */
 
 package Poker;
-
+/**
+ * @author Farhad & Avi
+ * creates game background
+ *
+ */
 
 
 public class GameBackground extends Picture {

@@ -8,7 +8,8 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 
 /**
- * Created by Farhad on 19/10/15.
+ * Created by Farhad & Avi
+ * handles the play button by checking if player can play an which round it is
  */
 public class PlayButtonHandler implements EventHandler<Event> {
 

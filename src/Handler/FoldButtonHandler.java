@@ -9,7 +9,8 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 
 /**
- * Created by Farhad on 19/10/15.
+ * Created by Farhad & Avi
+ * handles when a player folds the the player looses the game and restarts
  */
 public class FoldButtonHandler implements EventHandler<Event> {
     private Controller controller;

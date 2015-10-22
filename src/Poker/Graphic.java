@@ -212,7 +212,11 @@ public class Graphic implements Observer{
         rectangle.setFill(color);
     }
 
-
+    /**
+     * creates button
+     * @param name
+     *
+     */
 
     public Button createButton(String name){
         Button btn = new Button();

@@ -9,7 +9,7 @@ import Poker.Picture;
 import java.util.Random;
 
 /**
- * Created by Farhad Atroshi on 07/10/15.
+ * Created by Farhad Atroshi & Avi
  */
 public class Chip extends Picture {
 

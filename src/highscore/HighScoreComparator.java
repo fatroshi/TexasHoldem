@@ -10,7 +10,8 @@ import java.util.Comparator;
 
 /**
  *
- * @author avi
+ * @author Farhad & Avi
+ * compares the pot values
  */
 public class HighScoreComparator implements Comparator<HighScore>{
 

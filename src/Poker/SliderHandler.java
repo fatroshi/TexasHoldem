@@ -7,6 +7,11 @@ package Poker;
 
 import javafx.scene.control.*;
 
+/**
+ * @author Farhad & Avi
+ * hadles the slider in the game for betting
+ */
+
 
 public class SliderHandler {
 

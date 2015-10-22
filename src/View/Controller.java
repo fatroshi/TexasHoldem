@@ -18,7 +18,8 @@ import javafx.scene.shape.Rectangle;
 import java.util.List;
 
 /**
- * Created by Farhad Atroshi on 14/10/15.
+ * Created by Farhad Atroshi & Avi
+ * controlls the game
  */
 public class Controller {
     // Create game
@@ -36,6 +37,10 @@ public class Controller {
     // Round
     int round;
 
+    /**
+     * constructor
+     *@param viewStart
+     */
     public Controller(ViewStart viewStart) {
         this.viewStart = viewStart;                                 // Start view
         this.root      = viewStart.getRoot();                       // Root (holder for all Panes)
@@ -56,6 +61,9 @@ public class Controller {
         return this.game;
     }
 
+    /**
+     * creates players for the game
+     */
     public void createPlayers() {
         game.addPlayer("Mr Cohen", 50);
         game.addPlayer("Mr Atroshi", 82);
@@ -63,6 +71,9 @@ public class Controller {
         //game.addPlayer("Elise", 12);
     }
 
+    /**
+     * shows user info in a label
+     */
     public void getUserInfo() {
         for (int i = 0; i < this.game.getPlayers().size(); i++) {
             // Get user background
@@ -76,6 +87,9 @@ public class Controller {
         }
     }
 
+    /**
+     * gets the users chips to scene
+     */
     public void getUserChips() {
         for (int i = 0; i < this.game.getPlayers().size(); i++) {
             for (int j = 0; j < this.game.getPlayerChips(i).size(); j++) {
@@ -86,6 +100,9 @@ public class Controller {
         }
     }
 
+    /**
+     * adds two cards per player for the first round
+     */
     public void getFirstTwoCards() {
         for (int i = 0; i < this.game.getPlayerCards().size(); i++) {
             Card card = this.game.getPlayerCards().get(i);
@@ -96,7 +113,9 @@ public class Controller {
         }
         this.root.getChildren().add(playerCards);
     }
-
+    /**
+     * gets the first three cards on table with animation
+     */
     public void getTableCards(int from, int to) {
 
         for (int cardID = from; cardID < to; cardID++) {
@@ -125,12 +144,16 @@ public class Controller {
         }
     }
 
+
     public void getGameScene() {
         GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
         Animation.fadeIn(table);
         this.paneCenter.getChildren().add(table.getImageView());
     }
 
+    /**
+     * adds play button to game
+     */
     public void getPlayBtn() {
         Button btn = game.getPlayBtn();
         // Assign EventHandler
@@ -139,6 +162,9 @@ public class Controller {
 
     }
 
+    /**
+     * adds fold button to the game
+     */
     public void getFoldBtn() {
         Button btn = game.getFoldBtn();
         // Assign EventHandler
@@ -147,6 +173,9 @@ public class Controller {
 
     }
 
+    /**
+     * adds start button to the game
+     */
     public void getStartBtn() {
         Button btn = game.getStartBtn();
         // Assign EventHandler
@@ -154,6 +183,9 @@ public class Controller {
         paneCenter.getChildren().add(btn);
     }
 
+    /**
+     * adds pot label to the game
+     */
     public void getPotLabel() {
         Label potLabel = game.getPotLabel();
         // Add to scene
@@ -168,7 +200,9 @@ public class Controller {
         paneCenter.getChildren().add(game.getSlider());
     }
 
-
+    /**
+     * restarts the game
+     */
     public void restartGame(){
         // Game rounds
         this.getGame().resetRounds();
@@ -189,6 +223,10 @@ public class Controller {
 
     }
 
+    /**
+     * constructor only with image source
+     *@param src
+     */
     public void getRound(){
         int tableRound = this.game.round();
 

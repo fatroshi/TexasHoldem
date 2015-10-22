@@ -9,6 +9,12 @@ package Poker;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * @author Farhad & Avi
+ * creates picture object
+ *
+ */
+
 abstract public class Picture extends ImageView {
     private ImageView imageView;
     private Image image;
@@ -19,6 +25,10 @@ abstract public class Picture extends ImageView {
     public Picture() {
 
     }
+    /**
+     * constructor only with image source
+     *@param src
+     */
 
     public Picture(String src) {
         // init object
@@ -28,6 +38,13 @@ abstract public class Picture extends ImageView {
         // Apply to image view
         imageView.setImage(this.image);
     }
+
+    /**
+     * constructor only with image source both back and forth
+     *@param srcFront
+     * @param srcBack
+     */
+
 
     public Picture(String srcFront, String srcBack) {
         // init object
@@ -39,6 +56,13 @@ abstract public class Picture extends ImageView {
         // Apply to image Back view
         setImageBackView();
     }
+
+    /**
+     * constructor with image source with coordinates
+     *@param src
+     * @param x
+     * @param y
+     */
 
     public Picture(String src, double x, double y) {
         // init object
@@ -53,13 +77,28 @@ abstract public class Picture extends ImageView {
         this.setY(y);
     }
 
+    /**
+     * sets the front view of the object
+     *
+     */
+
     public void setImageFrontView() {
         this.imageView.setImage(this.image);
     }
 
+    /**
+     * sets the back view of the object
+
+     */
+
     public void setImageBackView() {
         this.imageView.setImage(this.imageBack);
     }
+
+    /**
+     * toggles the object to change view from front to back and vice versa
+     */
+
 
     public void toggleImage() {
         if (this.toggle == 0) {
@@ -72,6 +111,10 @@ abstract public class Picture extends ImageView {
 
 
     }
+
+    /**
+     * @return imageview
+     */
 
     public ImageView getImageView() {
         return this.imageView;

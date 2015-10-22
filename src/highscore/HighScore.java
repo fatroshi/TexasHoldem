@@ -5,16 +5,32 @@ package highscore;
 
 import java.io.Serializable;
 
+/**
+ * Created by Farhad Atroshi & Avi
+ * creates highscore objekt
+ * @param username
+ * @param pot
+ */
+
 public class HighScore implements Serializable {
     private String username;
     //private String hand;
     private int pot;
+
+    /**
+     * Constructor
+     * Initializes highscore object
+     */
     
     public HighScore (String username,double pot){
         this.username = username;
      //  this.hand = hand;
         this.pot = (int)pot;
     }
+
+    /**
+     * @return username
+     */
     
     public String getUserName(){
         return this.username;
@@ -24,7 +40,9 @@ public class HighScore implements Serializable {
     //    return this.hand;
         
    // }
-    
+    /**
+     * @return pot
+     */
     public int getPot(){
         return this.pot;
     }

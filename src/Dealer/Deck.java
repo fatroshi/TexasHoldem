@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Farhad Atroshi on 29/09/15.
+ * Created by Farhad Atroshi & Avi
  */
 public class Deck {
 

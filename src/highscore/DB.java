@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Farhad Atroshi on 2015-09-22.
+ * Created by Farhad Atroshi & Avi
+ * creates a bin file and saves highscorelist object
  */
 public class DB {
     private String dbName;

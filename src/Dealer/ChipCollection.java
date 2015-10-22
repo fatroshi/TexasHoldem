@@ -8,21 +8,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Farhad Atroshi on 07/10/15.
+ * Created by Farhad Atroshi & Avi
+ * creates collection of chips for player
  */
 public class ChipCollection {
     private int valueOfChips;
     private int noOfChips;
     private List<Chip> chipCollection;
 
+    /**
+     * Constructor
+     * @param money
+     */
     public ChipCollection(int money) {
         this.chipCollection = new ArrayList<>();
         fillChipCollection(money);
     }
 
+    /**
+     * @return value of the chipps
+     *
+     */
+
     public int getValueOfChips() {
         return this.valueOfChips;
     }
+
+    /**
+     * matches money with the chips
+     *
+     */
 
     public void fillChipCollection(int collections) {
         // We need a counter for the image files.
@@ -38,15 +53,15 @@ public class ChipCollection {
             }
         }
     }
-
+    // returns the chip in a collection by index
     public Chip getChip(int index) {
         return chipCollection.get(index);
     }
-
+    // returns number of chips in the collection
     public int getNoOfChips() {
         return this.chipCollection.size();
     }
-
+    //removes chip in a collection by index
     public Chip removeChip(int index) {
         return null;
     }

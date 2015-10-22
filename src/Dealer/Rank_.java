@@ -6,7 +6,7 @@
 package Dealer;
 
 /**
- * Created by Farhad Atroshi on 29/09/15.
+ * Created by Farhad Atroshi & Avi
  */
 public enum Rank_ {
 

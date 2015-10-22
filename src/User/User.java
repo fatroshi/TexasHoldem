@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Farhad & Avi
+ * creates user for the game
+ */
+
 
 abstract public class User {
     private String username;
@@ -24,10 +29,18 @@ abstract public class User {
     private double totalBet;
     private double bet;
 
+    /**
+     * constructor
+     */
     public User() {
 
     }
 
+    /**
+     * constructor initiates user with name and balance
+     *@param username
+     * @param balance
+     */
     public User(String username, double balance) {
         chips = new ArrayList<>();
         hand = new Hand();
@@ -37,43 +50,81 @@ abstract public class User {
         this.active = true;
     }
 
+    /**
+     *
+     * @return totalBet
+     */
+
     public double getTotalBet() {
         return totalBet;
     }
+
+    /**
+     * sets totalbet
+     *@param totalBet
+     */
 
     public void setTotalBet(double totalBet) {
         this.totalBet = totalBet;
     }
 
+    /**
+     * @return bet made by user
+     */
+
     public double getBet() {
         return bet;
     }
 
+    /**
+     * sets the bet
+     *@param bet
+     */
     public void setBet(double bet) {
         this.bet = bet;
         this.totalBet += this.bet;
     }
 
+    /**
+     * checks if the user is active
+     */
     public boolean isActive() {
         return this.active;
     }
+
+    /**
+     * sets the user active or inactive
+     */
 
     public void setActive(boolean b) {
         this.active = b;
     }
 
+    /**
+     * returns the hand of the user
+     */
     public Hand getHand() {
         return this.hand;
     }
 
+    /**
+     * returns the chips of the user
+     */
     public List<Chip> getChips() {
         return this.chips;
     }
 
+    /**
+     * returns the chip in chipcollection by index
+     * @param index
+     */
     public Chip getChip(int index) {
         return this.chips.get(index);
     }
 
+    /**
+     * converts the balance to chips
+     */
     public List<Chip> balanceToChips() {
         // Convert balance to int
         int balance = (int) Math.round(this.balance);
@@ -91,6 +142,10 @@ abstract public class User {
     public void buyChips() {
         // Write logic for adding to existing list!
     }
+
+    /**
+     * @return username
+     */
 
     public String getUsername() {
         return this.username;
@@ -159,21 +214,41 @@ abstract public class User {
         }
     }
 
+    /**
+     * clears the chipcollection
+     */
+
     public void clearChips() {
         this.chips.clear();
     }
 
+    /**
+     * returns the balnce of the user
+     */
     public double getBalance() {
         return this.balance;
     }
 
+    /**
+     * adds deposit to users balance
+     *@param deposit
+     */
     public void depositBalance(double deposit) {
         this.balance += deposit;
     }
 
+    /**
+     * debits money from the user
+     *@param debit
+     */
     public void debitBalance(double debit) {
         this.balance -= debit;
     }
+
+    /**
+     * setsa the users balance
+     *@param balance
+     */
 
     public void setSaldo(double balance) {
         this.balance = balance;

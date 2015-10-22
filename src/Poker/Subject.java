@@ -6,7 +6,7 @@
 package Poker;
 
 /**
- * Created by Farhad on 18/10/15.
+ * Created by Farhad & Avi
  */
 public interface Subject {
     public void registerObserver(Observer observer);

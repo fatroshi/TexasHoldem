@@ -18,7 +18,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 /**
- * Created by Farhad Atroshi on 14/10/15.
+ * Created by Farhad Atroshi & Avi
+ * Starts the game
  */
 public class StartButtonHandler implements EventHandler<Event> {
 

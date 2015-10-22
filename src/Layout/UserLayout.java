@@ -1,7 +1,7 @@
 package Layout;
 
 /**
- * Created by Farhad Atroshi on 13/10/15.
+ * Created by Farhad Atroshi & Avi
  *
  * This enum class is used for the layout position of each player.
  */

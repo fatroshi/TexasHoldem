@@ -42,15 +42,15 @@ public class Card extends Picture {
         this.rank = rank;
         this.suit = suit;
     }
-
+    // gets the rank of the card
     public int getRank() {
         return rank;
     }
-
+    // gets the suit of the card
     public int getSuit() {
         return suit;
     }
-
+    // checks if two cards are the same
     public boolean equals(Card other) {
         return this.rank == other.rank && this.suit == other.suit;
     }

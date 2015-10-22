@@ -1,7 +1,7 @@
 package Layout;
 
 /**
- * Created by Farhad Atroshi on 14/10/15.
+ * Created by Farhad Atroshi & Avi
  *
  * This enum class is used for position and colorization of the buttons
  *

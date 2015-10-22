@@ -33,25 +33,39 @@ public enum ChipLayout {
     P3_WHITE    (3,1,30,100);
 
     int x,y,userId,chipValue;
+    /**
+     * initiates the chip layout
+     * @param userid which chip it is
+     * @param chipValue how much that chip worhts
+     * @param x ,y  
+     */
     ChipLayout(int userId,int chipValue, int x, int y){
         this.userId = userId;
         this.chipValue = chipValue;
         this.x = x;
         this.y = y;
     }
-
+    /**
+     * return userid which chip it is  
+     */
     public int getUserId(){
         return this.userId;
     }
-
+    /**
+     * return chipValue how much that chip worhts  
+     */
     public int getChipValue(){
         return this.chipValue;
     }
-
+    /**
+     * return x coordinate  
+     */
     public int getX(){
         return this.x;
     }
-
+    /**
+     * return y coordinate  
+     */
     public int getY(){
         return this.y;
     }

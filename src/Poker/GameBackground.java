@@ -1,15 +1,11 @@
 /**
- * Created by Farhad Atroshi on 08/10/15.
+ * Created by Farhad Atroshi & Avi
  *
  * This class is used for when setting backgrounds.
  */
 
 package Poker;
-/**
- * @author Farhad & Avi
- * creates game background
- *
- */
+
 
 
 public class GameBackground extends Picture {

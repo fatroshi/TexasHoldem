@@ -1,5 +1,5 @@
 /**
- * Created by Farhad Atroshi on 07/10/15.
+ * Created by Farhad Atroshi & Avi
  * This class is used when creating the cards.
  */
 

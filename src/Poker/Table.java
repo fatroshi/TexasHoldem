@@ -118,7 +118,7 @@ public class Table implements Subject{
     }
 
     /**
-     * Get the start Button
+     * Get the start Button for first view
      * @return the start button
      */
     public Button getStartBtn() {

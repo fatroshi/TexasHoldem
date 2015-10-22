@@ -49,47 +49,43 @@ public class ViewStart extends Pane{
 
     }
 
-    public Stage getStage() {
-        return stage;
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
+    /**
+     * This is used as root, all nodes will be added to this.
+     * @return the root BorderPane
+     */
     public BorderPane getRoot() {
         return root;
     }
 
-    public void setRoot(BorderPane root) {
-        this.root = root;
-    }
-
+    /**
+     * The center part of the Border pane.
+     * @return returns the center part.
+     */
     public Pane getPaneCenter() {
         return paneCenter;
     }
 
-    public void setPaneCenter(Pane paneCenter) {
-        this.paneCenter = paneCenter;
-    }
-
+    /**
+     * Holder for players 2 cards
+     * @return the pane
+     */
     public Pane getPlayerCards() {
         return playerCards;
     }
 
-    public void setPlayerCards(Pane playerCards) {
-        this.playerCards = playerCards;
-    }
-
+    /**
+     * Holder for the table cards, total of five
+     * @return the pane
+     */
     public List<Pane> getTableCards() {
         return tableCards;
     }
 
 
-    public void setTableCards(List<Pane> tableCards) {
-        this.tableCards = tableCards;
-    }
-
+    /**
+     * Creates the menu when starting the game
+     * The user can check the high score list
+     */
     public void createGameMenu(){
         // MENU BAR
         MenuBar mb          = new MenuBar();
@@ -118,6 +114,9 @@ public class ViewStart extends Pane{
         this.root.getChildren().add(this.paneCenter);
     }
 
+    /**
+     * Adds start image to the root border Pane
+     */
     public void startView(){
         // TableLogic
         GameBackground start = new GameBackground(GameBackground_.TABLE_BLACK.getImageSrc());

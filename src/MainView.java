@@ -39,7 +39,10 @@ public class MainView extends Application{
         window = stage;
         // Set title for the stage
         window.setTitle("KING KONG POKER");
-        // Add stuff to the stage
+
+        // Create scene
+        // Add nodes applied to the root to scene
+        // Setup up dimension of the window
         Scene scene = new Scene(controller.getRootBorderPane(), 1000, 650);
 
         window.setScene(scene);

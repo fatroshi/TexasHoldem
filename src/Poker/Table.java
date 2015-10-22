@@ -44,7 +44,6 @@ public class Table implements Subject{
     private double newBet;            // User to check if bet has been changed
     private Label potLabel;           // Store the total pot value
     private double pot;               // Total current pot in the game
-    private double tableBet;
     private int rounds;               // Counts the poker rounds, used for showing cards and when the game in done.
     private int playCounter;          // increases for call,bet. Sets to 0 for raise
     
@@ -140,14 +139,6 @@ public class Table implements Subject{
      */
     public Button getFoldBtn() {
         return foldBtn;
-    }
-
-    /**
-     * Sets new bet from the slider
-     * @param setBet the value for the bet.
-     */
-    public void setBet(double setBet) {
-        this.newBet = setBet;
     }
 
     /**
@@ -248,9 +239,9 @@ public class Table implements Subject{
     /**
      * Adding player to the players list
      * Adding username and balance to list in graphic object
-     * @param username
-     * @param balance
-     * @return
+     * @param username the players username
+     * @param balance the players balance, the balance is used for gambling
+     * @return the created player.
      */
     public Player addPlayer(String username, double balance) {
         Player player = new Player(username, balance);
@@ -285,10 +276,10 @@ public class Table implements Subject{
      * Deals tho cards for each player
      */
     public void dealTwoCards() {
-        for (int j = 0; j < this.players.size(); j++) {
+        for (Player player : this.players) {
             // Deal 2 cards for each player
             for (int i = 0; i < 2; i++) {
-                players.get(j).getHand().addCard(deck.dealCard());
+                player.getHand().addCard(deck.dealCard());
             }
 
         }
@@ -298,7 +289,7 @@ public class Table implements Subject{
      * Deals cards to table and players
      * this is used for the 4 table cards not the first 2 cards for players'
      * Setting for card, show back/front
-     * @param quantityOfDeals
+     * @param quantityOfDeals the quantity of cards that will be dealt by the deck object.
      */
     public void dealCards(int quantityOfDeals) {
         // Deal same 5 cards to each player
@@ -307,8 +298,8 @@ public class Table implements Subject{
             card.setImageFrontView();
             tableCards.add(card);
 
-            for (int j = 0; j < players.size(); j++) {
-                players.get(j).getHand().addCard(card);
+            for (Player player : players) {
+                player.getHand().addCard(card);
             }
         }
     }
@@ -323,7 +314,7 @@ public class Table implements Subject{
 
     /**
      * Get player from players list by index
-     * @param index
+     * @param index the index of the player in the players list
      * @return Player
      */
     public Player getPlayer(int index) {
@@ -508,8 +499,10 @@ public class Table implements Subject{
 
     /**
      * Search for Royal Flush, Straight Flush, Straight and flush in the hand
-     * @param rsCards
-     * @return
+     * @param rsCards rank and suit of the cards in player hand.
+     * @return the best possible poker hand, values stored in an array.
+     * bestHand[0] = What we got, Royal Flush, Flush etc
+     * bestHand[3] = highestRank of the fifth card
      */
     public Integer[] getFlush(Map<Integer, Integer> rsCards) {
         Integer[] tmpBestHand = {0, 0, 0, 0};
@@ -562,7 +555,6 @@ public class Table implements Subject{
             } else if (rankCounter >= 5) {
                 // Straight
                 // Store the highest card which should be this one
-                //print("Straight, highest card: " + rank);
                 highestCard = rank;
                 // Store values
                 tmpBestHand[0] = 5;
@@ -580,7 +572,14 @@ public class Table implements Subject{
         return tmpBestHand;
     }
 
-    public boolean descByOne(int a, int b) {
+    /**
+     * This is method is mainly created for the method getFlush, it check if the next value is in order.
+     * this helps when we need to decide if the user has a Royal flish, straight flush or straight.
+     * @param a first card rank
+     * @param b second card rank
+     * @return true if the are in desc.
+     */
+     boolean descByOne(int a, int b) {
         boolean desc = false;
         if (a == (b - 1)) {
             desc = true;
@@ -624,9 +623,9 @@ public class Table implements Subject{
 
         List<Player> winners = new ArrayList<>();
 
-        for (int i = 0; i < players.size(); i++) {
-            Hand hand = players.get(i).getHand();
-            bestHands.put(bestHand(hand), players.get(i));
+        for (Player player1 : players) {
+            Hand hand = player1.getHand();
+            bestHands.put(bestHand(hand), player1);
         }
         // Store hand rank
         Integer[] topRank = {0, 0, 0, 0};
@@ -667,7 +666,6 @@ public class Table implements Subject{
                 loopCounter++;
             }
         }
-
         return  winners;
     }
 
@@ -694,22 +692,24 @@ public class Table implements Subject{
             winners.get(0).depositBalance(pot);
             hsl.updateHighScoreList(new HighScore(winners.get(0).getUsername(),pot));
         }
-        else if (winners.size() > 1 && count == winners.size()-1){
-            System.out.println("winners share the money");
-            splitPot = pot / winners.size();
-            // deals the pot to players
-            for (int i = 0; i < winners.size() ;i++){
-                winners.get(i).depositBalance(splitPot);
-                hsl.updateHighScoreList(new HighScore(winners.get(i).getUsername(),splitPot));
-            }
+        else {
+            if (winners.size() > 1 && count == winners.size() - 1) {
+                System.out.println("winners share the money");
+                splitPot = pot / winners.size();
+                // deals the pot to players
+                for (int i = 0; i < winners.size(); i++) {
+                    winners.get(i).depositBalance(splitPot);
+                    hsl.updateHighScoreList(new HighScore(winners.get(i).getUsername(), splitPot));
+                }
 
-        }
-        // if winners bet different amount they get their totalbet back
-        else{
-            System.out.println("winnerts get what they bet");
-            for (int i = 0 ; i < winners.size();i++){
-                winners.get(i).depositBalance(winners.get(i).getTotalBet());
-                hsl.updateHighScoreList(new HighScore(winners.get(i).getUsername(),winners.get(i).getTotalBet()));
+            }
+            // if winners bet different amount they get their totalbet back
+            else {
+                System.out.println("winnerts get what they bet");
+                for (int i = 0; i < winners.size(); i++) {
+                    winners.get(i).depositBalance(winners.get(i).getTotalBet());
+                    hsl.updateHighScoreList(new HighScore(winners.get(i).getUsername(), winners.get(i).getTotalBet()));
+                }
             }
         }
         // hsl.updateHighScoreList(new HighScore(player.getUsername(),splitPot));
@@ -721,37 +721,23 @@ public class Table implements Subject{
      * If the player folds, the player looses his bets.
      */
     public void fold() {
-        // Reset table bet
-        // Current bet
+        removePlayerInGame();
+        //Fadeout player cards
+        Card c1 = players.get(this.activeUser).getHand().getCard(0);
+        Card c2 = players.get(this.activeUser).getHand().getCard(1);
 
-        if (oneActivePlayer()) {
-            //We got a winner
+        Animation.fadeOut(c1);
+        Animation.fadeOut(c2);
 
+        // Deal the pot to the winner
+        dealPot(this.pot,getWinner());
+        // Notify all observers
+        notifyObservers();
+        // Reset all game values in this class
+        gameRestart();
 
-        } else {
-            //Set active = false
-            removePlayerInGame();
-            //Do somthing with user cards
-            Card c1 = players.get(this.activeUser).getHand().getCard(0);
-            Card c2 = players.get(this.activeUser).getHand().getCard(1);
-
-            Animation.fadeOut(c1);
-            Animation.fadeOut(c2);
-
-            dealPot(this.pot,getWinner());
-
-            notifyObservers();
-
-            gameRestart();
-
-            for (Player player: players){
-                if(player.isActive()){
-                    System.out.println(" ##### " + player.getUsername() + " " + player.isActive());
-                }
-            }
-            // Set next user
-            nextUser();
-        }
+        // Set next user
+        nextUser();
     }
 
 
@@ -796,8 +782,8 @@ public class Table implements Subject{
         // Remove all table cards
         tableCards.clear();
         // Remove player cards
-        for (int i = 0; i < players.size(); i++) {
-            players.get(i).getHand().clearHand();
+        for (Player player1 : players) {
+            player1.getHand().clearHand();
         }
 
         // Reset deck
@@ -815,7 +801,6 @@ public class Table implements Subject{
         notifyObservers();
 
         this.gameStart();
-
     }
 
     /**
@@ -859,7 +844,7 @@ public class Table implements Subject{
             if(this.newBet > this.bet) {                                                    // RAISE
                 // Check if it was raise
                 this.raise(player);
-            }else if(this.newBet == this.bet && this.newBet != 0 && this.bet != 0){         // CALL
+            }else if((this.newBet == this.bet) && (this.newBet != 0) && (this.bet != 0)){   // CALL
                 // Check if the challenge was accepted
                 this.call(player);
             }else if(this.newBet < this.bet){                                               // ALL IN
@@ -924,7 +909,7 @@ public class Table implements Subject{
         // Update status label (this.msg --> will be the text)
         notifyObservers();
 
-        if(allInFlag == true) {
+        if(allInFlag) {
             // Disable slider for next user
             this.slider.setDisable(true);
         }
@@ -1074,8 +1059,7 @@ public class Table implements Subject{
      */
     public int getActivePlayers() {
         int activePlayers = 0;
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
+        for (Player player : players) {
             if (player.isActive()) {
                 activePlayers++;
             }
@@ -1242,7 +1226,7 @@ public class Table implements Subject{
     /**
      * Gets the label for the slider
      * this label shows the quantity chosen by player
-     * @return
+     * @return the slider label
      */
     public Label getSliderLabel(){
         return this.sliderLabel;

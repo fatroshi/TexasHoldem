@@ -8,7 +8,7 @@ package Layout;
 public enum ChipLayout {
     //
     // Player 0
-    P0_BLACK    (0,500,300,100),
+    P0_BLACK    (0,500,300,100),            // (user id,value,x-position,y-position)
     P0_RED      (0,100,335,100),
     P0_BLUE     (0,50,355,130),
     P0_GREEN    (0,10,320,130),
@@ -33,6 +33,14 @@ public enum ChipLayout {
     P3_WHITE    (3,1,30,100);
 
     int x,y,userId,chipValue;
+
+    /**
+     * Used for setting up the position of each chip for each player in the game
+     * @param userId comparing this with the index in the list players
+     * @param chipValue the value of the chip
+     * @param x x- position of the chip
+     * @param y y- position of the chip
+     */
     ChipLayout(int userId,int chipValue, int x, int y){
         this.userId = userId;
         this.chipValue = chipValue;
@@ -40,18 +48,35 @@ public enum ChipLayout {
         this.y = y;
     }
 
+
+    /**
+     * Get the user id
+     * @return id value (index in the list players)
+     */
     public int getUserId(){
         return this.userId;
     }
 
+    /**
+     * Get the chip value
+     * @return chip value
+     */
     public int getChipValue(){
         return this.chipValue;
     }
 
+    /**
+     * Get the x - position of the chip
+     * @return x- value
+     */
     public int getX(){
         return this.x;
     }
 
+    /**
+     *  Get the y - value of the chip
+     * @return y - value
+     */
     public int getY(){
         return this.y;
     }

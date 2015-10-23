@@ -20,6 +20,7 @@ abstract public class Picture extends ImageView {
     private Image image;
     private Image imageBack;
     private int toggle = 0;
+    private ClassLoader cl = this.getClass().getClassLoader();
 
 
     public Picture() {
@@ -34,7 +35,9 @@ abstract public class Picture extends ImageView {
         // init object
         this.imageView = new ImageView();
         // Load image in container
-        this.image = new Image(this.getClass().getResource(src).toString());
+        //this.image = new Image(this.getClass().getResource(src).toString());
+        //System.out.println(src);
+        this.image = new Image(cl.getResourceAsStream(src));
         // Apply to image view
         imageView.setImage(this.image);
     }
@@ -50,11 +53,13 @@ abstract public class Picture extends ImageView {
         // init object
         this.imageView = new ImageView();
         // Load image in container
-        this.image = new Image(this.getClass().getResource(srcFront).toString());
+        //this.image = new Image(this.getClass().getResource(srcFront).toString());
+        this.image = new Image(cl.getResourceAsStream(srcFront));
         // Load image (Back of the card) in container
-        this.imageBack = new Image(this.getClass().getResource(srcBack).toString());
-        // Apply to image Back view
-        setImageBackView();
+        //this.imageBack = new Image(this.getClass().getResource(srcBack).toString());
+        this.imageBack = new Image(cl.getResourceAsStream(srcBack));
+        // Apply to image front view
+        setImageFrontView();
     }
 
     /**
@@ -68,7 +73,8 @@ abstract public class Picture extends ImageView {
         // init object
         this.imageView = new ImageView();
         // Load image in container
-        this.image = new Image(this.getClass().getResource(src).toString());
+        //this.image = new Image(this.getClass().getResource(src).toString());
+        this.image = new Image(cl.getResourceAsStream(src));
         // Apply to image view
         imageView.setImage(this.image);
         // Set x coordinate

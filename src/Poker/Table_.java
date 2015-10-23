@@ -25,10 +25,10 @@ public enum Table_ {
     BIG(),
     SMALL(),
     // Layout Position
-    P0(0, 50, 100, "../resource/bg/bg_profile.png"),
-    P1(1, 50, 320, "../resource/bg/bg_profile.png"),
-    P2(2, 880, 320, "../resource/bg/bg_profile.png"),
-    P3(3, 880, 100, "../resource/bg/bg_profile.png"),;
+    P0(0, 50, 100, "resource/bg/bg_profile.png"),
+    P1(1, 50, 320, "resource/bg/bg_profile.png"),
+    P2(2, 880, 320, "resource/bg/bg_profile.png"),
+    P3(3, 880, 100, "resource/bg/bg_profile.png"),;
 
     private int userId, cardId, rotation;
     private double xLayout, yLayout; // Layout position

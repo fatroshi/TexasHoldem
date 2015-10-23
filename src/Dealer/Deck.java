@@ -39,7 +39,7 @@ public class Deck {
         // Ace = 1.png,
         int fileCounter = 1;
 
-        String imgFolder = "../resource/cards/";
+        String imgFolder = "resource/cards/";
         String imgPath;
         for (Rank_ rank : Rank_.values()) {
             for (Suit_ suit : Suit_.values()) {

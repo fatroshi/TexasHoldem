@@ -67,8 +67,8 @@ public class Controller {
     public void createPlayers() {
         game.addPlayer("Mr Cohen", 2979);
         game.addPlayer("Mr Atroshi", 2979);
-        //game.addPlayer("Felicia", 13);
-        //game.addPlayer("Elise", 12);
+        game.addPlayer("Felicia", 13);
+        game.addPlayer("Elise", 12);
     }
 
     /**

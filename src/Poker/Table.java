@@ -875,7 +875,7 @@ public class Table implements Subject{
 
         double prevBet = player.getBet();
         double tmpBet = Math.abs(newBet - prevBet);
-
+        tmpBet = roundDouble(tmpBet,2);
         // Update user
         player.debitBalance(tmpBet);
         player.setBet(tmpBet);
@@ -936,6 +936,7 @@ public class Table implements Subject{
         double tmpBet = Math.abs(newBet - prevBet);
 
         // Update user
+        tmpBet = roundDouble(tmpBet,2);
         player.debitBalance(tmpBet);
         player.setBet(tmpBet);
 

@@ -23,7 +23,7 @@ public enum CardLayout {
     double x,y;
     /**
      * initiates the card layout
-     * @param cardid which card it is
+     * @param cardId which card it is
      * @param x ,y  coordinates of the button
      * @param rotation how muck the card will rotate
      */

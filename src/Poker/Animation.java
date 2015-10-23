@@ -19,25 +19,6 @@ import javafx.util.Duration;
 public class Animation {
 
     /**
-     * moves the picture to given coordinates
-     *@param x
-     * @param y
-     * @param p
-     */
-    public static void move(double x, double y, Picture p) {
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), p.getImageView());
-        tt.setByX(x);
-        tt.setByY(y);
-        //tt.setCycleCount(4);
-        //tt.setAutoReverse(true);
-        SequentialTransition seqTransition = new SequentialTransition(
-                new PauseTransition(Duration.millis(1000)), // wait a second
-                tt);
-
-        seqTransition.play();
-    }
-
-    /**
      * create effect by fade-out the picture
      *@param p
      */

@@ -69,23 +69,6 @@ public class Graphic implements Observer{
         return slider;
     }
 
-    /**
-     * Update the slider
-     * @param slider
-     * @param playerBalance
-     * @param playerId
-     * @param currentBet
-     * @param currentRaise
-     */
-    public double updateSlider(Slider slider, Label sliderLabel, double playerBalance, int playerId, double currentBet, double currentRaise) {
-        slider.setOnMouseClicked(even -> new SliderHandler(slider,sliderLabel));
-        slider.setMin(currentBet);
-        slider.setValue(currentRaise);
-        slider.setMax(playerBalance);
-
-        return currentBet;
-    }
-
 
     public Label getSliderLabel(){
        return this.sliderLabel;

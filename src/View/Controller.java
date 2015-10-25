@@ -1,5 +1,18 @@
-package View;
+/**
+ * ### FARHAD READ THIS ####
+ *
+ * Table should not have any graphic attached to it.
+ *
+ * Graphic should get values from table and be more like a viewModel
+ * The graphic should be created by viewStart.
+ * The buttons click events should be set also in viewStart.
+ * When a button is clicked the it should call a function in the controller class.
+ *
+ * ### OBS!!!! Before doing all of this.. first read on Java util Subject and observable !!!!!
+ * ### Don't do shit before u know this and how to implement it..
+ */
 
+package View;
 import Dealer.Card;
 import Dealer.Chip;
 import Handler.CardClickHandler;
@@ -7,7 +20,6 @@ import Handler.FoldButtonHandler;
 import Handler.PlayButtonHandler;
 import Handler.StartButtonHandler;
 import Poker.*;
-import View.ViewStart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;

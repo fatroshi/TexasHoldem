@@ -1,4 +1,17 @@
 /**
+ * ### FARHAD READ THIS #####
+ *
+ * FIRST LEARN JAVA UTIL SUBJECT AND OBSERVABLE
+ *
+ * This class should not contain any graphics!!!
+ * Store only the values for the graphics.
+ * Label = String
+ * Slider = Double
+ * Balance = Double
+ */
+
+
+/**
  * Created by Farhad on 17/10/15.
  *
  * This class handles the game logic.

@@ -38,19 +38,13 @@ import java.util.List;
 import java.util.Map;
 import highscore.*;
 
-public class Table implements Subject{
+public class Table{
 
-    private List<Rectangle> playersBg               = new ArrayList<>(); // Background for player profile
-    private List<Label> balanceLabels               = new ArrayList<>(); // Label for showing player balance
-    private List<Label> usernameLabels              = new ArrayList<>(); // Label for showing player username
     private Deck deck                               = new Deck();        // Dealer.Hand (52 cards)
     private List<Card> tableCards                   = new ArrayList<>(); // Store all table cards, total of 5
     private List<Player> players                    = new ArrayList<>(); // List for storing the players
 
     // Variables used by all players
-    private Button startBtn;                        // The start btn, Starts the game
-    private Button playBtn;                         // Play btn. Call,Raise,Check
-    private Button foldBtn;                         // Player fold
     private int activeUser;                         // Id of current active player (Active --> Still in the game)
     private int oldActiveUser;                      // Id of previous active player
     private double bet;                             // Current bet in game
@@ -59,7 +53,7 @@ public class Table implements Subject{
     private double pot;                             // Total current pot in the game
     private int rounds;                             // Counts the poker rounds, used for showing cards and when the game in done.
     private int playCounter;                        // increases for call,bet. Sets to 0 for raise
-    
+
     // Graphics
     private Graphic graphic;                        // Where we get our graphics from, except the cards
     private Slider slider;                          // Slider for player to make bet, call, raise
@@ -81,46 +75,44 @@ public class Table implements Subject{
         slider          = graphic.getSlider();                  // Slider for player to make bet, call, raise
         sliderLabel     = graphic.getSliderLabel();             // Create label for slider
         statusLabel     = graphic.getStatusLabel();             // Will be shown when; check,raise,call, all in, fold
-        startBtn        = graphic.createButton("START");        // Start the game
-        playBtn         = graphic.createButton("PLAY");         // Play: check,call,raise
-        foldBtn         = graphic.createButton("FOLD");         // player folds
         potLabel        = graphic.getPotLabel();
         hsl = db.getData();                                     // Load data from database
         // Register Observer
-        registerObserver(graphic);                              // Register observer
+        //registerObserver(graphic);                              // Register observer
     }
+
 
     /**
      * Registers new observers by adding to the listOfObservers
      * @param observer the objects that will be registered as an observer and added to the listOfObservers.
      */
-    @Override
-    public void registerObserver(Observer observer) {
-        this.listOfObservers.add(observer);
-    }
+    //@Override
+   // public void registerObserver(Observer observer) {
+     //   this.listOfObservers.add(observer);
+   // }
 
     /**
      * Removes observers from the listOfObservers
      * @param observer the observer that will be removed from the listOfObserver.
      */
-    @Override
-    public void removeObserver(Observer observer) {
-        this.listOfObservers.remove(observer);
-    }
+    //@Override
+    //public void removeObserver(Observer observer) {
+     //   this.listOfObservers.remove(observer);
+    //}
 
     /**
      * Notifies the observers in the listOfObservers
      * updates the slider, decreases the user balance, updates the pot label
      */
-    @Override
-    public void notifyObservers() {
+    //@Override
+    //public void notifyObservers() {
         // Update set: min, max
-        for (Observer observer: listOfObservers){
-            observer.updateSlider(this.slider.getValue(), players.get(this.activeUser).getBalance(), this.msg);
-            observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance());
-            observer.updateTablePotLabel(this.pot);
-        }
-    }
+      //  for (Observer observer: listOfObservers){
+        ///    observer.updateSlider(this.slider.getValue(), players.get(this.activeUser).getBalance(), this.msg);
+           // observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance());
+            //observer.updateTablePotLabel(this.pot);
+       // }
+    //}
 
     /**
      * Get the pot label
@@ -130,29 +122,6 @@ public class Table implements Subject{
         return this.potLabel;
     }
 
-    /**
-     * Get the start Button for first view
-     * @return the start button
-     */
-    public Button getStartBtn() {
-        return startBtn;
-    }
-
-    /**
-     * Get the play button
-     * @return the play button
-     */
-    public Button getPlayBtn() {
-        return playBtn;
-    }
-
-    /**
-     * Get the fold button
-     * @return the fold button
-     */
-    public Button getFoldBtn() {
-        return foldBtn;
-    }
 
     /**
      * Checks game rounds, if its the last round the de pot will
@@ -186,7 +155,7 @@ public class Table implements Subject{
                 // Check who the winner is
                 //splitPot(this.pot, getWinner());
                 dealPot(this.pot,getWinner());
-                notifyObservers();
+                //notifyObservers();
 
                 System.out.println(players.get(0).getBalance() + " Balance: AVI");
                 System.out.println(players.get(0).getBalance() + " Balance: Farhad");
@@ -265,15 +234,15 @@ public class Table implements Subject{
 
         // Create graphics for the user
         // Add username to usernameLabels
-        Label usernameLabel = graphic.createUsernameLabel(player, playerIndex);
-        this.usernameLabels.add(usernameLabel);
+        //Label usernameLabel = graphic.createUsernameLabel(player, playerIndex);
+        //this.usernameLabels.add(usernameLabel);
         // Add balance to balanceLabels
-        Label balanceLabel = graphic.createBalanceLabel(player,playerIndex);
-        this.balanceLabels.add(balanceLabel);
+        //Label balanceLabel = graphic.createBalanceLabel(player,playerIndex);
+        //this.balanceLabels.add(balanceLabel);
         // Add bg to bgPlayers
-        Rectangle playerBg = graphic.createPlayerBg(playerIndex);
-        this.playersBg.add(playerBg);
-        
+        //Rectangle playerBg = graphic.createPlayerBg(playerIndex);
+        //this.playersBg.add(playerBg);
+
         return player;
     }
 
@@ -592,7 +561,7 @@ public class Table implements Subject{
      * @param b second card rank
      * @return true if the are in desc.
      */
-     boolean descByOne(int a, int b) {
+    boolean descByOne(int a, int b) {
         boolean desc = false;
         if (a == (b - 1)) {
             desc = true;
@@ -745,7 +714,7 @@ public class Table implements Subject{
         // Deal the pot to the winner
         dealPot(this.pot,getWinner());
         // Notify all observers
-        notifyObservers();
+        //notifyObservers();
         // Reset all game values in this class
         gameRestart();
 
@@ -762,7 +731,7 @@ public class Table implements Subject{
         // Show current selected user by changing the background color
         // We know that the firs user has index 0
 
-
+        /*
         for (Player player: players){
             if(player.getBalance() > 0){
                 int indexOfPlayer = players.indexOf(player);
@@ -772,7 +741,8 @@ public class Table implements Subject{
                 break;
             }
         }
-   }
+        */
+    }
 
     /**
      * Resets the variables used in the game and also sets all users to active mode
@@ -811,9 +781,13 @@ public class Table implements Subject{
         }
 
         // notify observers
-        notifyObservers();
+        //notifyObservers();
 
         this.gameStart();
+    }
+
+    public int getActiveUser(){
+        return this.activeUser;
     }
 
     /**
@@ -822,21 +796,11 @@ public class Table implements Subject{
      */
     public void play() {
 
-        if (oneActivePlayer()) {
-            //We got a winner
-            setWinnerBG();
-        } else {
+        if (!oneActivePlayer()) {
             // Set next user
             this.nextUser();
-            // Update background  for current active user
-            // Show current selected user by changing the background color
-            graphic.updatePlayerBg(this.playersBg.get(this.activeUser), Color.DARKGREEN);
-            // Change back the background color
-            graphic.updatePlayerBg(this.playersBg.get(this.oldActiveUser), Color.BLACK);
         }
 
-        // Find a better place for this
-        this.updateGame();
     }
 
     /**
@@ -850,7 +814,7 @@ public class Table implements Subject{
         // Set to 2 decimal
         this.newBet = slider.getValue();
         this.newBet = roundDouble(this.newBet,0);
-        notifyObservers();
+        //notifyObservers();
 
         if(canBet(player)){
 
@@ -905,14 +869,14 @@ public class Table implements Subject{
             // Set status text
             this.msg = "ALL IN by " + player.getUsername();
             // Update playBtn
-            playBtn.setText("CALL");
+            //playBtn.setText("CALL");
             // Set flag to disable slider
             allInFlag = true;
         }else{
             // Set status text
             this.msg = "Raise by " + player.getUsername();
             // Update playBtn
-            playBtn.setText("CALL or RAISE");
+            //playBtn.setText("CALL or RAISE");
         }
 
 
@@ -920,7 +884,7 @@ public class Table implements Subject{
         this.pot += tmpBet;
 
         // Update status label (this.msg --> will be the text)
-        notifyObservers();
+        //notifyObservers();
 
         if(allInFlag) {
             // Disable slider for next user
@@ -964,7 +928,7 @@ public class Table implements Subject{
         this.pot += tmpBet;
 
         // Update playBtn
-        playBtn.setText("PLAY");
+        //playBtn.setText("PLAY");
 
         // Reset values for bet and newBet
         this.bet = 0;
@@ -973,7 +937,7 @@ public class Table implements Subject{
         player.setBet(0);
 
         // Update status label (this.msg --> will be the text)
-        notifyObservers();
+        //notifyObservers();
 
         // Increase playCounter
         playCounter++;
@@ -991,7 +955,7 @@ public class Table implements Subject{
 
         // Increase playCounter
         playCounter++;
-        notifyObservers();
+        //notifyObservers();
     }
 
     /**
@@ -1017,7 +981,7 @@ public class Table implements Subject{
         this.pot += balance;
 
         // Update status label (this.msg --> will be the text)
-        notifyObservers();
+        //notifyObservers();
 
         // Increase playCounter
         playCounter++;
@@ -1028,20 +992,6 @@ public class Table implements Subject{
 
         System.out.println(" ALL IN " + player.getUsername() + " newBet: " + newBet + " bet: " + bet);
     }
-    /**
-     * updates the slider when dragged or clicked
-     */
-    public void updateGame(){
-        if (setActivePlayer()) {
-            if(this.rounds < 5) {
-                // When slider is clicked
-                slider.setOnMouseClicked(event -> notifyObservers());
-                // When the slider is dragged
-                slider.setOnMouseDragged(event -> notifyObservers());
-            }
-        }
-    }
-
 
     /**
      * Check if the player can bet
@@ -1117,15 +1067,7 @@ public class Table implements Subject{
         return foundUser;
     }
 
-    /**
-     * Change bg for the winner/s
-     */
-    public void setWinnerBG() {
-        // Change color of player bg
-        this.playersBg.get(this.activeUser).setFill(Color.GOLD);
-        this.usernameLabels.get(this.activeUser).setTextFill(Color.BLACK);
-        this.balanceLabels.get(this.activeUser).setTextFill(Color.BLACK);
-    }
+
 
     /**
      * Get all cheap object for the user
@@ -1188,29 +1130,6 @@ public class Table implements Subject{
         return chips;
     }
 
-    /**
-     * Get players background
-     * @return a list of rectangles with fill color black.
-     */
-    public List<Rectangle> getPlayersBg(){
-        return this.playersBg;
-    }
-
-    /**
-     * Get players balance label
-     * @return list of labels
-     */
-    public List<Label> getBalanceLabels(){
-        return this.balanceLabels;
-    }
-
-    /**
-     * Get players username label
-     * @return list of labels
-     */
-    public List<Label> getUsernameLabels(){
-        return this.usernameLabels;
-    }
 
     /**
      * Get table cards

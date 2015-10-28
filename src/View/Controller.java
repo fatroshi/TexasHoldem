@@ -22,6 +22,7 @@ import Handler.StartButtonHandler;
 import Poker.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -57,7 +58,7 @@ public class Controller {
         this.viewStart = viewStart;                                 // Start view
         this.root      = viewStart.getRoot();                       // Root (holder for all Panes)
         this.paneCenter = this.viewStart.getPaneCenter();           // Holder for game play background (image = table)
-        this.game = new Table();                                    // init. the game
+        this.game = viewStart.getGame();                                    // init. the game
         this.createPlayers();                                       // Create players, get user info, get chips for each player
         this.round = 0;                                             // Counter for poker rounds
         this.getStartBtn();                                         // Add start btn to the scene
@@ -79,24 +80,15 @@ public class Controller {
     public void createPlayers() {
         game.addPlayer("Mr Cohen", 2979);
         game.addPlayer("Mr Atroshi", 2979);
-        game.addPlayer("Felicia", 13);
-        game.addPlayer("Elise", 12);
+        //game.addPlayer("Felicia", 13);
+        //game.addPlayer("Elise", 12);
     }
 
     /**
      * shows user info in a label
      */
     public void getUserInfo() {
-        for (int i = 0; i < this.game.getPlayers().size(); i++) {
-            // Get user background
-            Rectangle r = this.game.getPlayersBg().get(i);
-            // Get username
-            Label username = this.game.getUsernameLabels().get(i);
-            // Get balance
-            Label balance = this.game.getBalanceLabels().get(i);
-            // Add to paneCenter scene
-            paneCenter.getChildren().addAll(r, username, balance);
-        }
+        viewStart.displayUserinfo();
     }
 
     /**
@@ -169,18 +161,22 @@ public class Controller {
      * adds play button to game
      */
     public void getPlayBtn() {
-        Button btn = game.getPlayBtn();
+        Button btn = viewStart.getPlayBtn();
         // Assign EventHandler
         btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayButtonHandler(this));
         paneCenter.getChildren().add(btn);
 
     }
 
+    public void getTableGraphics(){
+        this.viewStart.drawTableLabels();
+    }
+
     /**
      * adds fold button to the game
      */
     public void getFoldBtn() {
-        Button btn = game.getFoldBtn();
+        Button btn = viewStart.getFoldBtn();
         // Assign EventHandler
         btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new FoldButtonHandler(this));
         paneCenter.getChildren().add(btn);
@@ -191,28 +187,12 @@ public class Controller {
      * adds start button to the game
      */
     public void getStartBtn() {
-        Button btn = game.getStartBtn();
+        Button btn = viewStart.getStartBtn();
         // Assign EventHandler
         btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new StartButtonHandler(this));
         paneCenter.getChildren().add(btn);
     }
 
-    /**
-     * adds pot label to the game
-     */
-    public void getPotLabel() {
-        Label potLabel = game.getPotLabel();
-        // Add to scene
-        paneCenter.getChildren().add(potLabel);
-    }
-
-    // This function should be written to 2
-    // one for slider, one for labels
-    public void getSlider() {
-        paneCenter.getChildren().add(game.getSliderLabel());
-        paneCenter.getChildren().add(game.getStatusLabel());
-        paneCenter.getChildren().add(game.getSlider());
-    }
 
     /**
      * restarts the game

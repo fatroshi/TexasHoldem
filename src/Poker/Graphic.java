@@ -153,34 +153,7 @@ public class Graphic implements Observer{
         return label;
     }
     
-    /**
-     * Create background for user, and set layoutX, LayoutY
-     * @param playerIndex
-     * @return
-     */
-    public Rectangle createPlayerBg(int playerIndex) {
-        // Index of the player in array
-        int id = playerIndex;
-        // Create ractangle
-        Rectangle r = new Rectangle();
-        // Properties
-        r.setFill(Color.BLACK);
-        r.setStroke(Color.DARKGRAY);
-        r.setWidth(140);
-        r.setHeight(50);
-        r.setArcWidth(10);
-        r.setArcHeight(10);
 
-        // Find the correct x,y position for the player
-        for (Table_ t : Table_.values()) {
-            if (id == t.getUserId()) {
-                r.setX(t.getXlayout() - 35);
-                r.setY(t.getYlayout() + 90);
-            }
-        }
-        // Add to array
-        return r;
-    }
 
     /**
      * Updade player background

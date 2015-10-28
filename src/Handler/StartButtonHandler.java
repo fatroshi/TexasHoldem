@@ -39,7 +39,7 @@ public class StartButtonHandler implements EventHandler<Event> {
         // New Scene BG
         c.getGameScene();
         // Get UI Items
-        c.getSlider();
+        c.getTableGraphics();
         // User info
         c.getUserInfo();
         // User chips
@@ -58,8 +58,8 @@ public class StartButtonHandler implements EventHandler<Event> {
         // Get fold btn
         c.getFoldBtn();
         // Get total pot label
-        c.getPotLabel();
-        c.getGame().updateGame();
+        //c.getPotLabel();
+        //c.getGame().updateGame();
     }
 
 

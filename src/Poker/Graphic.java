@@ -21,7 +21,6 @@ import javafx.scene.text.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Graphic implements Observer{
 
     private Slider slider;
@@ -32,7 +31,7 @@ public class Graphic implements Observer{
     private List<Label> blanceLabels = new ArrayList<>();
 
     public Graphic(){
-        slider = this.createSlider(0,100,0);           // Slider fot betting (min,max,currentSliderValue)
+        slider      = this.createSlider(0,100,0);       // Slider fot betting (min,max,currentSliderValue)
         sliderLabel = createLabel(240, 465, 24);        // Label for the slider
         statusLabel = createLabel(400, 575, 24);        // Label for showing current status: bet/call/raise
         potLabel    = createLabel(443,340,24);
@@ -41,7 +40,6 @@ public class Graphic implements Observer{
     public Slider getSlider() {
         return slider;
     }
-
 
     public Label getPotLabel() {
         return potLabel;
@@ -68,7 +66,6 @@ public class Graphic implements Observer{
         slider.setStyle("-fx-color: RED;");
         return slider;
     }
-
 
     public Label getSliderLabel(){
        return this.sliderLabel;
@@ -225,8 +222,6 @@ public class Graphic implements Observer{
         return btn;
     }
 
-
-
     @Override
     public void updateSlider(double currentBet, double userBalance, String message) {
         // Update the slider
@@ -259,7 +254,6 @@ public class Graphic implements Observer{
 
         this.potLabel.setText(strPot);
     }
-
 
     /**
      * Found at: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places

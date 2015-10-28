@@ -48,24 +48,24 @@ public class Table implements Subject{
     private List<Player> players                    = new ArrayList<>(); // List for storing the players
 
     // Variables used by all players
-    private Button startBtn;          // The start btn, Starts the game
-    private Button playBtn;           // Play btn. Call,Raise,Check
-    private Button foldBtn;           // Player fold
-    private int activeUser;           // Id of current active player (Active --> Still in the game)
-    private int oldActiveUser;        // Id of previous active player
-    private double bet;               // Current bet in game
-    private double newBet;            // User to check if bet has been changed
-    private Label potLabel;           // Store the total pot value
-    private double pot;               // Total current pot in the game
-    private int rounds;               // Counts the poker rounds, used for showing cards and when the game in done.
-    private int playCounter;          // increases for call,bet. Sets to 0 for raise
+    private Button startBtn;                        // The start btn, Starts the game
+    private Button playBtn;                         // Play btn. Call,Raise,Check
+    private Button foldBtn;                         // Player fold
+    private int activeUser;                         // Id of current active player (Active --> Still in the game)
+    private int oldActiveUser;                      // Id of previous active player
+    private double bet;                             // Current bet in game
+    private double newBet;                          // User to check if bet has been changed
+    private Label potLabel;                         // Store the total pot value
+    private double pot;                             // Total current pot in the game
+    private int rounds;                             // Counts the poker rounds, used for showing cards and when the game in done.
+    private int playCounter;                        // increases for call,bet. Sets to 0 for raise
     
     // Graphics
-    private Graphic graphic;          // Where we get our graphics from, except the cards
-    private Slider slider;            // Slider for player to make bet, call, raise
-    private Label sliderLabel;        // Create label for slider
-    private Label statusLabel;        // Will be shown when; check,raise,call, all in, fold
-    private String msg;               // Used for passing strings to objects from class Graphics
+    private Graphic graphic;                        // Where we get our graphics from, except the cards
+    private Slider slider;                          // Slider for player to make bet, call, raise
+    private Label sliderLabel;                      // Create label for slider
+    private Label statusLabel;                      // Will be shown when; check,raise,call, all in, fold
+    private String msg;                             // Used for passing strings to objects from class Graphics
 
     private List<Observer> listOfObservers = new ArrayList<>();
 

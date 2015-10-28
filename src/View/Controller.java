@@ -163,7 +163,7 @@ public class Controller {
     public void getPlayBtn() {
         Button btn = viewStart.getPlayBtn();
         // Assign EventHandler
-        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayButtonHandler(this));
+        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayButtonHandler(this, this.viewStart.getStatusLabel()));
         paneCenter.getChildren().add(btn);
 
     }

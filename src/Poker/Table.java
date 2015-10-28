@@ -26,12 +26,6 @@ import Layout.ChipLayout;
 import Layout.UserLayout;
 import User.Hand;
 import User.Player;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,79 +43,53 @@ public class Table{
     private int oldActiveUser;                      // Id of previous active player
     private double bet;                             // Current bet in game
     private double newBet;                          // User to check if bet has been changed
-    private Label potLabel;                         // Store the total pot value
     private double pot;                             // Total current pot in the game
     private int rounds;                             // Counts the poker rounds, used for showing cards and when the game in done.
     private int playCounter;                        // increases for call,bet. Sets to 0 for raise
 
     // Graphics
-    private Graphic graphic;                        // Where we get our graphics from, except the cards
-    private Slider slider;                          // Slider for player to make bet, call, raise
-    private Label sliderLabel;                      // Create label for slider
-    private Label statusLabel;                      // Will be shown when; check,raise,call, all in, fold
     private String msg;                             // Used for passing strings to objects from class Graphics
 
-    private List<Observer> listOfObservers = new ArrayList<>();
 
     HighScoreList hsl = new HighScoreList();
     DB db = new DB("dbScoreList.bin");
+
+    // Var for viwStart slider
+    double sliderValue;
+    double sliderMinValue;
+    double sliderMaxValue;
 
     /**
      * Constructor
      * Initializes nine objects
      */
     public Table(){
-        graphic         = new Graphic();
-        slider          = graphic.getSlider();                  // Slider for player to make bet, call, raise
-        sliderLabel     = graphic.getSliderLabel();             // Create label for slider
-        statusLabel     = graphic.getStatusLabel();             // Will be shown when; check,raise,call, all in, fold
-        potLabel        = graphic.getPotLabel();
         hsl = db.getData();                                     // Load data from database
-        // Register Observer
-        //registerObserver(graphic);                              // Register observer
+        //Slider
+        sliderMinValue = 0;
+        sliderMaxValue = 0;
     }
 
+    public void setSliderValue(double value){
+        this.sliderValue = value;
 
-    /**
-     * Registers new observers by adding to the listOfObservers
-     * @param observer the objects that will be registered as an observer and added to the listOfObservers.
-     */
-    //@Override
-   // public void registerObserver(Observer observer) {
-     //   this.listOfObservers.add(observer);
-   // }
-
-    /**
-     * Removes observers from the listOfObservers
-     * @param observer the observer that will be removed from the listOfObserver.
-     */
-    //@Override
-    //public void removeObserver(Observer observer) {
-     //   this.listOfObservers.remove(observer);
-    //}
-
-    /**
-     * Notifies the observers in the listOfObservers
-     * updates the slider, decreases the user balance, updates the pot label
-     */
-    //@Override
-    //public void notifyObservers() {
-        // Update set: min, max
-      //  for (Observer observer: listOfObservers){
-        ///    observer.updateSlider(this.slider.getValue(), players.get(this.activeUser).getBalance(), this.msg);
-           // observer.decreaseUserBalance(this.activeUser, this.players.get(activeUser).getBalance());
-            //observer.updateTablePotLabel(this.pot);
-       // }
-    //}
-
-    /**
-     * Get the pot label
-     * @return returns the label
-     */
-    public Label getPotLabel(){
-        return this.potLabel;
     }
 
+    public double getSliderMinValue() {
+        return sliderMinValue;
+    }
+
+    public void setSliderMinValue(double sliderMinValue) {
+        this.sliderMinValue = sliderMinValue;
+    }
+
+    public double getSliderMaxValue() {
+        return sliderMaxValue;
+    }
+
+    public void setSliderMaxValue(double sliderMaxValue) {
+        this.sliderMaxValue = sliderMaxValue;
+    }
 
     /**
      * Checks game rounds, if its the last round the de pot will
@@ -228,20 +196,6 @@ public class Table{
     public Player addPlayer(String username, double balance) {
         Player player = new Player(username, balance);
         players.add(player);
-
-        // Player Index in list players
-        int playerIndex = players.indexOf(player);
-
-        // Create graphics for the user
-        // Add username to usernameLabels
-        //Label usernameLabel = graphic.createUsernameLabel(player, playerIndex);
-        //this.usernameLabels.add(usernameLabel);
-        // Add balance to balanceLabels
-        //Label balanceLabel = graphic.createBalanceLabel(player,playerIndex);
-        //this.balanceLabels.add(balanceLabel);
-        // Add bg to bgPlayers
-        //Rectangle playerBg = graphic.createPlayerBg(playerIndex);
-        //this.playersBg.add(playerBg);
 
         return player;
     }
@@ -759,8 +713,7 @@ public class Table{
         //this.playCounter = 0;
 
         // Reset slider
-        this.slider.setMin(0);
-        this.slider.setValue(0);
+        this.setSliderValue(0);
 
         // Remove all table cards
         tableCards.clear();
@@ -812,8 +765,9 @@ public class Table{
         Player player = getActivePlayer();
 
         // Set to 2 decimal
-        this.newBet = slider.getValue();
+        this.newBet = sliderValue;
         this.newBet = roundDouble(this.newBet,0);
+        this.msg = "First round";
         //notifyObservers();
 
         if(canBet(player)){
@@ -888,11 +842,11 @@ public class Table{
 
         if(allInFlag) {
             // Disable slider for next user
-            this.slider.setDisable(true);
+            //this.slider.setDisable(true);
         }
 
         // Update slider
-        this.slider.setMin(this.newBet);
+        this.setSliderMinValue(this.newBet);
 
         // Reset playCounter
         playCounter = 1;
@@ -918,8 +872,9 @@ public class Table{
         player.setBet(tmpBet);
 
         // Reset slider value
-        this.slider.setMin(0);
-        this.slider.setValue(0);
+
+        this.setSliderMinValue(0);
+        this.setSliderValue(0);
 
         // Set status text
         this.msg = "Call by " + player.getUsername();
@@ -956,6 +911,11 @@ public class Table{
         // Increase playCounter
         playCounter++;
         //notifyObservers();
+    }
+
+
+    public String getMsg(){
+        return this.msg;
     }
 
     /**
@@ -1137,32 +1097,6 @@ public class Table{
      */
     public List<Card> getTableCards(){
         return this.tableCards;
-    }
-
-    /**
-     * Get the slider
-     * @return the slider
-     */
-    public Slider getSlider(){
-        return this.slider;
-    }
-
-    /**
-     * Get the status label
-     * this is used when a player checks,calls,raises and goes all in
-     * @return statuslabel
-     */
-    public Label getStatusLabel(){
-        return this.statusLabel;
-    }
-
-    /**
-     * Gets the label for the slider
-     * this label shows the quantity chosen by player
-     * @return the slider label
-     */
-    public Label getSliderLabel(){
-        return this.sliderLabel;
     }
 
 

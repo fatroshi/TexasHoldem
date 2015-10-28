@@ -253,7 +253,16 @@ public class ViewStart extends Pane{
         slider.setLayoutY(510);
         slider.setTooltip(new Tooltip("Check or Raise"));
         slider.setStyle("-fx-color: RED;");
+
+        slider.setOnMouseDragged(event -> sliderHandler());
+
         return slider;
+    }
+
+    public void sliderHandler(){
+        double value = round(slider.getValue(),0);
+        this.sliderLabel.setText(String.valueOf(value));
+        this.game.setSliderValue(value);
     }
 
     public Label getSliderLabel(){

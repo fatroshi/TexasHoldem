@@ -6,6 +6,7 @@ package Handler;
 import View.Controller;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 
 /**
  * Created by Farhad & Avi
@@ -14,14 +15,18 @@ import javafx.event.EventHandler;
 public class PlayButtonHandler implements EventHandler<Event> {
 
     private Controller controller;
-
-    public PlayButtonHandler(Controller controller){
+    private Label statusLabel;
+    public PlayButtonHandler(Controller controller, Label statusLabel){
         this.controller = controller;
+        this.statusLabel = statusLabel;
     }
 
     @Override
     public void handle(Event evt) {
+        this.statusLabel.setText(this.controller.getGame().getMsg());
         controller.getGame().canPlay();
         controller.getRound();
+
+        System.out.println("#### CLICKED PLAY BTN " + " MSG: " + this.controller.getGame().getMsg());
     }
 }

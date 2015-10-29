@@ -134,10 +134,6 @@ abstract public class User {
         return this.chips;
     }
 
-    public void buyChips() {
-        // Write logic for adding to existing list!
-    }
-
     /**
      * @return username
      */
@@ -204,13 +200,6 @@ abstract public class User {
         }
     }
 
-    /**
-     * clears the chipcollection
-     */
-
-    public void clearChips() {
-        this.chips.clear();
-    }
 
     /**
      * returns the balnce of the user
@@ -236,7 +225,7 @@ abstract public class User {
     }
 
     /**
-     * setsa the users balance
+     * sets the users balance
      *@param balance
      */
 

@@ -87,14 +87,6 @@ public class Table{
         this.sliderMinValue = sliderMinValue;
     }
 
-    public double getSliderMaxValue() {
-        return sliderMaxValue;
-    }
-
-    public void setSliderMaxValue(double sliderMaxValue) {
-        this.sliderMaxValue = sliderMaxValue;
-    }
-
     /**
      * Checks game rounds, if its the last round the de pot will
      * be split between the winners and the game starts over again.
@@ -691,6 +683,7 @@ public class Table{
         this.newBet = 0;
         this.bet = 0;
 
+
         // Round
         this.resetRounds();
         //this.playCounter = 0;
@@ -714,6 +707,9 @@ public class Table{
             if(!player.isActive()){
                 player.setActive(true);
             }
+
+            player.setBet(0);
+            player.setTotalBet(0);
         }
 
         // notify observers
@@ -792,11 +788,11 @@ public class Table{
         // Update user
         player.debitBalance(tmpBet);
         player.setBet(tmpBet);
-        player.balanceToChips();
 
         // Set bet to the new value
         this.bet = this.newBet;
         this.sliderMinValue = bet;
+        this.sliderValue = bet;
 
         System.out.println("FROM raise: newBet " + newBet + " bet: " + bet + " Balance: " + player.getBalance() );
 
@@ -854,11 +850,10 @@ public class Table{
         tmpBet = roundDouble(tmpBet,2);
         player.debitBalance(tmpBet);
         player.setBet(tmpBet);
-        player.balanceToChips();
 
         // Reset slider value
         this.setSliderMinValue(0);
-        //this.setSliderValue(0);
+        this.setSliderValue(0);
 
         // Set status text
         this.msg = "Call by " + player.getUsername();
@@ -892,6 +887,9 @@ public class Table{
         // Set status text
         this.msg = "Check by " + player.getUsername();
 
+        this.newBet = 0;
+        this.bet = 0;
+
         // Increase playCounter
         playCounter++;
         //notifyObservers();
@@ -917,7 +915,6 @@ public class Table{
         // Update user
         player.debitBalance(balance);
         player.setBet(balance);
-        player.balanceToChips();
 
         // Set status text
         this.msg = "ALL IN " + player.getUsername();

@@ -113,7 +113,7 @@ public class ViewStart extends Pane{
     }
 
     public void showTableLabes(){
-        slider      = this.createSlider(0,100,10);       // Slider fot betting (min,max,currentSliderValue)
+        slider      = this.createSlider(0,100,0);       // Slider fot betting (min,max,currentSliderValue)
         sliderLabel = createLabel(240, 465, 24);        // Label for the slider
         statusLabel = createLabel(400, 575, 24);        // Label for showing current status: bet/call/raise
         potLabel    = createLabel(443,340,24);
@@ -162,6 +162,10 @@ public class ViewStart extends Pane{
         // Set active user
         //Dealer deal 5 for the table
         this.controller.getGame().dealCards(5);
+
+        //
+        updateBgUser();
+
     }
 
     public void drawStartBtn(){
@@ -304,7 +308,7 @@ public class ViewStart extends Pane{
 
     public void sliderHandler(){
         double value = round(slider.getValue(),0);
-        this.sliderLabel.setText(String.valueOf(value));
+        this.sliderLabel.setText("$ " + String.valueOf(value));
         this.game.setSliderValue(value);
     }
 
@@ -315,6 +319,26 @@ public class ViewStart extends Pane{
     public Label getStatusLabel(){
         return this.statusLabel;
     }
+
+    public void updateBgUser(){
+        int id = this.game.getActiveUser();
+        Rectangle r;
+
+        for (int i = 0; i < this.game.getPlayers().size(); i++) {
+
+            r = this.playersBg.get(i);
+            if(i != id){
+                r.setFill(Color.BLACK);
+                r.setStroke(Color.DARKGRAY);
+
+            }else{
+                r.setFill(Color.DARKGREEN);
+                r.setStroke(Color.LIGHTGREEN);
+            }
+        }
+
+    }
+
 
     /**
      * Create label set x,y and fontsize
@@ -420,6 +444,7 @@ public class ViewStart extends Pane{
             }
         }
         // Add to array
+        this.playersBg.add(r);
         return r;
     }
 

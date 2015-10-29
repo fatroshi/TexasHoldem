@@ -24,6 +24,9 @@ public class PlayButtonHandler implements EventHandler<Event> {
 
     @Override
     public void handle(Event evt) {
+
+
+
         viewStart.getController().getGame().canPlay();
         //Update labels
         viewStart.getStatusLabel().setText(viewStart.getGame().getMsg());
@@ -34,12 +37,15 @@ public class PlayButtonHandler implements EventHandler<Event> {
         double max = viewStart.getGame().getActivePlayer().getBalance();
         viewStart.getSlider().setMin(min);
         viewStart.getSlider().setMax(max);
+        viewStart.getSlider().setValue(min);
+        viewStart.getSliderLabel().setText("$ " + String.valueOf(viewStart.getSlider().getValue()));
 
         //Update label balance
         viewStart.updateLabelBalances();
 
-
         viewStart.getController().getRound();
-        System.out.println("#### CLICKED PLAY BTN " + " MSG: " + viewStart.getGame().getMsg());
+
+        // Update user BG
+        viewStart.updateBgUser();
     }
 }

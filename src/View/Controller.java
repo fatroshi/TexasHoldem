@@ -206,7 +206,8 @@ public class Controller {
                 this.getTableCards(4, 5);
             }else if(this.round == 4){
                 System.out.println(" --- Controller round " + this.round + " (Should be 4)");
-
+                // Update labels
+                viewStart.updateLabelBalances();
                 // Restart game
                 this.restartGame();
                 // Dealer deal 2 cards for each player

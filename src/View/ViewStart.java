@@ -617,23 +617,9 @@ public class ViewStart extends Pane implements Observer{
      */
     @Override
     public void update(Observable o, Object arg) {
-        String txt= "Winners: ";
-        if(this.game.getWinner().size() > 1){
 
-            for(Player p: this.game.getWinner()){
-                txt += p.getUsername() + " ";
-            }
-            this.winnerLabel.setText(txt);
-
-        }else{
-            Player player = this.game.getWinner().get(0);
-            this.winnerLabel.setText("The Winner is : " + player.getUsername());
-        }
-
-        Player player = this.game.getWinner().get(0);
-        this.winnerLabel.setText("The Winner is : " + player.getUsername());
+        this.winnerLabel.setText(this.game.getMsg());
         Animation.fadeIn(winnerLabel);
-
     }
 
 

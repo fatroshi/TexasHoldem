@@ -123,6 +123,9 @@ public class Controller  extends Observable {
 
         for (int cardID = from; cardID < to; cardID++) {
             Card card = this.game.getTableCards().get(cardID);
+
+            System.out.println(card.getRank() + " " + card.getSuit());
+
             int space = 6;
             for (Table_ t : Table_.values()) {
                 if (t.getCardId() == (cardID + 2)) {
@@ -152,9 +155,7 @@ public class Controller  extends Observable {
     */
     public void resetGame(){
 
-        //
-        this.setChanged();
-        this.notifyObservers();
+
 
         // Game rounds
         this.getGame().resetRounds();
@@ -166,6 +167,8 @@ public class Controller  extends Observable {
         for(Pane chip: playerChips){
             this.paneCenter.getChildren().remove(chip);
         }
+        // clear list
+        playerChips.clear();
 
         // Remove player cards
         this.paneCenter.getChildren().remove(this.playerCards);
@@ -174,6 +177,8 @@ public class Controller  extends Observable {
         for (Pane pane: tableCards){
             this.paneCenter.getChildren().remove(pane);
         }
+        // clear list
+        tableCards.clear();
 
         // Restart the game
         this.game.gameRestart();
@@ -185,9 +190,8 @@ public class Controller  extends Observable {
      * Restart the game
      */
     public void restartGame(){
-        // The model has changed, notify observers!
-        //this.setChanged();
-        //this.notifyObservers();
+
+
         // Fadeout winner label
         Animation.fadeOut(this.winnerLabel);
         // Update labels
@@ -202,6 +206,10 @@ public class Controller  extends Observable {
         this.showUserChips();
         //Dealer deal 5 for the table
         this.getGame().dealCards(5);
+
+        //
+        this.setChanged();
+        this.notifyObservers();
     }
 
     public ViewStart getViewStart(){

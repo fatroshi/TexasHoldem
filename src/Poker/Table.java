@@ -120,12 +120,6 @@ public class Table {
                 // CHECK WHO ONE
                 System.out.println(" *** Table Round 4 ***");
 
-                // Check who the winner is
-                dealPot(this.pot,getWinner());
-
-                System.out.println(players.get(0).getBalance() + " Balance: AVI");
-                System.out.println(players.get(0).getBalance() + " Balance: Farhad");
-
             }else if(this.rounds == 5){
                 // CHECK WHO ONE
                 System.out.println(" *** Table Round 5 ***");
@@ -202,8 +196,9 @@ public class Table {
      * Removes player from the game by calling the players method player.active(false);
      */
     public void removePlayerInGame() {
-        getPlayer(this.activeUser).setActive(false);
-        System.out.println(players.get(this.activeUser).getUsername() + " Removed, ID: " + this.activeUser);
+        Player p = getPlayer(this.activeUser);
+        p.setActive(false);
+        System.out.println(p.getUsername() + " Removed, ID: " + this.activeUser + " " + p.isActive()) ;
     }
 
     /**
@@ -407,9 +402,9 @@ public class Table {
         }
 
         // PRINT OUT firstQuantity AND secondQuantity
-        System.out.println("First         --> quantity: " + bestHand[1]);
-        System.out.println("Second        --> quantity: " + bestHand[2]);
-        System.out.println("Fifth card: " + bestHand[3]);
+        //System.out.println("First         --> quantity: " + bestHand[1]);
+        //System.out.println("Second        --> quantity: " + bestHand[2]);
+        //System.out.println("Fifth card: " + bestHand[3]);
 
         // STORE THE POKER RANK AFTER FOUND WHAT WE GOT
         // CREATE 2 NEW VAR, FOR RANK
@@ -548,11 +543,9 @@ public class Table {
      * Compares players best hand, return a of players that are the winners
      * @return list of players that won
      */
+    List<Player> winners = new ArrayList<>();
     public List<Player> getWinner() {
         Map<Integer[], Player> bestHands = new HashMap<>();
-
-        List<Player> winners = new ArrayList<>();
-
         for (Player player1 : players) {
             Hand hand = player1.getHand();
             bestHands.put(bestHand(hand), player1);
@@ -587,21 +580,28 @@ public class Table {
                     winners.add(player);
                 }
 
-                if(oneActivePlayer()){
-                    Player p = getActivePlayer();
-                    System.out.println(p.getUsername() + " ** WON  ONE ACTIVE PLAYER ** " + p.isActive());
-
-                    winners.add(p);
-                }else if (loopCounter > 0 && player.isActive()) {
+                if (loopCounter > 0) {
                     Player p = players.get(winner);
-                    System.out.println(p.getUsername() + " ** WON ** " + p.isActive());
+                    System.out.println(p.getUsername() + " ** WON ** ");
+                    this.msg = p.getUsername() + " ** WON ** ";
                     winners.add(p);
                 }
 
                 loopCounter++;
             }
         }
+
+        for(Player p: players){
+            System.out.println(p.getUsername() + " " + p.isActive());
+        }
+
         return  winners;
+
+
+    }
+
+    public List<Player> getWinnerList(){
+        return this.winners;
     }
 
     /**
@@ -622,14 +622,14 @@ public class Table {
             }
         }
         if (winners.size() == 1){
-            System.out.println("only one gets the money");
+            //System.out.println("only one gets the money");
 
             winners.get(0).depositBalance(pot);
             hsl.updateHighScoreList(new HighScore(winners.get(0).getUsername(),pot));
         }
         else {
             if (winners.size() > 1 && count == winners.size() - 1) {
-                System.out.println("winners share the money");
+                //System.out.println("winners share the money");
                 splitPot = pot / winners.size();
                 // deals the pot to players
                 for (int i = 0; i < winners.size(); i++) {
@@ -640,7 +640,7 @@ public class Table {
             }
             // if winners bet different amount they get their totalbet back
             else {
-                System.out.println("winnerts get what they bet");
+                //System.out.println("winnerts get what they bet");
                 for (int i = 0; i < winners.size(); i++) {
                     winners.get(i).depositBalance(winners.get(i).getTotalBet());
                     hsl.updateHighScoreList(new HighScore(winners.get(i).getUsername(), winners.get(i).getTotalBet()));
@@ -664,17 +664,14 @@ public class Table {
         Animation.fadeOut(c1);
         Animation.fadeOut(c2);
 
-        // Deal the pot to the winner
-        dealPot(this.pot,getWinner());
-
-        //
-        dealPot(this.pot, this.getWinner());
-
         // Reset all game values in this class
         gameRestart();
 
+        //
+        this.msg = "Fold by " + players.get(this.activeUser).getUsername();
+
         // Set next user
-        //nextUser();
+        nextUser();
     }
 
 
@@ -683,11 +680,13 @@ public class Table {
      */
     public void gameRestart(){
 
+        // Deal the pot to the winner
+        dealPot(this.pot,getWinner());
+
         // Reset all variables
         this.pot = 0;
         this.newBet = 0;
         this.bet = 0;
-
 
         // Round
         this.resetRounds();
@@ -699,8 +698,10 @@ public class Table {
         // Remove all table cards
         tableCards.clear();
         // Remove player cards
-        for (Player player1 : players) {
-            player1.getHand().clearHand();
+        for (Player p : players) {
+            p.getHand().clearHand();
+            p.balanceToChips();
+
         }
 
         // Reset deck

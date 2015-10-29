@@ -23,11 +23,6 @@ public class Deck {
         cards = new ArrayList<>();
         createDeck();
         shuffleCards();
-        shuffleCards();
-        shuffleCards();
-        shuffleCards();
-        shuffleCards();
-
     }
 
     /**
@@ -92,6 +87,10 @@ public class Deck {
      * Shuffle created cards
      */
     public void shuffleCards() {
+        Collections.shuffle(cards);
+        Collections.shuffle(cards);
+        Collections.shuffle(cards);
+        Collections.shuffle(cards);
         Collections.shuffle(cards);
     }
 

@@ -792,6 +792,7 @@ public class Table{
         // Update user
         player.debitBalance(tmpBet);
         player.setBet(tmpBet);
+        player.balanceToChips();
 
         // Set bet to the new value
         this.bet = this.newBet;
@@ -853,6 +854,7 @@ public class Table{
         tmpBet = roundDouble(tmpBet,2);
         player.debitBalance(tmpBet);
         player.setBet(tmpBet);
+        player.balanceToChips();
 
         // Reset slider value
         this.setSliderMinValue(0);
@@ -915,6 +917,7 @@ public class Table{
         // Update user
         player.debitBalance(balance);
         player.setBet(balance);
+        player.balanceToChips();
 
         // Set status text
         this.msg = "ALL IN " + player.getUsername();

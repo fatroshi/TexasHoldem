@@ -40,7 +40,7 @@ public class Controller {
     // Holder for table cards
     private Pane playerCards;
     // Holder for player chips
-    private Pane playerChips;
+    private List<Pane> playerChips;
     // ViewStart
     ViewStart viewStart;
     // Round
@@ -60,7 +60,7 @@ public class Controller {
         this.round = 0;                                             // Counter for poker rounds
         this.tableCards =  new ArrayList<>();                       // Holder for table cards
         this.playerCards = new Pane();                              // Holder for player cards
-        this.playerChips = new Pane();
+        this.playerChips = new ArrayList<>();
     }
 
     public Table getGame() {
@@ -77,20 +77,33 @@ public class Controller {
         //game.addPlayer("Elise", 12);
     }
 
-
-
     /**
      * gets the users chips to scene
      */
     public void showUserChips() {
         for (int i = 0; i < this.game.getPlayers().size(); i++) {
+
             for (int j = 0; j < this.game.getPlayerChips(i).size(); j++) {
                 Chip chip = this.game.getPlayerChips(i).get(j);
                 // Add to scene
-                this.playerChips.getChildren().add(chip.getImageView());
+                //this.playerChips.getChildren().add(chip.getImageView());
+
+                // Add to pane tableCards
+                Pane cPane = new Pane();
+                cPane.getChildren().add(chip.getImageView());
+
+                // Add to player chip to table
+                this.playerChips.add(cPane);
+
+                // Add to pane center
+
             }
+
         }
-        this.paneCenter.getChildren().add(playerChips);
+
+        for(Pane chip: playerChips){
+            this.paneCenter.getChildren().add(chip);
+        }
     }
 
     /**
@@ -152,7 +165,9 @@ public class Controller {
         this.round = 0;
 
         //Remove user chips
-        this.paneCenter.getChildren().remove(this.playerChips);
+        for(Pane chip: playerChips){
+            this.paneCenter.getChildren().remove(chip);
+        }
 
         // Remove player cards
         this.paneCenter.getChildren().remove(this.playerCards);

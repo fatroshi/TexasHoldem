@@ -184,11 +184,6 @@ abstract public class User {
      * @param map
      */
     public void createChips(Map<String, Integer> map) {
-
-        // Here we should clear all objects in chips
-        // And then create new ones
-        // We do this so that the table wont get to crowded with chips
-
         // Output deposit converted to chips
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             String name = entry.getKey();

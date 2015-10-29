@@ -8,7 +8,6 @@ package View;
 
 import Handler.FoldButtonHandler;
 import Handler.PlayButtonHandler;
-import Handler.StartButtonHandler;
 import Layout.ButtonLayout;
 import Poker.*;
 import User.Player;
@@ -163,7 +162,7 @@ public class ViewStart extends Pane{
         //Dealer deal 5 for the table
         this.controller.getGame().dealCards(5);
 
-        //
+        // Show current active player by changing the bg
         updateBgUser();
 
     }
@@ -339,7 +338,6 @@ public class ViewStart extends Pane{
 
     }
 
-
     /**
      * Create label set x,y and fontsize
      * @param layoutX
@@ -488,7 +486,6 @@ public class ViewStart extends Pane{
         return btn;
     }
 
-
     /**
      * Get players background
      * @return a list of rectangles with fill color black.
@@ -496,44 +493,6 @@ public class ViewStart extends Pane{
     public List<Rectangle> getPlayersBg(){
         return this.playersBg;
     }
-
-
-    /*
-    @Override
-    public void updateSlider(double currentBet, double userBalance, String message) {
-        // Update the slider
-        //System.out.println("Slider got updated by the update method in graphic");
-        this.slider.setValue(currentBet);
-        this.slider.setMax(userBalance);
-
-        double value = round(slider.getValue(), 0);
-        String strValue = String.valueOf(value);
-        // Slider label
-        sliderLabel.setText("$ " + strValue);
-
-        // Status label
-        this.statusLabel.setText(message);
-    }
-
-    @Override
-    public void decreaseUserBalance(int activeUser, double userBalance) {
-        String strBalance = String.valueOf(userBalance);
-        blanceLabels.get(activeUser).setText(strBalance);
-    }
-
-    @Override
-    public void updateTablePotLabel(double pot) {
-        pot = round(pot, 0);
-
-        String strPot = "Pot $ " + String.valueOf(pot);
-
-        this.potLabel.setTextFill(Color.LIGHTGREEN);
-
-        this.potLabel.setText(strPot);
-    }
-
-    */
-
 
     /**
      * Found at: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places

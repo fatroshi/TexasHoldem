@@ -6,15 +6,16 @@
 
 package View;
 
+import Handler.FoldButtonHandler;
+import Handler.PlayButtonHandler;
+import Handler.StartButtonHandler;
 import Layout.ButtonLayout;
-import Poker.GameBackground;
-import Poker.GameBackground_;
-import Poker.Table;
-import Poker.Table_;
+import Poker.*;
 import User.Player;
 import highscore.DB;
 import highscore.HighScoreList;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -51,13 +52,16 @@ public class ViewStart extends Pane{
     private Button startBtn;                        // The start btn, Starts the game
     private Button playBtn;                         // Play btn. Call,Raise,Check
     private Button foldBtn;                         // Player fold
-
+    // THE GAME LOGIC
     private Table game;
 
+    // Controller
+    Controller controller;
+
     public ViewStart(Stage stage,BorderPane borderPane){
+
         // Create table object
         this.game =  new Table();
-
         this.stage = stage;
         this.root = borderPane;
         // Holder for game background
@@ -67,12 +71,26 @@ public class ViewStart extends Pane{
         // Holder for table cards
         this.tableCards = new ArrayList<>();
 
-        createGameGraphics();
+
 
         // Init scene elements
         this.startView();
         this.createGameMenu();
 
+        createGameGraphics();
+
+        controller = new Controller(this);
+
+        controller.drawStartBtn();
+
+        //Start button
+        //this.drawStartBtn();
+
+
+    }
+
+    public BorderPane getBorderPane(){
+        return  this.root;
     }
 
     public Table getGame(){
@@ -91,6 +109,11 @@ public class ViewStart extends Pane{
         createSlider(0,100,0);
     }
 
+    public void showGameBg(){
+        GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
+        Animation.fadeIn(table);
+        this.root.getChildren().add(table.getImageView());
+    }
 
     /**
      * Change bg for the winner/s
@@ -114,21 +137,24 @@ public class ViewStart extends Pane{
     }
 
     public void createButtons(){
+        // Start btn
         startBtn        = createButton("START");        // Start the game
+        //startBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new StartButtonHandler(this.controller));
+        startBtn.setOnMouseClicked(event -> startBtnHandler());
+        // Play btn
         playBtn         = createButton("PLAY");         // Play: check,call,raise
+        playBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayButtonHandler(this.controller, this.statusLabel));
+        // Fold btn
         foldBtn         = createButton("FOLD");         // player folds
+        foldBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new FoldButtonHandler(this.controller));
     }
 
-    public Button getStartBtn(){
-        return this.startBtn;
+    public void startBtnHandler(){
+        this.showGameBg();
     }
 
-    public Button getPlayBtn(){
-        return this.playBtn;
-    }
-
-    public Button getFoldBtn(){
-        return this.foldBtn;
+    public void drawStartBtn(){
+        this.paneCenter.getChildren().add(this.startBtn);
     }
 
     public void displayUserinfo(){

@@ -16,18 +16,10 @@ package View;
 import Dealer.Card;
 import Dealer.Chip;
 import Handler.CardClickHandler;
-import Handler.FoldButtonHandler;
-import Handler.PlayButtonHandler;
-import Handler.StartButtonHandler;
 import Poker.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
-
 import java.util.List;
 
 /**
@@ -55,19 +47,15 @@ public class Controller {
      *@param viewStart
      */
     public Controller(ViewStart viewStart) {
+
         this.viewStart = viewStart;                                 // Start view
         this.root      = viewStart.getRoot();                       // Root (holder for all Panes)
         this.paneCenter = this.viewStart.getPaneCenter();           // Holder for game play background (image = table)
-        this.game = viewStart.getGame();                                    // init. the game
+        this.game = viewStart.getGame();                            // init. the game
         this.createPlayers();                                       // Create players, get user info, get chips for each player
         this.round = 0;                                             // Counter for poker rounds
-        this.getStartBtn();                                         // Add start btn to the scene
         this.tableCards = viewStart.getTableCards();                // Holder for table cards
         this.playerCards = viewStart.getPlayerCards();              // Holder for player cards
-    }
-
-    public BorderPane getRootBorderPane(){
-        return this.viewStart.getRoot();
     }
 
     public Table getGame() {
@@ -152,45 +140,15 @@ public class Controller {
 
 
     public void getGameScene() {
-        GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
-        Animation.fadeIn(table);
-        this.paneCenter.getChildren().add(table.getImageView());
+        this.viewStart.showGameBg();
     }
 
-    /**
-     * adds play button to game
-     */
-    public void getPlayBtn() {
-        Button btn = viewStart.getPlayBtn();
-        // Assign EventHandler
-        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayButtonHandler(this, this.viewStart.getStatusLabel()));
-        paneCenter.getChildren().add(btn);
-
-    }
-
-    public void getTableGraphics(){
+    public void drawTableGraphics(){
         this.viewStart.drawTableLabels();
     }
 
-    /**
-     * adds fold button to the game
-     */
-    public void getFoldBtn() {
-        Button btn = viewStart.getFoldBtn();
-        // Assign EventHandler
-        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new FoldButtonHandler(this));
-        paneCenter.getChildren().add(btn);
-
-    }
-
-    /**
-     * adds start button to the game
-     */
-    public void getStartBtn() {
-        Button btn = viewStart.getStartBtn();
-        // Assign EventHandler
-        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new StartButtonHandler(this));
-        paneCenter.getChildren().add(btn);
+    public void drawStartBtn(){
+        this.viewStart.drawStartBtn();
     }
 
 
@@ -217,6 +175,9 @@ public class Controller {
 
     }
 
+    public ViewStart getViewStart(){
+        return this.viewStart;
+    }
 
     /**
      * decides what to do in every round

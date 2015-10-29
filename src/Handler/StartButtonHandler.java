@@ -33,30 +33,34 @@ public class StartButtonHandler implements EventHandler<Event> {
     @Override
     public void handle(Event evt) {
         loadGameData();
+
     }
 
     public void loadGameData(){
+
+        c.getViewStart().getStatusLabel().setText("Helloooo");
+
         // New Scene BG
-        c.getGameScene();
+        //c.getViewStart().drawTableLabels();
         // Get UI Items
-        c.getTableGraphics();
+        //c.drawTableGraphics();
         // User info
-        c.getUserInfo();
+        //c.getUserInfo();
         // User chips
-        c.getUserChips();
+        //c.getUserChips();
         // Dealer deal 2 cards for each player
-        c.getGame().dealTwoCards();
+        //c.getGame().dealTwoCards();
         // Add to scene
-        c.getFirstTwoCards();
+        //c.getFirstTwoCards();
         // Set active user
         //Dealer deal 5 for the table
-        c.getGame().dealCards(5);
+        //c.getGame().dealCards(5);
         //Start the game
-        c.getGame().gameStart();
+        //c.getGame().gameStart();
         // Get play btn
-        c.getPlayBtn();
+        //c.getPlayBtn();
         // Get fold btn
-        c.getFoldBtn();
+        //c.getFoldBtn();
         // Get total pot label
         //c.getPotLabel();
         //c.getGame().updateGame();

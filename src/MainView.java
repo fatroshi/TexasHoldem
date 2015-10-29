@@ -32,9 +32,6 @@ public class MainView extends Application{
         // View start
         ViewStart viewStart = new ViewStart(window,root);
 
-        // Game controller
-        Controller controller = new Controller(viewStart);
-
         window = stage;
         // Set title for the stage
         window.setTitle("KING KONG POKER");
@@ -42,7 +39,7 @@ public class MainView extends Application{
         // Create scene
         // Add nodes applied to the root to scene
         // Setup up dimension of the window
-        Scene scene = new Scene(controller.getRootBorderPane(), 1000, 650);
+        Scene scene = new Scene(viewStart.getBorderPane(), 1000, 650);
 
         window.setScene(scene);
         window.show();

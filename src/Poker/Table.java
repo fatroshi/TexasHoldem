@@ -1,17 +1,4 @@
 /**
- * ### FARHAD READ THIS #####
- *
- * FIRST LEARN JAVA UTIL SUBJECT AND OBSERVABLE
- *
- * This class should not contain any graphics!!!
- * Store only the values for the graphics.
- * Label = String
- * Slider = Double
- * Balance = Double
- */
-
-
-/**
  * Created by Farhad on 17/10/15.
  *
  * This class handles the game logic.
@@ -26,13 +13,13 @@ import Layout.ChipLayout;
 import Layout.UserLayout;
 import User.Hand;
 import User.Player;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
+
 import highscore.*;
 
-public class Table{
+
+public class Table {
 
     private Deck deck                               = new Deck();        // Dealer.Hand (52 cards)
     private List<Card> tableCards                   = new ArrayList<>(); // Store all table cards, total of 5
@@ -70,19 +57,36 @@ public class Table{
         sliderMaxValue = 100;
     }
 
+    /**
+     * Set the current value for the slider
+     * @param value money
+     */
     public void setSliderValue(double value){
         this.sliderValue = value;
 
     }
 
+    /**
+     * Get current pot
+     * @return the current pot
+     */
     public double getPot(){
         return this.pot;
     }
 
+
+    /**
+     * Get slider min value
+     * @return min value
+     */
     public double getSliderMinValue() {
         return sliderMinValue;
     }
 
+    /**
+     * Set slider min value
+     * @param sliderMinValue min value for the slider
+     */
     public void setSliderMinValue(double sliderMinValue) {
         this.sliderMinValue = sliderMinValue;
     }
@@ -117,9 +121,9 @@ public class Table{
                 System.out.println(" *** Table Round 4 ***");
 
                 // Check who the winner is
-                //splitPot(this.pot, getWinner());
                 dealPot(this.pot,getWinner());
-                //notifyObservers();
+
+
 
                 System.out.println(players.get(0).getBalance() + " Balance: AVI");
                 System.out.println(players.get(0).getBalance() + " Balance: Farhad");
@@ -408,10 +412,6 @@ public class Table{
         System.out.println("First         --> quantity: " + bestHand[1]);
         System.out.println("Second        --> quantity: " + bestHand[2]);
         System.out.println("Fifth card: " + bestHand[3]);
-
-        // PRINT OUT THE BEST HAND
-        // bestHand = {Poker.Poker_:rank, Dealer.Card rank firstQuantity, secondQuantity, fifth best card}
-
 
         // STORE THE POKER RANK AFTER FOUND WHAT WE GOT
         // CREATE 2 NEW VAR, FOR RANK
@@ -1008,7 +1008,6 @@ public class Table{
 
         return foundUser;
     }
-
 
 
     /**

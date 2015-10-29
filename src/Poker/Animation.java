@@ -7,6 +7,7 @@
 package Poker;
 
 import javafx.animation.*;
+import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 /**
@@ -39,6 +40,25 @@ public class Animation {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), p.getImageView());
         ft.setFromValue(0.1);
         ft.setToValue(1.0);
+        //ft.setCycleCount(Timeline.INDEFINITE);
+        //ft.setAutoReverse(true);
+        ft.play();
+    }
+
+    public static void fadeIn(Label l) {
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), l);
+        ft.setFromValue(0.1);
+        ft.setToValue(1.0);
+        //ft.setCycleCount(Timeline.INDEFINITE);
+        //ft.setAutoReverse(true);
+        ft.play();
+    }
+
+
+    public static void fadeOut(Label l) {
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), l);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.001);
         //ft.setCycleCount(Timeline.INDEFINITE);
         //ft.setAutoReverse(true);
         ft.play();

@@ -17,18 +17,22 @@ import Dealer.Card;
 import Dealer.Chip;
 import Handler.CardClickHandler;
 import Poker.*;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by Farhad Atroshi & Avi
  * controlls the game
  */
-public class Controller {
+public class Controller  extends Observable {
     // Create game
     private Table game;
     // Root scene
@@ -43,6 +47,8 @@ public class Controller {
     private List<Pane> playerChips;
     // ViewStart
     ViewStart viewStart;
+    // Winner label
+    Label winnerLabel;
     // Round
     int round;
 
@@ -61,6 +67,10 @@ public class Controller {
         this.tableCards =  new ArrayList<>();                       // Holder for table cards
         this.playerCards = new Pane();                              // Holder for player cards
         this.playerChips = new ArrayList<>();
+        this.winnerLabel = this.viewStart.getWinnerLabel();
+
+        //Add Observer
+        addObserver(viewStart);
     }
 
     public Table getGame() {
@@ -206,6 +216,11 @@ public class Controller {
                 this.getTableCards(4, 5);
             }else if(this.round == 4){
                 System.out.println(" --- Controller round " + this.round + " (Should be 4)");
+                // The model has changed, notify observers!
+                this.setChanged();
+                this.notifyObservers();
+                // Fadeout winner label
+                Animation.fadeOut(this.winnerLabel);
                 // Update labels
                 viewStart.updateLabelBalances();
                 // Restart game

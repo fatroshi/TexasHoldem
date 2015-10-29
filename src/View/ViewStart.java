@@ -25,10 +25,11 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 
-
-public class ViewStart extends Pane{
+public class ViewStart extends Pane implements Observer{
 
     Stage stage;
     BorderPane root;
@@ -39,12 +40,13 @@ public class ViewStart extends Pane{
     DB db = new DB("dbScoreList.bin");
 
     //FROM GRAPHIC
-    private Slider slider;
-    private Label sliderLabel;
-    private Label statusLabel;
-    private Label potLabel;
-    private List<Label> usernameLabels = new ArrayList<>();
-    private List<Label> blanceLabels = new ArrayList<>();
+    private Slider slider;                                  // Slider is used for betting
+    private Label sliderLabel;                              // Show current value of the slider
+    private Label statusLabel;                              // Provide feedback for who checked,raised, folded or went all in
+    private Label potLabel;                                 // Label for total pot
+    private List<Label> usernameLabels = new ArrayList<>(); // Holder for all username labels
+    private List<Label> blanceLabels = new ArrayList<>();   // Holder for all balance labels
+    private Label winnerLabel;                              // Show who won the pot
 
     // FROM TABLE
     private List<Rectangle> playersBg               = new ArrayList<>(); // Background for player profile
@@ -82,19 +84,35 @@ public class ViewStart extends Pane{
         this.drawStartBtn();
     }
 
+    /**
+     * Get the game controller
+     * @return Controller
+     */
     public Controller getController(){
         return this.controller;
     }
 
+    /**
+     * Get the root border pane
+     * @return Borderpane
+     */
     public BorderPane getBorderPane(){
         return  this.root;
     }
 
+
+    /**
+     * Get the game (Class Table)
+     * @return game
+     */
     public Table getGame(){
         return this.game;
     }
 
 
+    /**
+     * Adds the poker table image to the scene
+     */
     public void showGameBg(){
         GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
         //Animation.fadeIn(table);
@@ -111,6 +129,9 @@ public class ViewStart extends Pane{
         this.blanceLabels.get(this.game.getActiveUser()).setTextFill(Color.BLACK);
     }
 
+    /**
+     * Creates labels for the table and adds to the scene
+     */
     public void showTableLabes(){
         slider      = this.createSlider(0,100,0);       // Slider fot betting (min,max,currentSliderValue)
         sliderLabel = createLabel(240, 465, 24);        // Label for the slider
@@ -120,6 +141,9 @@ public class ViewStart extends Pane{
         this.paneCenter.getChildren().addAll(this.slider,this.sliderLabel,this.statusLabel,this.potLabel);
     }
 
+    /**
+     * Creates all buttons and button handlers for the game
+     */
     public void createButtons(){
         // Start btn
         startBtn        = createButton("START");        // Start the game
@@ -133,18 +157,31 @@ public class ViewStart extends Pane{
         foldBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new FoldButtonHandler(this.controller));
     }
 
+    /**
+     * Handles the start button click
+     * Updates the scene by adding graphic elements to the scene
+     */
     public void startBtnHandler(){
         this.showGameGraphics();
     }
 
+    /**
+     * Add play button to the scene
+     */
     public void showPlayBtn(){
         this.paneCenter.getChildren().add(this.playBtn);
     }
 
+    /**
+     * Add fold button to the scene
+     */
     public void showFoldBtn(){
         this.paneCenter.getChildren().add(this.foldBtn);
     }
 
+    /**
+     * Add graphic elements to the scene.
+     */
     public void showGameGraphics(){
         this.showGameBg();
         this.showTableLabes();
@@ -161,16 +198,24 @@ public class ViewStart extends Pane{
         // Set active user
         //Dealer deal 5 for the table
         this.controller.getGame().dealCards(5);
+        // Winner label
+        this.createWinnerLabel();
 
         // Show current active player by changing the bg
         updateBgUser();
 
     }
 
+    /**
+     * Add the start btn to the scene
+     */
     public void drawStartBtn(){
         this.paneCenter.getChildren().add(this.startBtn);
     }
 
+    /**
+     * Add players information to the scene (except the chips)
+     */
     public void showUserinfo(){
         Label username;
         Label balance;
@@ -187,10 +232,13 @@ public class ViewStart extends Pane{
         }
     }
 
+    /**
+     * Update the players label balances
+     */
     public void updateLabelBalances(){
         for (int i = 0; i < this.game.getPlayers().size(); i++) {
             Player player = this.game.getPlayer(i);
-            blanceLabels.get(i).setText(String.valueOf(player.getBalance()));
+            blanceLabels.get(i).setText("$ " + String.valueOf(player.getBalance()));
         }
     }
 
@@ -271,14 +319,22 @@ public class ViewStart extends Pane{
     }
 
 
-
+    /**
+     * Get the slider
+     * @return slider
+     */
     public Slider getSlider() {
         return slider;
     }
 
+    /**
+     * The label for showing the total pot
+     * @return label
+     */
     public Label getPotLabel() {
         return potLabel;
     }
+
     /**
      * Create a slider set min,max and start value
      * @param setMin
@@ -305,20 +361,37 @@ public class ViewStart extends Pane{
         return slider;
     }
 
+    /**
+     * Updates the slider label when the slider is changed.
+     */
     public void sliderHandler(){
         double value = round(slider.getValue(),0);
         this.sliderLabel.setText("$ " + String.valueOf(value));
         this.game.setSliderValue(value);
     }
 
+    /**
+     * Get the slider label
+     * @return label
+     */
     public Label getSliderLabel(){
         return this.sliderLabel;
     }
 
+
+    /**
+     * The status label is used for providing information to the players
+     * check,raise all in;
+     * @return
+     */
     public Label getStatusLabel(){
         return this.statusLabel;
     }
 
+
+    /**
+     * Update the background for the current active user
+     */
     public void updateBgUser(){
         int id = this.game.getActiveUser();
         Rectangle r;
@@ -327,12 +400,14 @@ public class ViewStart extends Pane{
 
             r = this.playersBg.get(i);
             if(i != id){
+                // Other player
                 r.setFill(Color.BLACK);
                 r.setStroke(Color.DARKGRAY);
                 usernameLabels.get(i).setTextFill(Color.WHITESMOKE);
                 blanceLabels.get(i).setTextFill(Color.DARKGREEN);
 
             }else{
+                // Active user
                 r.setFill(Color.DARKGREEN);
                 r.setStroke(Color.LIGHTGREEN);
                 usernameLabels.get(i).setTextFill(Color.WHITE);
@@ -501,8 +576,8 @@ public class ViewStart extends Pane{
     /**
      * Found at: http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
      *
-     * @param value
-     * @param places
+     * @param value Value that we want to round
+     * @param places How many decimals
      * @return
      */
     public static double round(double value, int places) {
@@ -512,6 +587,50 @@ public class ViewStart extends Pane{
         value = value * factor;
         long tmp = Math.round(value);
         return (double) tmp / factor;
+    }
+
+    /**
+     * Return the winner label
+     * @return label
+     */
+    public Label getWinnerLabel(){
+        return this.winnerLabel;
+    }
+
+    /**
+     * Create the winner label and att to scene
+     */
+    public void createWinnerLabel(){
+        this.winnerLabel = new Label();
+        this.winnerLabel.setTextFill(Color.LIGHTGREEN);
+        this.winnerLabel.setFont(Font.font(20));
+        this.winnerLabel.setLayoutX(370);
+        this.winnerLabel.setLayoutY(370);
+        paneCenter.getChildren().add(winnerLabel);
+    }
+
+    /**
+     * Update winner label with the username of the winners
+     * @param o
+     * @param arg
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        String txt= "Winners: ";
+        if(this.game.getWinner().size() > 1){
+
+            for(Player p: this.game.getWinner()){
+                txt += p.getUsername() + " ";
+            }
+            this.winnerLabel.setText(txt);
+
+        }else{
+            Player player = this.game.getWinner().get(0);
+            this.winnerLabel.setText("The Winner is : " + player.getUsername());
+        }
+
+        Animation.fadeIn(winnerLabel);
+
     }
 
 

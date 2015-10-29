@@ -33,7 +33,7 @@ public class Table {
     private double pot;                             // Total current pot in the game
     private int rounds;                             // Counts the poker rounds, used for showing cards and when the game in done.
     private int playCounter;                        // increases for call,bet. Sets to 0 for raise
-    private boolean fold;                           // Flag used for checking if the user fold
+
     // Graphics
     private String msg;                             // Used for passing strings to objects from class Graphics
 
@@ -122,8 +122,6 @@ public class Table {
 
                 // Check who the winner is
                 dealPot(this.pot,getWinner());
-
-
 
                 System.out.println(players.get(0).getBalance() + " Balance: AVI");
                 System.out.println(players.get(0).getBalance() + " Balance: Farhad");
@@ -589,12 +587,15 @@ public class Table {
                     winners.add(player);
                 }
 
-                if (oneActivePlayer()) {
-                    Player p = players.get(this.activeUser);
-                    System.out.println(p.getUsername() + " ** WON ** ");
-                    winners.add(p);
+                if(oneActivePlayer()){
+                    Player p = getActivePlayer();
+                    System.out.println(p.getUsername() + " ** WON  ONE ACTIVE PLAYER ** " + p.isActive());
 
-                    break;
+                    winners.add(p);
+                }else if (loopCounter > 0 && player.isActive()) {
+                    Player p = players.get(winner);
+                    System.out.println(p.getUsername() + " ** WON ** " + p.isActive());
+                    winners.add(p);
                 }
 
                 loopCounter++;
@@ -664,14 +665,18 @@ public class Table {
         Animation.fadeOut(c2);
 
         // Deal the pot to the winner
+        dealPot(this.pot,getWinner());
+
+        //
         dealPot(this.pot, this.getWinner());
 
         // Reset all game values in this class
         gameRestart();
 
         // Set next user
-        nextUser();
+        //nextUser();
     }
+
 
     /**
      * Resets the variables used in the game and also sets all users to active mode

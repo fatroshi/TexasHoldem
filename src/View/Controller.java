@@ -151,6 +151,11 @@ public class Controller  extends Observable {
      * Reset game elements
     */
     public void resetGame(){
+
+        //
+        this.setChanged();
+        this.notifyObservers();
+
         // Game rounds
         this.getGame().resetRounds();
 
@@ -181,8 +186,8 @@ public class Controller  extends Observable {
      */
     public void restartGame(){
         // The model has changed, notify observers!
-        this.setChanged();
-        this.notifyObservers();
+        //this.setChanged();
+        //this.notifyObservers();
         // Fadeout winner label
         Animation.fadeOut(this.winnerLabel);
         // Update labels

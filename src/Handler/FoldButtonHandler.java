@@ -27,12 +27,12 @@ public class FoldButtonHandler implements EventHandler<Event> {
         // Restart game
         controller.restartGame();
         // Dealer deal 2 cards for each player
-        controller.getGame().dealTwoCards();
+        //controller.getGame().dealTwoCards();
         // Add to scene
-        controller.showFirstTwoCards();
+        //controller.showFirstTwoCards();
         // Set active user
         //Dealer deal 5 for the table
-        controller.getGame().dealCards(5);
+        //controller.getGame().dealCards(5);
 
     }
 }

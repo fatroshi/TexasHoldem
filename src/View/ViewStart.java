@@ -329,10 +329,14 @@ public class ViewStart extends Pane{
             if(i != id){
                 r.setFill(Color.BLACK);
                 r.setStroke(Color.DARKGRAY);
+                usernameLabels.get(i).setTextFill(Color.WHITESMOKE);
+                blanceLabels.get(i).setTextFill(Color.DARKGREEN);
 
             }else{
                 r.setFill(Color.DARKGREEN);
                 r.setStroke(Color.LIGHTGREEN);
+                usernameLabels.get(i).setTextFill(Color.WHITE);
+                blanceLabels.get(i).setTextFill(Color.LIGHTYELLOW);
             }
         }
 

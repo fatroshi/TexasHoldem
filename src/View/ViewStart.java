@@ -157,8 +157,16 @@ public class ViewStart extends Pane{
         // Btn
         this.showPlayBtn();
         this.showFoldBtn();
-        // Chips
+        // Controller
         this.controller.showUserChips();
+        // Dealer deal 2 cards for each player
+        this.controller.getGame().dealTwoCards();
+        // Add to scene
+        this.controller.showFirstTwoCards();
+        // Set active user
+        //Dealer deal 5 for the table
+        this.controller.getGame().dealCards(5);
+
 
     }
 

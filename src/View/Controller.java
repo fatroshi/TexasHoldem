@@ -90,7 +90,7 @@ public class Controller {
     /**
      * adds two cards per player for the first round
      */
-    public void getFirstTwoCards() {
+    public void showFirstTwoCards() {
         for (int i = 0; i < this.game.getPlayerCards().size(); i++) {
             Card card = this.game.getPlayerCards().get(i);
             // Set event handler when card clicked
@@ -98,7 +98,7 @@ public class Controller {
             // Att to player cards pan
             this.playerCards.getChildren().add(card.getImageView());
         }
-        this.root.getChildren().add(playerCards);
+        this.paneCenter.getChildren().add(playerCards);
     }
     /**
      * gets the first three cards on table with animation
@@ -146,11 +146,11 @@ public class Controller {
         this.round = 0;
 
         // Remove player cards
-        this.root.getChildren().remove(this.playerCards);
+        this.paneCenter.getChildren().remove(this.playerCards);
 
         // Remove table Cards
         for (Pane pane: tableCards){
-            this.root.getChildren().remove(pane);
+            this.paneCenter.getChildren().remove(pane);
         }
 
         // Restart the game
@@ -188,7 +188,7 @@ public class Controller {
                 // Dealer deal 2 cards for each player
                 this.getGame().dealTwoCards();
                 // Add to scene
-                this.getFirstTwoCards();
+                this.showFirstTwoCards();
                 // Set active user
                 //Dealer deal 5 for the table
                 this.getGame().dealCards(5);

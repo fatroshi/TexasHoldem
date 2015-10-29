@@ -1,6 +1,7 @@
 /**
  * Created by Farhad & Avi
  * This class is used for accessing stage and to be able to interact with the scene.
+ * Also for creating the graphic elements in the game.
  *
  */
 

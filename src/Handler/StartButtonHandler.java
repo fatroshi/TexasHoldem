@@ -34,6 +34,7 @@ public class StartButtonHandler implements EventHandler<Event> {
     public void handle(Event evt) {
         loadGameData();
 
+
     }
 
     public void loadGameData(){

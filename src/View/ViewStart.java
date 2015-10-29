@@ -71,22 +71,24 @@ public class ViewStart extends Pane{
         // Holder for table cards
         this.tableCards = new ArrayList<>();
 
-
+        // Game Controller
+        controller = new Controller(this);
 
         // Init scene elements
         this.startView();
         this.createGameMenu();
+        this.createButtons();
 
-        createGameGraphics();
-
-        controller = new Controller(this);
-
-        controller.drawStartBtn();
-
-        //Start button
-        //this.drawStartBtn();
+        // Start btn
+        this.drawStartBtn();
 
 
+
+
+    }
+
+    public Controller getController(){
+        return this.controller;
     }
 
     public BorderPane getBorderPane(){
@@ -98,21 +100,10 @@ public class ViewStart extends Pane{
     }
 
 
-    public void createGameGraphics(){
-        // FROM GRAPHIC
-        createTableLabes();
-
-        // Game buttons
-        createButtons();
-
-        // Crate slider
-        createSlider(0,100,0);
-    }
-
     public void showGameBg(){
         GameBackground table = new GameBackground(GameBackground_.TABLE.getImageSrc());
-        Animation.fadeIn(table);
-        this.root.getChildren().add(table.getImageView());
+        //Animation.fadeIn(table);
+        this.paneCenter.getChildren().add(table.getImageView());
     }
 
     /**
@@ -125,14 +116,12 @@ public class ViewStart extends Pane{
         this.blanceLabels.get(this.game.getActiveUser()).setTextFill(Color.BLACK);
     }
 
-    public void createTableLabes(){
-        slider      = this.createSlider(0,100,0);       // Slider fot betting (min,max,currentSliderValue)
+    public void showTableLabes(){
+        slider      = this.createSlider(0,100,10);       // Slider fot betting (min,max,currentSliderValue)
         sliderLabel = createLabel(240, 465, 24);        // Label for the slider
         statusLabel = createLabel(400, 575, 24);        // Label for showing current status: bet/call/raise
         potLabel    = createLabel(443,340,24);
-    }
-
-    public void drawTableLabels(){
+        // Add to pance center
         this.paneCenter.getChildren().addAll(this.slider,this.sliderLabel,this.statusLabel,this.potLabel);
     }
 
@@ -143,21 +132,41 @@ public class ViewStart extends Pane{
         startBtn.setOnMouseClicked(event -> startBtnHandler());
         // Play btn
         playBtn         = createButton("PLAY");         // Play: check,call,raise
-        playBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayButtonHandler(this.controller, this.statusLabel));
+        playBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new PlayButtonHandler(this));
         // Fold btn
         foldBtn         = createButton("FOLD");         // player folds
         foldBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new FoldButtonHandler(this.controller));
     }
 
     public void startBtnHandler(){
+        this.showGameGraphics();
+    }
+
+    public void showPlayBtn(){
+        this.paneCenter.getChildren().add(this.playBtn);
+    }
+
+    public void showFoldBtn(){
+        this.paneCenter.getChildren().add(this.foldBtn);
+    }
+
+    public void showGameGraphics(){
         this.showGameBg();
+        this.showTableLabes();
+        this.showUserinfo();
+        // Btn
+        this.showPlayBtn();
+        this.showFoldBtn();
+        // Chips
+        this.controller.showUserChips();
+
     }
 
     public void drawStartBtn(){
         this.paneCenter.getChildren().add(this.startBtn);
     }
 
-    public void displayUserinfo(){
+    public void showUserinfo(){
         Label username;
         Label balance;
 
@@ -170,7 +179,7 @@ public class ViewStart extends Pane{
             // Get balance
             balance = createBalanceLabel(player,i);
 
-            paneCenter.getChildren().addAll(r, username, balance);
+            this.paneCenter.getChildren().addAll(r, username, balance);
         }
     }
 

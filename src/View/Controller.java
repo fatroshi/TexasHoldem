@@ -72,17 +72,12 @@ public class Controller {
         //game.addPlayer("Elise", 12);
     }
 
-    /**
-     * shows user info in a label
-     */
-    public void getUserInfo() {
-        viewStart.displayUserinfo();
-    }
+
 
     /**
      * gets the users chips to scene
      */
-    public void getUserChips() {
+    public void showUserChips() {
         for (int i = 0; i < this.game.getPlayers().size(); i++) {
             for (int j = 0; j < this.game.getPlayerChips(i).size(); j++) {
                 Chip chip = this.game.getPlayerChips(i).get(j);
@@ -134,22 +129,10 @@ public class Controller {
             this.tableCards.add(cPane);
 
             // Add to root
-            this.root.getChildren().add(tableCards.get(cardID));
+            this.paneCenter.getChildren().add(tableCards.get(cardID));
         }
     }
 
-
-    public void getGameScene() {
-        this.viewStart.showGameBg();
-    }
-
-    public void drawTableGraphics(){
-        this.viewStart.drawTableLabels();
-    }
-
-    public void drawStartBtn(){
-        this.viewStart.drawStartBtn();
-    }
 
 
     /**

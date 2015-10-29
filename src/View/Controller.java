@@ -66,8 +66,8 @@ public class Controller  extends Observable {
         this.round = 0;                                             // Counter for poker rounds
         this.tableCards =  new ArrayList<>();                       // Holder for table cards
         this.playerCards = new Pane();                              // Holder for player cards
-        this.playerChips = new ArrayList<>();
-        this.winnerLabel = this.viewStart.getWinnerLabel();
+        this.playerChips = new ArrayList<>();                       // Holder for player chips
+        this.winnerLabel = this.viewStart.getWinnerLabel();         // Display the winners name with this label
 
         //Add Observer
         addObserver(viewStart);
@@ -162,12 +162,10 @@ public class Controller  extends Observable {
         }
     }
 
-
-
     /**
-     * restarts the game
+     * Reset game elements
     */
-    public void restartGame(){
+    public void resetGame(){
         // Game rounds
         this.getGame().resetRounds();
 
@@ -190,6 +188,30 @@ public class Controller  extends Observable {
         // Restart the game
         this.game.gameRestart();
 
+    }
+
+
+    /**
+     * Restart the game
+     */
+    public void restartGame(){
+        // The model has changed, notify observers!
+        this.setChanged();
+        this.notifyObservers();
+        // Fadeout winner label
+        Animation.fadeOut(this.winnerLabel);
+        // Update labels
+        viewStart.updateLabelBalances();
+        // Restart game
+        this.resetGame();
+        // Dealer deal 2 cards for each player
+        this.getGame().dealTwoCards();
+        // Add to scene
+        this.showFirstTwoCards();
+        // Get user chips
+        this.showUserChips();
+        //Dealer deal 5 for the table
+        this.getGame().dealCards(5);
     }
 
     public ViewStart getViewStart(){
@@ -216,23 +238,8 @@ public class Controller  extends Observable {
                 this.getTableCards(4, 5);
             }else if(this.round == 4){
                 System.out.println(" --- Controller round " + this.round + " (Should be 4)");
-                // The model has changed, notify observers!
-                this.setChanged();
-                this.notifyObservers();
-                // Fadeout winner label
-                Animation.fadeOut(this.winnerLabel);
-                // Update labels
-                viewStart.updateLabelBalances();
-                // Restart game
+                // Restart the game
                 this.restartGame();
-                // Dealer deal 2 cards for each player
-                this.getGame().dealTwoCards();
-                // Add to scene
-                this.showFirstTwoCards();
-                // Get user chips
-                this.showUserChips();
-                //Dealer deal 5 for the table
-                this.getGame().dealCards(5);
             }
 
         }

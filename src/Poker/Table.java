@@ -2,7 +2,7 @@
  * Created by Farhad on 17/10/15.
  *
  * This class handles the game logic.
- * The logic for getting cards,chips and the controls items.
+ * The logic for getting cards and chips
  */
 
 package Poker;
@@ -33,7 +33,7 @@ public class Table {
     private double pot;                             // Total current pot in the game
     private int rounds;                             // Counts the poker rounds, used for showing cards and when the game in done.
     private int playCounter;                        // increases for call,bet. Sets to 0 for raise
-
+    private boolean fold;                           // Flag used for checking if the user fold
     // Graphics
     private String msg;                             // Used for passing strings to objects from class Graphics
 
@@ -562,7 +562,7 @@ public class Table {
         // Store hand rank
         Integer[] topRank = {0, 0, 0, 0};
 
-        int winner = -1;
+        int winner = 0;
         int loopCounter = 0;
         for (Map.Entry<Integer[], Player> entry : bestHands.entrySet()) {
             Integer[] rank = entry.getKey();
@@ -589,10 +589,12 @@ public class Table {
                     winners.add(player);
                 }
 
-                if ((loopCounter > 0 || oneActivePlayer()) && player.isActive()) {
-                    Player p = players.get(winner);
+                if (oneActivePlayer()) {
+                    Player p = players.get(this.activeUser);
                     System.out.println(p.getUsername() + " ** WON ** ");
                     winners.add(p);
+
+                    break;
                 }
 
                 loopCounter++;
@@ -662,16 +664,14 @@ public class Table {
         Animation.fadeOut(c2);
 
         // Deal the pot to the winner
-        dealPot(this.pot,getWinner());
-        // Notify all observers
-        //notifyObservers();
+        dealPot(this.pot, this.getWinner());
+
         // Reset all game values in this class
         gameRestart();
 
         // Set next user
         nextUser();
     }
-
 
     /**
      * Resets the variables used in the game and also sets all users to active mode

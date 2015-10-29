@@ -630,6 +630,8 @@ public class ViewStart extends Pane implements Observer{
             this.winnerLabel.setText("The Winner is : " + player.getUsername());
         }
 
+        Player player = this.game.getWinner().get(0);
+        this.winnerLabel.setText("The Winner is : " + player.getUsername());
         Animation.fadeIn(winnerLabel);
 
     }

@@ -23,6 +23,7 @@ public class FoldButtonHandler implements EventHandler<Event> {
     public void handle(Event evt) {
 
         controller.getGame().fold();
+
         // Restart game
         controller.restartGame();
         // Dealer deal 2 cards for each player

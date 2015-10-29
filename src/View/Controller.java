@@ -109,6 +109,7 @@ public class Controller  extends Observable {
             // Set event handler when card clicked
             card.getImageView().addEventHandler(MouseEvent.MOUSE_CLICKED, new CardClickHandler(card));
             // Att to player cards pan
+
             this.playerCards.getChildren().add(card.getImageView());
         }
         this.paneCenter.getChildren().add(playerCards);

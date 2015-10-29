@@ -81,10 +81,6 @@ public class ViewStart extends Pane{
 
         // Start btn
         this.drawStartBtn();
-
-
-
-
     }
 
     public Controller getController(){
@@ -166,8 +162,6 @@ public class ViewStart extends Pane{
         // Set active user
         //Dealer deal 5 for the table
         this.controller.getGame().dealCards(5);
-
-
     }
 
     public void drawStartBtn(){
@@ -186,8 +180,14 @@ public class ViewStart extends Pane{
             username = createUsernameLabel(player,i);
             // Get balance
             balance = createBalanceLabel(player,i);
-
             this.paneCenter.getChildren().addAll(r, username, balance);
+        }
+    }
+
+    public void updateLabelBalances(){
+        for (int i = 0; i < this.game.getPlayers().size(); i++) {
+            Player player = this.game.getPlayer(i);
+            blanceLabels.get(i).setText(String.valueOf(player.getBalance()));
         }
     }
 

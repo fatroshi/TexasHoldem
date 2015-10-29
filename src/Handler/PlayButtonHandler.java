@@ -8,7 +8,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 
-import javax.swing.text.View;
 
 /**
  * Created by Farhad & Avi
@@ -17,19 +16,30 @@ import javax.swing.text.View;
 public class PlayButtonHandler implements EventHandler<Event> {
 
     private ViewStart viewStart;
-    private Label statusLabel;
+
     public PlayButtonHandler(ViewStart viewStart){
         this.viewStart = viewStart;
-        this.statusLabel = statusLabel;
+
     }
 
     @Override
     public void handle(Event evt) {
-        //this.statusLabel.setText(this.controller.getGame().getMsg());
-        //controller.getGame().canPlay();
-        //controller.getRound();
         viewStart.getController().getGame().canPlay();
+        //Update labels
+        viewStart.getStatusLabel().setText(viewStart.getGame().getMsg());
+        viewStart.getPotLabel().setText("$ " + String.valueOf(viewStart.getGame().getPot()));
+
+        //Update slider
+        double min = viewStart.getGame().getSliderMinValue();
+        double max = viewStart.getGame().getActivePlayer().getBalance();
+        viewStart.getSlider().setMin(min);
+        viewStart.getSlider().setMax(max);
+
+        //Update label balance
+        viewStart.updateLabelBalances();
+
+
         viewStart.getController().getRound();
-        System.out.println("#### CLICKED PLAY BTN " + " MSG: " + viewStart.getController().getGame().getMsg());
+        System.out.println("#### CLICKED PLAY BTN " + " MSG: " + viewStart.getGame().getMsg());
     }
 }

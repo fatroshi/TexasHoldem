@@ -20,6 +20,8 @@ import Poker.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +39,8 @@ public class Controller {
     private List<Pane> tableCards;
     // Holder for table cards
     private Pane playerCards;
+    // Holder for player chips
+    private Pane playerChips;
     // ViewStart
     ViewStart viewStart;
     // Round
@@ -54,8 +58,9 @@ public class Controller {
         this.game = viewStart.getGame();                            // init. the game
         this.createPlayers();                                       // Create players, get user info, get chips for each player
         this.round = 0;                                             // Counter for poker rounds
-        this.tableCards = viewStart.getTableCards();                // Holder for table cards
-        this.playerCards = viewStart.getPlayerCards();              // Holder for player cards
+        this.tableCards =  new ArrayList<>();                // Holder for table cards
+        this.playerCards = new Pane();             // Holder for player cards
+        this.playerChips = new Pane();
     }
 
     public Table getGame() {
@@ -82,9 +87,10 @@ public class Controller {
             for (int j = 0; j < this.game.getPlayerChips(i).size(); j++) {
                 Chip chip = this.game.getPlayerChips(i).get(j);
                 // Add to scene
-                this.paneCenter.getChildren().add(chip.getImageView());
+                this.playerChips.getChildren().add(chip.getImageView());
             }
         }
+        this.paneCenter.getChildren().add(playerChips);
     }
 
     /**

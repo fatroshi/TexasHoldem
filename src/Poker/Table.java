@@ -67,12 +67,16 @@ public class Table{
         hsl = db.getData();                                     // Load data from database
         //Slider
         sliderMinValue = 0;
-        sliderMaxValue = 0;
+        sliderMaxValue = 100;
     }
 
     public void setSliderValue(double value){
         this.sliderValue = value;
 
+    }
+
+    public double getPot(){
+        return this.pot;
     }
 
     public double getSliderMinValue() {
@@ -678,27 +682,6 @@ public class Table{
 
 
     /**
-     * Settings when the game starts
-     */
-    public void gameStart(){
-        // Update background  for current active user
-        // Show current selected user by changing the background color
-        // We know that the firs user has index 0
-
-        /*
-        for (Player player: players){
-            if(player.getBalance() > 0){
-                int indexOfPlayer = players.indexOf(player);
-                graphic.updatePlayerBg(this.playersBg.get(indexOfPlayer), Color.DARKGREEN);
-                this.slider.setMax(player.getBalance());
-                this.slider.setValue(0);
-                break;
-            }
-        }
-        */
-    }
-
-    /**
      * Resets the variables used in the game and also sets all users to active mode
      */
     public void gameRestart(){
@@ -736,7 +719,6 @@ public class Table{
         // notify observers
         //notifyObservers();
 
-        this.gameStart();
     }
 
     public int getActiveUser(){
@@ -813,6 +795,7 @@ public class Table{
 
         // Set bet to the new value
         this.bet = this.newBet;
+        this.sliderMinValue = bet;
 
         System.out.println("FROM raise: newBet " + newBet + " bet: " + bet + " Balance: " + player.getBalance() );
 
@@ -872,9 +855,8 @@ public class Table{
         player.setBet(tmpBet);
 
         // Reset slider value
-
         this.setSliderMinValue(0);
-        this.setSliderValue(0);
+        //this.setSliderValue(0);
 
         // Set status text
         this.msg = "Call by " + player.getUsername();

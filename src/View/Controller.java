@@ -58,8 +58,8 @@ public class Controller {
         this.game = viewStart.getGame();                            // init. the game
         this.createPlayers();                                       // Create players, get user info, get chips for each player
         this.round = 0;                                             // Counter for poker rounds
-        this.tableCards =  new ArrayList<>();                // Holder for table cards
-        this.playerCards = new Pane();             // Holder for player cards
+        this.tableCards =  new ArrayList<>();                       // Holder for table cards
+        this.playerCards = new Pane();                              // Holder for player cards
         this.playerChips = new Pane();
     }
 
@@ -151,6 +151,9 @@ public class Controller {
         // Controller round
         this.round = 0;
 
+        //Remove user chips
+        this.paneCenter.getChildren().remove(this.playerChips);
+
         // Remove player cards
         this.paneCenter.getChildren().remove(this.playerCards);
 
@@ -195,7 +198,8 @@ public class Controller {
                 this.getGame().dealTwoCards();
                 // Add to scene
                 this.showFirstTwoCards();
-                // Set active user
+                // Get user chips
+                this.showUserChips();
                 //Dealer deal 5 for the table
                 this.getGame().dealCards(5);
             }

@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 /**
- * @author Farhad & Avi
+ * @author Farhad
  * creates animation for the cards and chips
  */
 

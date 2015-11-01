@@ -8,7 +8,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  * turns the card when you click it
  */
 public class CardClickHandler implements EventHandler<Event> {

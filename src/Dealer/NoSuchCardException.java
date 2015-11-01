@@ -5,7 +5,7 @@
 package Dealer;
 
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  *
  */
 public class NoSuchCardException extends RuntimeException {

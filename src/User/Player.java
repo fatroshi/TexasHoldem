@@ -3,7 +3,7 @@
 package User;
 
 /**
- * @author Farhad & Avi
+ * @author Farhad
  *  This class extends User class.
  * creates a player with name and balance
  */

@@ -1,6 +1,6 @@
 
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  * This class is used for holding the player cards.
  * Adding cards and removing cards from the hand.
  */

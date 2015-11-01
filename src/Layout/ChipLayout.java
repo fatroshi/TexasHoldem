@@ -1,7 +1,7 @@
 package Layout;
 
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  * This enum class is used for creating chips, setting them up for each player, and setting values.
  * Setting  correct value, position for each user.
  */

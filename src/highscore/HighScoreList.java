@@ -1,5 +1,5 @@
 /**
- *  This class is used when saving high score to database.
+ *  This class is used when sng high score to database.
  */
 
 package highscore;
@@ -13,7 +13,7 @@ import java.util.Collections;
 
 /**
  *
- * @author Farhad & avi
+ * @author Farhad
  * creates a highscorelist object
  *
  */

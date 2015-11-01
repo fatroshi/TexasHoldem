@@ -16,9 +16,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  * creates alert window for highscore
- * found at https://www.youtube.com/watch?v=SpL3EToqaXA&feature=youtu.be&list=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG
+ * found at https://www.youtube.com/watch?v=SpL3EToqaXAfeature=youtu.belist=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG
  */
 
 

@@ -1,5 +1,5 @@
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  * This class is used when creating the cards.
  */
 
@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * @author Farhad & Avi
+ * @author Farhad
  * creates picture object
  *
  */

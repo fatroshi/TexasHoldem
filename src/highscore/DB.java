@@ -1,5 +1,5 @@
 /**
- * This class is used for creating a local database file, saving to it and also reading from it.
+ * This class is used for creating a local database file, sng to it and also reading from it.
  * The database is used for storing the game high score.
  */
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  * creates a bin file and saves highscorelist object
  */
 public class DB {

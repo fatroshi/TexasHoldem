@@ -6,7 +6,7 @@
 package Dealer;
 
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  */
 public enum Rank_ {
 

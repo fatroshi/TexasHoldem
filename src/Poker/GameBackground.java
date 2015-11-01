@@ -1,5 +1,5 @@
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  *
  * This class is used for when setting backgrounds.
  */

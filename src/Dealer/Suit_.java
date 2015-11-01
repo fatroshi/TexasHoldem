@@ -4,7 +4,7 @@
 package Dealer;
 
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  */
 public enum Suit_ {
     // 1 = spades, 2 = hearts, 3 = diamonds, 4 = clubs

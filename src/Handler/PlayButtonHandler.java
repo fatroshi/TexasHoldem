@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 
 
 /**
- * Created by Farhad & Avi
+ * Created by Farhad
  * handles the play button by checking if player can play an which round it is
  */
 public class PlayButtonHandler implements EventHandler<Event> {

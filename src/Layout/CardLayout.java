@@ -1,7 +1,7 @@
 package Layout;
 
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  *
  * This eum class is used for setting the table card positions.
  *

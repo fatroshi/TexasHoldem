@@ -6,7 +6,7 @@ package highscore;
 import java.io.Serializable;
 
 /**
- * Created by Farhad Atroshi & Avi
+ * Created by Farhad Atroshi
  * creates highscore objekt
  * @param username
  * @param pot
